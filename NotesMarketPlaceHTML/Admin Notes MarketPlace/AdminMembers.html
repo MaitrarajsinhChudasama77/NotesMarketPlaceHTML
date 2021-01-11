@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    
+    <!--meta tags-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+    <!--title-->
+    <title>Notes - MarketPlace</title>
+    
+    <link rel="shortcut icon" href="image/home/favicon.ico">
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="css/Bootstrap/bootstrap.css">
+    
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+    
+    <!--external css-->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css"> 
+    </head>
+    <body>
+        <section>
+            <header>
+			<nav id="mynav" class="nav navbar-fixed-top white-nav-top">
+				<div class="container">
+				    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="hamburger-icon">&#9776;</span>
+                            </button>
+                            <a class="logo" href="#"><img src="image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#search-notes">Dashboard</a></li>
+                                <li><a href="#">Notes</a></li>
+                                <li><a href="#">Members</a></li>
+                                <li><a href="#faq">Reports</a></li>
+                                <li><a href="#contact-us">Settings</a></li>
+                                <li><img id="user-img" src="image/Add-notes/user-img.png"></li>
+                                <li><button class="btn btn-class last-child" type="submit">Login</button>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
+                        
+					</div>
+				</div>
+			</nav>
+		</header>
+            <div class="content-box-lg manage-admin-content-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="dashboard-heading-left">
+                            <h4>Members</h4>
+                        </div>
+                        <div id="dashboard-heading-right">
+                            <div class="form-group" id="dashboard-search-left">
+                                
+                                <input id="special-search" type="search" class="form-control search-field" placeholder="Search">
+                            </div>
+                            <div id="dashboard-search-right">
+                                <a class="btn  btn-class smooth-scroll" role="button" href="#" title="Search">SEARCH</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      
+                       <div class="table-responsive" id="dashboard-table">
+                           <table class="table Members-table">
+                                <thead>
+                                                <tr>
+                                                  <th class="about-item text-center" scope="col">SR NO.</th>
+                                                  <th scope="col" class="about-item text-center">FIRST NAME</th>
+                                                  <th scope="col" class="about-item text-center">LAST NAME</th>
+                                                  <th scope="col" class="about-item text-center">EMAIL</th>
+                                                  <th scope="col" class="about-item text-center">JOINING DATE</th>
+                                                  <th class="about-item text-center" scope="col">UNDER REVIEW NOTES</th>
+                                                  <th class="about-item text-center" scope="col">PUBLISHED NOTES</th>
+                                                  <th class="about-item text-center" scope="col">DOWNLOADED NOTES</th>
+                                                  <th class="about-item text-center" scope="col">TOTAL EXPENSES</th>
+                                                  <th class="about-item text-center" scope="col">TOTAL EARNINGS</th>
+                                                  <th class="about-item text-center" scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">1</td>
+                                                    <td class="about-item text-center">Khyati</td>
+                                                    <td class="about-item text-center">Patel</td>
+                                                    <td class="about-item text-center">khyatipatel@gmail.com</td>
+                                                    <td class="about-item text-center">09-10-2020, 10:10</td>
+                                                    <td  class="about-item text-center">19</td>
+                                                    <td  class="about-item text-center">10</td>
+                                                    <td  class="about-item text-center">22</td>
+                                                    <td class="about-item text-center">$220</td>
+                                                    <td class="about-item text-center">$177</td>
+                                                    <td class="about-item text-center">
+                                                        <div id="dashboard-buttons">
+                                                            <div class="dropdown">
+                                                               <i onclick="myAdminMembersDropdown(1)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                                <div id="myDropdown_1" class="dropdown-content">
+                                                                   <a href="#">View More Details</a>
+                                                                   <a href="#">Deactivate</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">2</td>
+                                                    <td class="about-item text-center">Rahul</td>
+                                                    <td class="about-item text-center">Shah</td>
+                                                    <td class="about-item text-center">rahulpatel@gmail.com</td>
+                                                    <td class="about-item text-center">10-10-2020, 11:25</td>
+                                                    <td class="about-item text-center">4</td>
+                                                    <td class="about-item text-center">5</td>
+                                                    <td class="about-item text-center">4</td>
+                                                    <td class="about-item text-center">$200</td>
+                                                    <td class="about-item text-center">$160</td>
+                                                    <td class="about-item text-center">
+                                                        <div id="dashboard-buttons">
+                                                            <div class="dropdown">
+                                                               <i onclick="myAdminMembersDropdown(2)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                                <div id="myDropdown_2" class="dropdown-content">
+                                                                   <a href="#">View More Details</a>
+                                                                   <a href="#">Deactivate</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">3</td>
+                                                    <td class="about-item text-center">Suman</td>
+                                                    <td class="about-item text-center">Trivedi</td>
+                                                    <td class="about-item text-center">sumantrivedi@gmail.com</td>
+                                                    <td class="about-item text-center">11-10-2020, 01:00</td>
+                                                    <td class="about-item text-center">12</td>
+                                                    <td class="about-item text-center">11</td>
+                                                    <td class="about-item text-center">17</td>
+                                                    <td class="about-item text-center">$886</td>
+                                                    <td class="about-item text-center">$978</td>
+                                                    <td class="about-item text-center">
+                                                        <div id="dashboard-buttons">
+                                                            <div class="dropdown">
+                                                               <i onclick="myAdminMembersDropdown(3)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                                <div id="myDropdown_3" class="dropdown-content">
+                                                                   <a href="#">View More Details</a>
+                                                                   <a href="#">Deactivate</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">4</td>
+                                                    <td class="about-item text-center">Raj</td>
+                                                    <td class="about-item text-center">Malhotra</td>
+                                                    <td class="about-item text-center">rajmalhotra77@gmail.com</td>
+                                                    <td class="about-item text-center">12-10-2020, 10:10</td>
+                                                    <td class="about-item text-center">2</td>
+                                                    <td class="about-item text-center">123</td>
+                                                    <td class="about-item text-center">28</td>
+                                                    <td class="about-item text-center">$1284</td>
+                                                    <td class="about-item text-center">$15254</td>
+                                                    <td class="about-item text-center">
+                                                        <div id="dashboard-buttons">
+                                                            <div class="dropdown">
+                                                               <i onclick="myAdminMembersDropdown(4)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                                <div id="myDropdown_4" class="dropdown-content">
+                                                                   <a href="#">View More Details</a>
+                                                                   <a href="#">Deactivate</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">5</td>
+                                                    <td class="about-item text-center">Niya</td>
+                                                    <td class="about-item text-center">Patel</td>
+                                                    <td class="about-item text-center">niyapatel12@gmail.com</td>
+                                                    <td class="about-item text-center">13-10-2020, 11:25</td>
+                                                    <td class="about-item text-center">20</td>
+                                                    <td class="about-item text-center">1</td>
+                                                    <td class="about-item text-center">0</td>
+                                                    <td class="about-item text-center">$0</td>
+                                                    <td class="about-item text-center">$69</td>
+                                                    <td class="about-item text-center">
+                                                        <div id="dashboard-buttons">
+                                                            <div class="dropdown">
+                                                               <i onclick="myAdminMembersDropdown(5)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                                <div id="myDropdown_5" class="dropdown-content">
+                                                                   <a href="#">View More Details</a>
+                                                                   <a href="#">Deactivate</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                  
+                                </div>
+                                
+                            </div>
+                </div></div>    
+            </div>
+            <!-- Pagination -->
+                <div class="content-box-md downloads-pagination">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="pagination">
+                                   <a href="#"><i class="fa fa-angle-left"></i></a>
+                                   <a href="#" class="active">1</a>
+                                   <a href="#">2</a>
+                                   <a href="#">3</a>
+                                   <a href="#">4</a>
+                                   <a href="#">5</a>
+                                   <a href="#"><i class="fa fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-left">
+                                <div class="footer-text-1">
+                                    <p>
+                                       Version: 1.1.24
+                                    </p> 
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                                <div class="footer-text-2">
+                                    <p>
+                                       Copyright &copy; Tatvasoft All Rights Reserved
+                                    </p> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+        </section>
+        <!--Jquery-->
+        <script src="js/jQuery-3.5.1.js"></script>
+        <!--Bootstrap Js-->
+        <script src="js/bootstrap/bootstrap.js"></script>
+        <!--script.js-->
+        <script src="js/script.js"></script>
+    </body>
+</html>

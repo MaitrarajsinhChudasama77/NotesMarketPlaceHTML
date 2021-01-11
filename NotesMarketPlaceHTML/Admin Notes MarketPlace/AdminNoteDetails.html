@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    
+    <!--meta tags-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+    <!--title-->
+    <title>Notes - MarketPlace</title>
+    
+    <link rel="shortcut icon" href="image/home/favicon.ico">
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="css/Bootstrap/bootstrap.css">
+    
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+    
+    <!--external css-->
+    <link rel="stylesheet" href="css/NoteDetails.css">
+    <link rel="stylesheet" href="css/responsive.css"> 
+    </head>
+    <body>
+        <section>
+            <header>
+			<nav id="mynav" class="nav navbar-fixed-top white-nav-top">
+				<div class="container">
+				    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="hamburger-icon">&#9776;</span>
+                            </button>
+                            <a class="logo" href="#"><img src="image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#search-notes">Dashboard</a></li>
+                                <li><a href="#">Notes</a></li>
+                                <li><a href="#">Members</a></li>
+                                <li><a href="#faq">Reports</a></li>
+                                <li><a href="#contact-us">Settings</a></li>
+                                <li><img id="user-img" src="image/Add-notes/user-img.png"></li>
+                                <li><button class="btn btn-class last-child" type="submit">Login</button>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
+                        
+					</div>
+				</div>
+			</nav>
+		</header>
+            <div class="content-box-lg Notes-Details">
+                <div class="container contu">
+                    <div class="NoteDetails-title">
+                        <h4>Notes Details</h4>
+                    </div>
+                    
+                        <div class="row">
+                            <div class="col-md-7 book-div">
+                                <img id="book-img" src="image/NotesDetails/1.jpg" class="img-responsive" alt="Book">
+                                <div class="book-details-div">
+                                    <h3>Computer Science</h3>
+                                        <h5>Sciences</h5>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente aspernatur harum libero et nostrum sequi consequatur, tempore accusamus ab esse, voluptatem laudantium voluptas rerum? Laborum id ad alias saepe nemo,alias saepe ne consequatur.</p>
+                                        <button id="download-button" type="button" class="btn btn-primary" id="loginbutton" data-toggle="modal" data-target="#exampleModal">DOWNLOAD / $15</button>
+                                </div>
+                            </div>
+                            <!--Modal-->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button id="close-button" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <img src="image/NotesDetails/close.png" />
+                                            </button>
+                                            <div class="myHeader">
+                                            <div class="row">
+                                                <div class="col-md-12 text-center">
+                                                    <img id="download-modal-icon" src="image/NotesDetails/SUCCESS.png" class="img-responsive">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-center">
+                                                    <h7 class="modal-title" id="exampleModalLabel">Thank you for purchasing!</h7>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6 id="customer-name">Dear Smith,</h6>
+                                            <p>As this is paid notes - you need to pay to seller Rahil Shah offline. We will send him an email that you want to download this note. He may contact you further for payment process completion.</p>
+                                            <p>In case, you have emergency,<br>Please contact us on +9195377345959.</p>
+                                            <p>Once he receives payment and acknoledge us - selected notes you can see over my downloads tab for download.</p>
+                                            <p>Have a good day.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal End-->
+                            <div class="col-md-5 book-extra-details">
+                                
+                        
+                                    <p>Institution: <span>University of California</span></p>
+                                        <p>Country: <span>United State</span></p>
+                                        <p>Course Name: <span>Computer Engineering</span></p>
+                                        <p>Course Code: <span>248705</span></p>
+                                        <p>Professor: <span>Mr. Richard Brown</span></p>
+                                        <p>Number of Pages: <span>277</span></p>
+                                        <p>Approved Date: <span>November 25 2020</span></p>
+                                        <p>Rating: <span><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star-o"></i>100 Reviews</span></p>
+                                        <p>5 users marked this note as inappropriate</p>
+                       
+                                
+                            </div>
+                       
+                    </div>
+                </div>
+            </div>    
+            <div class="content-box-lg Notes-Details-Bottom-content-box">
+               <div class="container Notes-Details-Bottom">
+               <div class="row">
+                   
+                   
+                   <div class="col-md-5">
+                       <div class="notes-preview-heading">
+                            <div class="row">
+                               
+                                <div class="col-md-12">
+                                    <h4>Notes Preview</h4>
+                                </div>
+                           </div>
+                       </div>
+                        
+                        <div class="notes-preview">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="Iframe-Cicis-Menu-To-Go" class="set-margin-cicis-menu-to-go set-padding-cicis-menu-to-go set-border-cicis-menu-to-go set-box-shadow-cicis-menu-to-go center-block-horiz">
+                                        <div class="responsive-wrapper responsive-wrapper-padding-bottom-90pct" style="-webkit-overflow-scrolling: touch; overflow: auto;">
+                                            <iframe src="http://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf">
+                                                <p style="font-size: 110%;"><em><strong>ERROR: </strong>  
+                                                    An &#105;frame should be displayed here but your browser version does not support &#105;frames.</em> Please update your browser to its most recent version and try again, or access the file <a href="http://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf">with this link.</a>
+                                                </p>
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+
+                   
+                   <div class="col-md-7">
+                       
+                        <div class="review-heading">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Customer Reviews</h4>
+                                </div>
+                           </div>
+                       </div>
+
+                       <div class="customer-box">
+                           <div class="row">
+                               
+                                <!-- Customer-01 --> 
+                                <div class="col-md-1">
+                                    <img src="image/home/customer-1.png" class="rounded-circle" alt="Customer Image" height="50px" width="50px"/>
+                                </div>
+                                <div class="col-md-11">
+                                    <div id="customer-details">
+                                        <ul>
+                                            <li>
+                                                <h6>Richard Brown</h6>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star-o"></i>
+                                            </li>
+                                            <li>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit cupiditate distinctio voluptas deleniti nobis. Non dignissimos ipsum sed earum voluptatum.</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12 bottom-border">
+                                    <div id="border"></div>
+                                </div>
+                                
+                                <!-- Customer-02 --> 
+                                <div class="col-md-1">
+                                    <img src="image/home/customer-2.png" class="rounded-circle" alt="Customer Image" height="50px" width="50px"/>
+                                </div>
+                                <div class="col-md-11">
+                                    <div id="customer-details">
+                                        <ul>
+                                            <li>
+                                                <h6>Richard Harrison</h6>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star-o"></i>
+                                            </li>
+                                            <li>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit cupiditate distinctio voluptas deleniti nobis. Non dignissimos ipsum sed earum voluptatum.</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12 bottom-border">
+                                    <div id="border"></div>
+                                </div>
+                                
+                                <!-- Customer-03 --> 
+                                <div class="col-md-1">
+                                    <img src="image/home/customer-3.png" class="rounded-circle" alt="Customer" height="50px" width="50px"/>
+                                </div>
+                                <div class="col-md-11">
+                                    <div id="customer-details">
+                                        <ul>
+                                            <li>
+                                                <h6>Paula Shughart</h6>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star-o"></i>
+                                            </li>
+                                            <li>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit cupiditate distinctio voluptas deleniti nobis. Non dignissimos ipsum sed earum voluptatum.</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                               
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>    
+        <footer class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-left">
+                                <div class="footer-text-1">
+                                    <p>
+                                       Version: 1.1.24
+                                    </p> 
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                                <div class="footer-text-2">
+                                    <p>
+                                       Copyright &copy; Tatvasoft All Rights Reserved
+                                    </p> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>    
+        
+        </section>
+        <!--Jquery-->
+        <script src="js/jQuery-3.5.1.js"></script>
+        <!--Bootstrap Js-->
+        <script src="js/bootstrap/bootstrap.js"></script>
+        <!--script.js-->
+        <script src="js/script.js"></script>
+        
+    </body>
+</html>

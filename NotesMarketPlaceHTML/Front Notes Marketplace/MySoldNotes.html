@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    
+        <!--meta tags-->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        
+        <!--title-->
+        <title>Notes - MarketPlace</title>
+        <!--fav icon-->
+        <link rel="shortcut icon" href="image/home/favicon.ico">
+        
+        <!--google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        
+        <!--bootstrap css-->
+        <link rel="stylesheet" href="css/Bootstrap/bootstrap.css">
+        
+        <!--font awesome css-->
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+
+        <!--external css-->
+        <link rel="stylesheet" href="css/Dashboard.css">
+        
+        <!--responsive css-->
+        <link rel="stylesheet" href="css/responsive.css">
+        
+    </head>
+    <body>
+        <section>
+            <header>
+			<nav id="mynav" class="nav navbar-fixed-top white-nav-top">
+				<div class="container">
+				    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="hamburger-icon">&#9776;</span>
+                            </button>
+                            <a class="logo" href="#"><img src="image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#search-notes">Search Notes</a></li>
+                                <li><a href="#">Sell Your Notes</a></li>
+                                <li><a href="#">Buyer Requests</a></li>
+                                <li><a href="#faq">FAQ</a></li>
+                                <li><a href="#contact-us">Contact Us</a></li>
+                                <li><img id="user-img" src="image/Add-notes/user-img.png"></li>
+                                <li><button class="btn btn-class last-child" type="submit">Login</button>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
+                        
+					</div>
+				</div>
+			</nav>
+		</header>
+            <div class="content-box-lg downloads-content-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="dashboard-heading-left">
+                            <h4>My Sold Notes</h4>
+                        </div>
+                        <div id="dashboard-heading-right">
+                            <div class="form-group" id="dashboard-search-left">
+                                
+                                <input id="search-button" type="search" class="form-control search-field" placeholder="Search">
+                            </div>
+                            <div id="dashboard-search-right">
+                                <a class="btn  btn-class smooth-scroll" role="button" href="#" title="Search">SEARCH</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      
+                       <div class="table-responsive" id="dashboard-table">
+                           <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="about-item text-center" scope="col">SR NO.</th>
+                                                  <th scope="col">NOTE TITLE</th>
+                                                  <th scope="col">CATEGORY</th>
+                                                  <th scope="col">BUYER</th>
+                                                  <th scope="col">SELL TYPE</th>
+                                                  <th scope="col">PRICE</th>
+                                                  <th scope="col">DOWNLOADED DATE/TIME</th>
+                                                  <th scope="col"></th> 
+                                    </tr>                                
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                                    <td class="about-item text-center" scope="row">1</td>
+                                                    
+                                                    <td style="color: #6255a5">Data Science</td>
+                                                    <td>Science</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Paid</td>
+                                                    <td>$250</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(1)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_1" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                            
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">2</td>
+                                                    
+                                                    <td style="color: #6255a5">Accounts</td>
+                                                    <td>Commerce</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Free</td>
+                                                    <td>$0</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(2)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_2" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">3</td>
+                                                    
+                                                    <td style="color: #6255a5">Social Studies</td>
+                                                    <td>Social</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Free</td>
+                                                    <td>$0</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(3)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_3" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">4</td>
+                                                    
+                                                    <td style="color: #6255a5">AI</td>
+                                                    <td>IT</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Paid</td>
+                                                    <td>$158</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(4)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_4" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">5</td>
+                                                    
+                                                    <td style="color: #6255a5">Lorem ipsum</td>
+                                                    <td>Lorem</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Free</td>
+                                                    <td>$0</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(5)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_5" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">6</td>
+                                                    
+                                                    <td style="color: #6255a5">Data Science</td>
+                                                    <td>Science</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Paid</td>
+                                                    <td>$555</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(6)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_6" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">7</td>
+                                                    
+                                                    <td style="color: #6255a5">Accounts</td>
+                                                    <td>Commerce</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Free</td>
+                                                    <td>$0</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(7)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_7" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">8</td>
+                                                    
+                                                    <td style="color: #6255a5">Social Studies</td>
+                                                    <td>Social</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Free</td>
+                                                    <td>$0</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(8)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_8" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">9</td>
+                                                    
+                                                    <td style="color: #6255a5">AI</td>
+                                                    <td>IT</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Paid</td>
+                                                    <td>$250</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(9)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_9" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">10</td>
+                                                    
+                                                    <td style="color: #6255a5">Lorem ipsum</td>
+                                                    <td>Lorem</td>
+                                                    <td>testting123@gmail.com</td>
+                                                    <td>Free</td>
+                                                    <td>$115</td>
+                                                    <td>27 Nov 2020, 11:24:34</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                <img src="image/Dashboard/eye.png" alt="eye"/>
+                                                <div class="dropdown">
+                                                   <i onclick="mysoldnotesDropdown(10)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_10" class="dropdown-content">
+                                                       <a href="#">Download Note</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    </td>
+                                                </tr>
+                                </tbody>
+                            </table>
+                       </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-box-md downloads-pagination">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="pagination">
+                            <a href="#"><i class="fa fa-angle-left"></i></a>
+                            <a href="#" class="active">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#">5</a>
+                            <a href="#"><i class="fa fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <p>
+                        Copyright &copy; Tatvasoft All Rights Reserved
+                    </p>
+                </div>
+                <div class="col-md-2 text-center">
+                    <ul class="social-list">
+                            <li>
+                                <a href="#">
+                                 <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                  <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+        
+    </footer>             
+    </section>
+        <!--Jquery-->
+        <script src="js/jQuery-3.5.1.js"></script>
+        <!--Bootstrap Js-->
+        <script src="js/bootstrap/bootstrap.js"></script>
+        <!--script.js-->
+        <script src="js/script.js"></script>
+    </body>
+</html>

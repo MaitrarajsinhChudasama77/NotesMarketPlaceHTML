@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    
+        <!--meta tags-->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+        
+        <!--title-->
+        <title>Admin Notes - MarketPlace</title>
+        
+        <!--fav icon-->
+        <link rel="shortcut icon" href="image/home/favicon.ico">
+        
+        <!--google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        
+        <!--bootstrap css-->
+        <link rel="stylesheet" href="css/Bootstrap/bootstrap.css">
+        
+        <!--font awesome css-->
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+
+        <!--external css-->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/responsive.css"> 
+    </head>
+    <body>
+        <section>
+            <header>
+			<nav id="mynav" class="nav navbar-fixed-top white-nav-top">
+				<div class="container">
+				    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="hamburger-icon">&#9776;</span>
+                            </button>
+                            <a class="logo" href="#"><img src="image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#search-notes">Dashboard</a></li>
+                                <li><a href="#">Notes</a></li>
+                                <li><a href="#">Members</a></li>
+                                <li><a href="#faq">Reports</a></li>
+                                <li><a href="#contact-us">Settings</a></li>
+                                <li><img id="user-img" src="image/Add-notes/user-img.png"></li>
+                                <li><button class="btn btn-class last-child" type="submit">Login</button>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
+                        
+					</div>
+				</div>
+			</nav>
+		</header>
+            <div class="content-box-lg dashboard-content-box-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="dashboard-heading-left">
+                                <h4>Dashboard</h4>
+                            </div>
+                        </div>
+            
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                        <div class="dashboard-details text-center">
+                           <p class="figure">20</p>
+                           <p class="details">Number of Notes in Review for Publish</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 col-sm-4">
+                        <div class="dashboard-details text-center">
+                            <p class="figure">103</p>
+                            <p class="details">Number of New Notes Downloaded(Last 7 days)</p>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 col-sm-4">
+                        <div class="dashboard-details text-center">
+                            <p class="figure">223</p>
+                            <p class="details">Number of New Registrations(Last 7 days)</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        
+        
+        <div class="content-box-lg dashboard-content-box-2">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-md-12">
+                        <div id="dashboard-heading-left">
+                            <h4>Published Notes</h4>
+                        </div>
+                        <div id="dashboard-heading-right">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                      <input id="special-search" type="search" class="form-control search-field" placeholder="Search">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a id="search-button-dash" class="btn smooth-scroll" role="button" href="#" title="Search">SEARCH</a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <select id="special-select" class="form-control">
+				                           <option value="month-1" selected>Select Month</option>
+				                           <option value="month-2">January</option>
+				                           <option value="month-3">February</option>
+				                           <option value="month-4">March</option>
+				                           <option value="month-5">May</option>
+			                            </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      
+                       <div class="table-responsive" id="dashboard-table">
+                           <table class="table">
+                                <thead>
+                                    <tr>
+                                      <th scope="col" class="text-center">SR NO.</th>
+                                      <th scope="col">TITLE</th>
+                                      <th scope="col">CATEGORY</th>
+                                      <th scope="col">ATTACHMENT SIZE</th>
+                                      <th scope="col">SELL TYPE</th>
+                                      <th scope="col">PRICE</th>
+                                      <th scope="col">PUBLISHER</th>
+                                      <th scope="col">PUBLISHED DATE</th>
+                                      <th scope="col" class="text-center">NUMBER OF DOWNLOADS</th>
+                                      <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                      <td scope="row"  class="text-center">1</td>
+                                      <td class="row-color">Data Science</td>
+                                      <td>Science</td>
+                                      <td>10KB</td>
+                                      <td>Free</td>
+                                      <td>$0</td>
+                                      <td>Pritesh Panchal</td>
+                                      <td>09-10-2020,10:10</td>
+                                      <td class="text-center">10</td>
+                                      <td>
+                                            <div id="dashboard-buttons">
+                                                <div class="dropdown">
+                                                   <i onclick="myDashboardDropdown(1)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_1" class="dropdown-content">
+                                                       <a href="#">Download Notes</a>
+                                                       <a href="#">View More Details</a>
+                                                       <a href="#">Unpublish</a>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                      </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                      <td scope="row"  class="text-center">2</td>
+                                      <td class="row-color">Accounts</td>
+                                      <td>Commerce</td>
+                                      <td>23MB</td>
+                                      <td>Paid</td>
+                                      <td>$22</td>
+                                      <td>Rahil Shah</td>
+                                      <td>10-10-2020,12:30</td>
+                                      <td class="text-center">15</td>
+                                      <td>
+                                          <div id="dashboard-buttons">
+                                                <div class="dropdown">
+                                                   <i onclick="myDashboardDropdown(2)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_2" class="dropdown-content">
+                                                       <a href="#">Download Notes</a>
+                                                       <a href="#">View More Details</a>
+                                                       <a href="#">Unpublish</a>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                      </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                      <td scope="row"  class="text-center">3</td>
+                                      <td class="row-color">Social Studies</td>
+                                      <td>Social</td>
+                                      <td>3MB</td>
+                                      <td>Paid</td>
+                                      <td>$56</td>
+                                      <td>Anish Patel</td>
+                                      <td>11-10-2020,01:00</td>
+                                      <td class="text-center">20</td>
+                                      <td>
+                                          <div id="dashboard-buttons">
+                                                <div class="dropdown">
+                                                   <i onclick="myDashboardDropdown(3)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_3" class="dropdown-content">
+                                                       <a href="#">Download Notes</a>
+                                                       <a href="#">View More Details</a>
+                                                       <a href="#">Unpublish</a>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                      </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                      <td scope="row"  class="text-center">4</td>
+                                      <td class="row-color">AI</td>
+                                      <td>IT</td>
+                                      <td>1MB</td>
+                                      <td>Free</td>
+                                      <td>$0</td>
+                                      <td>Vijay Vaishnav</td>
+                                      <td>12-10-2020,10:10</td>
+                                      <td class="text-center">34</td>
+                                      <td>
+                                           <div id="dashboard-buttons">
+                                                <div class="dropdown">
+                                                   <i onclick="myDashboardDropdown(4)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_4" class="dropdown-content">
+                                                       <a href="#">Download Notes</a>
+                                                       <a href="#">View More Details</a>
+                                                       <a href="#">Unpublish</a>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                      </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                      <td scope="row"  class="text-center">5</td>
+                                      <td class="row-color">Lorem ipsum</td>
+                                      <td>Lorem</td>
+                                      <td>105KB</td>
+                                      <td>Paid</td>
+                                      <td>$90</td>
+                                      <td>Mehul Patel</td>
+                                      <td>13-10-2020,11:25</td>
+                                      <td class="text-center">9</td>
+                                      <td>
+                                         <div id="dashboard-buttons">
+                                                <div class="dropdown">
+                                                   <i onclick="myDashboardDropdown(5)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                    <div id="myDropdown_5" class="dropdown-content">
+                                                       <a href="#">Download Notes</a>
+                                                       <a href="#">View More Details</a>
+                                                       <a href="#">Unpublish</a>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                      </td> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                       </div>
+                        
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="content-box-md downloads-pagination">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="pagination">
+                           <a href="#"><i class="fa fa-angle-left"></i></a>
+                           <a href="#" class="active">1</a>
+                           <a href="#">2</a>
+                           <a href="#">3</a>
+                           <a href="#">4</a>
+                           <a href="#">5</a>
+                           <a href="#"><i class="fa fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="footer-bottom">
+           <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-left">
+                        <div class="footer-text-1">
+                            <p>
+                               Version: 1.1.24
+                            </p> 
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                        <div class="footer-text-2">
+                            <p>
+                               Copyright &copy; Tatvasoft All Rights Reserved
+                            </p> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+        <!--Jquery-->
+        <script src="js/jQuery-3.5.1.js"></script>
+        <!--Bootstrap Js-->
+        <script src="js/bootstrap/bootstrap.js"></script>
+        <!--script.js-->
+        <script src="js/script.js"></script>
+        
+    </body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    
+    <!--meta tags-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+    <!--title-->
+    <title>Notes - MarketPlace</title>
+    
+    <link rel="shortcut icon" href="image/home/favicon.ico">
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="css/Bootstrap/bootstrap.css">
+    
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+    
+    <!--external css-->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css"> 
+    </head>
+    <body>
+        <section>
+            <header>
+			<nav id="mynav" class="nav navbar-fixed-top white-nav-top">
+				<div class="container">
+				    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="hamburger-icon">&#9776;</span>
+                            </button>
+                            <a class="logo" href="#"><img src="image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#search-notes">Dashboard</a></li>
+                                <li><a href="#">Notes</a></li>
+                                <li><a href="#">Members</a></li>
+                                <li><a href="#faq">Reports</a></li>
+                                <li><a href="#contact-us">Settings</a></li>
+                                <li><img id="user-img" src="image/Add-notes/user-img.png"></li>
+                                <li><button class="btn btn-class last-child" type="submit">Login</button>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
+                        
+					</div>
+				</div>
+			</nav>
+		</header>
+            <div class="content-box-lg manage-admin-content-box">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Manage Category</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="dashboard-heading-left">
+                               <a id="add-administrator-button" class="btn btn-class smooth-scroll" role="button" href="#" title="Add Administration">ADD CATEGORY</a>
+                            </div>
+                            <div id="dashboard-heading-right">
+                                <div class="form-group has-search" id="dashboard-search-left">
+
+                                    <input id="special-search" type="search" class="form-control search-field" placeholder="Search">
+                                </div>
+                                <div id="dashboard-search-right">
+                                    <a class="btn btn-class smooth-scroll" role="button" href="#" title="Search">SEARCH</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="table-responsive" id="dashboard-table">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                                  <th class="about-item text-center" scope="col">SR NO.</th>
+                                                  <th scope="col">CATEGORY</th>
+                                                  <th scope="col">DESCRIPTION</th>
+                                                  <th scope="col">DATE ADDED</th>
+                                                  <th scope="col">ADDED BY</th>
+                                                  <th scope="col">ACTIVE</th>
+                                                  <th scope="col">ACTION</th>
+                                                </tr> 
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                    <td class="about-item text-center" scope="row">1</td>
+                                                    
+                                                    <td>IT</td>
+                                                    <td>Lorem Ipsum is simply dummy text</td>
+                                                    <td>09-10-2020, 10:10</td>
+                                                    <td>Khyati Patel</td>
+                                                    <td>Yes</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                            <img src="image/assets/edit.png" alt="pencil"/>
+                                                            <i class="fa fa-trash" id="ellipsis"></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">2</td>
+                                                    <td>Computer</td>
+                                                    <td>Lorem Ipsum is simply dummy text</td>
+                                                    <td>10-10-2020, 11:25</td>
+                                                    <td>Rahul Shah</td>
+                                                    <td>Yes</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                            <img src="image/assets/edit.png" alt="pencil"/>
+                                                            <i class="fa fa-trash" id="ellipsis"></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">3</td>
+                                                    <td>Science</td>
+                                                    <td>Lorem Ipsum is simply dummy text</td>
+                                                    <td>11-10-2020, 01:00</td>
+                                                    <td>Suman Trivedi</td>
+                                                    <td>No</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                            <img src="image/assets/edit.png" alt="pencil"/>
+                                                            <i class="fa fa-trash" id="ellipsis"></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">4</td>
+                                                    <td>History</td>
+                                                    <td>Lorem Ipsum is simply dummy text</td>
+                                                    <td>12-10-2020, 10:10</td>
+                                                    <td>Raj Malhotra</td>
+                                                    <td>Yes</td>
+                                                   <td>
+                                                       <div id="dashboard-buttons">
+                                                            <img src="image/assets/edit.png" alt="pencil"/>
+                                                            <i class="fa fa-trash" id="ellipsis"></i>
+                                                        </div>
+                                                   </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="about-item text-center" scope="row">5</td>
+                                                    <td>Account</td>
+                                                    <td>Lorem Ipsum is simply dummy text</td>
+                                                    <td>13-10-2020, 11:25</td>
+                                                    <td>Niya Patel</td>
+                                                    <td>No</td>
+                                                    <td>
+                                                        <div id="dashboard-buttons">
+                                                            <img src="image/assets/edit.png" alt="pencil"/>
+                                                            <i class="fa fa-trash" id="ellipsis"></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            </div>
+            <!-- Pagination -->
+                <div class="content-box-md downloads-pagination">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="pagination">
+                                   <a href="#"><i class="fa fa-angle-left"></i></a>
+                                   <a href="#" class="active">1</a>
+                                   <a href="#">2</a>
+                                   <a href="#">3</a>
+                                   <a href="#">4</a>
+                                   <a href="#">5</a>
+                                   <a href="#"><i class="fa fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-left">
+                                <div class="footer-text-1">
+                                    <p>
+                                       Version: 1.1.24
+                                    </p> 
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                                <div class="footer-text-2">
+                                    <p>
+                                       Copyright &copy; Tatvasoft All Rights Reserved
+                                    </p> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer> 
+    
+         
+         
+         
+    </section>                     
+        <!--Jquery-->
+        <script src="js/jQuery-3.5.1.js"></script>
+        <!--Bootstrap Js-->
+        <script src="js/bootstrap/bootstrap.js"></script>
+        <!--script.js-->
+        <script src="js/script.js"></script>
+    </body>
+</html>

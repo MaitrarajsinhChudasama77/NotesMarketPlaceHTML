@@ -1,0 +1,198 @@
+@media(max-width:480px){
+    .form-container{
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+    .forgot-password-form-container{
+       margin-left: 10px;
+        margin-right: 10px;
+    }
+    .forgot-password-form-container h2{
+        font-size: 25px;
+    }
+    .forgot-password-form-container p{
+       font-size: 13px;
+    }
+    .book-div h3{
+        font-size:20px; 
+    }
+    .book-div h5{
+        font-size: 16px;
+    }
+    .book-div p{
+       font-size: 10px;
+    }
+    #book-img{
+        width: 150px;
+       
+    }
+}
+@media(max-width:380px){
+    .mail-container{
+        margin:15px;
+    }
+   
+}
+@media(min-width:768px) and (max-width:991px){
+    .card{
+        margin-bottom: 20px;
+    }
+    .card-title{
+        font-size: 15px;
+    }
+}
+@media(min-width:575px) and (max-width:767px){
+    .card{
+        margin:50px;
+    }
+    #search-options{
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    .search-bar-title h2{
+        margin-left: 50px;
+    }
+    .search-title h4{
+        margin-left: 50px;
+    }
+}
+@media(max-width:320px){
+    .pagination a{
+        padding: 6px 12px;
+    }
+    /*-Login-*/
+    .form-container h2 {
+    font-size: 32px;
+}
+
+.form-container p {
+    
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 19px;
+
+}
+
+#email {
+    margin-top: 30px;
+    
+    font-size: 14px;
+    
+    line-height: 20px;
+}
+
+#password-lbl {
+    margin-top: 0px;
+    
+    font-size: 12px;
+   
+
+}
+
+#forgotpasswd {
+    
+    
+    font-size: 12px;
+    
+}
+input[type=email],input[type=password]
+    {
+        font-size: 12px;
+    }
+
+#RememberMe {
+    
+    font-family: Open Sans;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 20px;
+
+}
+
+#exampleCheck1 {
+    border: 1px solid #d1d1d1;
+    width: 20px;
+    height: 15px;
+    border-radius: 3px;
+}
+
+#login-button {
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.login-bottom {
+    font-size: 14px;
+}
+}
+@media(max-width:991px){
+    #myprofile-phone-no{
+        margin-top: 5px;
+    }
+}
+@media(max-width:535px){
+    #myprofile-phone-no{
+        margin-top: 1px;
+    }
+}
+@media(min-width:992px) and (max-width:1199px){
+    #myprofile-phone-no{
+        margin-top: 24px;
+    }
+}
+@media(max-width:767px){
+    .last-child{
+        margin-left: 8px;
+    }
+    #user-img{
+       margin-left: 8px; 
+    }
+    #notes-logo{
+        margin-top: 3px;
+    }
+    #dashboard-heading-right{
+        float: left;
+    }
+}
+@media(max-width:991px) and (min-width:768px){
+    #notes-logo{
+        width: 180px;
+    }
+    .white-nav-top ul.navbar-nav > li > a{
+        font-size: 13px;padding-left: 12px;padding-right: 12px;
+    }
+    .white-nav-top ul.navbar-nav > li > .last-child{
+       font-size: 13px; 
+    }
+}
+@media(max-width:1440px) and (min-width:992px){
+    
+    .white-nav-top ul.navbar-nav > li > a{
+        padding-left: 15px;padding-right: 15px;
+    }
+}
+@media(max-width:358px){
+    #dashboard-search-right{
+        float: left;
+    }
+}
+
+@media(max-width:1440px) and (min-width:768px){
+    footer{
+        padding-left: 9px;
+    }
+}
+@media(max-width:991px){
+    #member-details-left{
+        margin-top: 10px;
+    }
+}
+@media(max-width:1199px) and (min-width:992px){
+    #member-details-right td{
+    padding-left: 10px;
+    }
+    
+}
