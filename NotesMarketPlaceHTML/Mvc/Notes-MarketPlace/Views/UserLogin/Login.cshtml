@@ -1,0 +1,87 @@
+﻿@model Notes_MarketPlace.Models.UserLoginModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--meta tags-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--title-->
+    <title>Notes - MarketPlace</title>
+
+    <!--fav icon-->
+    <link rel="shortcut icon" href="~/Content/user/image/home/favicon.ico">
+
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!--font-awesome css-->
+    <link rel="stylesheet" href="~/Content/user/font-awesome/css/font-awesome.css">
+
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="~/Content/user/Bootstrap/bootstrap.css">
+
+    <!--external css-->
+    <link rel="stylesheet" href="~/Content/user/css/style.css">
+
+    <!--responsive css-->
+    <link rel="stylesheet" href="~/Content/user/css/responsive.css">
+
+    <style>
+        .error{
+            font-family: Open Sans;
+            font-size: 13px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="login" class="bg-image">
+
+        <div class="about-item text-center">
+            <img id="logo-img" src="~/Content/user/image/top-logo.png" alt="LoginPage" width="180px" height="30px">
+        </div>
+        <div class="form-container">
+            @using (Html.BeginForm("Login", "UserLogin", FormMethod.Post))
+             { @Html.AntiForgeryToken()
+                <div class="title-heading about-item text-center">
+                    <h2>Login</h2>
+                    <p>Enter your email address and password to login</p>
+                </div>
+
+                <div class="form-group">
+
+                    <label class="label-class" id="email" for="formGroupExampleInput2">Email</label>
+                    @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "Enter your email" })
+                    @Html.ValidationMessageFor(x => x.EmailID, "", new { @class = "error" })
+                </div>
+                <div class="form-group forgotpasswd">
+                    <label class="label-class" id="password-lbl" for="formGroupExampleInput2">Password</label>
+                    <label class="label-class" id="forgotpasswd" for="formGroupExampleInput2"><a href="@Url.Action("ForgotPassword","UserLogin")">Forgot Password?</a></label>
+                    @Html.PasswordFor(x => x.Password, new { @class = "form-control input-field", @id = "password", @placeholder = "Enter your password" })
+                    @Html.ValidationMessageFor(x => x.Password, "", new { @class = "error" })
+                    <i toggle="#password" class="fa fa-eye-slash field-icon toggle-password" aria-hidden="true"></i>
+                </div>
+                <div class="form-group form-check">
+                    @Html.CheckBoxFor( x => x.RememberMe, new { @class = "form-check-input", @id = "exampleCheck1"})
+                    <label id="RememberMe" for="exampleCheck1">Remember Me</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" id="login-button">login</button>
+                <div class="login-bottom label-text">
+                    <p>Don't have an account? <a href="@Url.Action("SignUp","UserLogin")">Sign Up</a></p>
+                </div>
+             }
+        </div>
+    </div>
+    <!--Jquery-->
+    <script src="~/Scripts/user/jQuery-3.5.1.js"></script>
+    <!--Bootstrap Js-->
+    <script src="~/Scripts/user/bootstrap/bootstrap.js"></script>
+    <!--script.js-->
+    <script src="~/Scripts/user/script.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+html,
+body {
+    height: 100%;
+}
+.background{
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: black;
+    height: 100%;
+    width: 100%;
+}
+.mail-container {
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+#logo-img {
+   
+}
+#verifyemail-button {
+    margin-top: 40px;
+    background-color: #6255a5;
+    height: 50px;
+    border: 1px solid #6255a5;
+    border-radius: 3px;
+    font-family: Open Sans;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.title-heading p {
+    font-family: Open Sans;
+    font-size: 26px;
+    font-weight: 600;
+    color: #6255a5;
+    line-height: 20px;
+    margin-top: 40px;
+}
+
+#bold {line-height: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: Open Sans;margin-top: 20px;
+}
+
+#semibold1 {line-height: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: Open Sans;margin-top: 10px;
+}
+
+#semibold2 {line-height: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: Open Sans;margin-top: 10px;
+}
+
+/*
+Email-Verification 
+.bg {
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: black;
+    height: 100%;
+    width: 100%;
+}
+
+#message-container {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+#message-container h3 {
+    margin-top: 40px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 30px;
+    color: #6255a5;
+}
+
+#message-container h5 {
+    margin-top: 25px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+    color: #333333;
+}
+
+#message-container p {
+    margin-top: 20px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333333;
+}
+
+#login-button-2 {
+    margin-top: 35px;
+    background-color: #6255a5;
+    //width: 480px;
+    height: 40px;
+    border-radius: 3px;
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    border: none;
+    outline: none;
+    text-align: center;
+    font-weight: 600;
+}
+
+#login-button-2:focus {
+    -webkit-box-shadow: 0px 0px 0px;
+    box-shadow: 0px 0px 0px;
+}
+*/

@@ -1,0 +1,65 @@
+﻿@model Notes_MarketPlace.Models.User
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!--meta tags-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+
+    <!--title-->
+    <title>Notes - MarketPlace</title>
+
+    <!--fav icon-->
+    <link rel="shortcut icon" href="~/Content/user/image/home/favicon.ico">
+
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="~/Content/user/Bootstrap/bootstrap.css">
+
+    <!--external css-->
+    <link rel="stylesheet" href="~/Content/user/css/EmailVerification.css">
+
+    <!--responsive css-->
+    <link rel="stylesheet" href="~/Content/user/css/responsive.css">
+
+</head>
+
+<body>
+    <div class="background">
+        <div class="mail-container">
+            <div id="logo-img">
+                <img src="~/Content/user/image/logo.png" height="32px">
+            </div>
+            <div id="mini-container">
+                 
+                    <div class="title-heading">
+                        <p>Email Verification</p>
+                    </div>
+                    <div id="second">
+                        <p id="bold">Dear @ViewBag.name</p>
+                        <p id="semibold1">Thanks for Signing up!</p>
+                        <p id="semibold2">Simply click below for email verification.</p>
+                    </div>
+                    <a href="@Url.Action("VerifyEmail","UserLogin")" type="submit" class="btn btn-primary btn-block" id="verifyemail-button">VERIFY EMAIL ADDRESS</a>
+                
+            </div>
+        </div>
+    </div>
+    <!--Jquery-->
+    <script src="~/Scripts/user/jQuery-3.5.1.js"></script>
+    <!--Bootstrap Js-->
+    <script src="~/Scripts/user/bootstrap/bootstrap.js"></script>
+    <!--script.js-->
+    <script src="~/Scripts/user/script.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>
+
+
+

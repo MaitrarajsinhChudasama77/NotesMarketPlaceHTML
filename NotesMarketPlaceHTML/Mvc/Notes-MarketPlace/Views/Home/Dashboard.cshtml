@@ -1,0 +1,410 @@
+﻿@model IPagedList<Notes_MarketPlace.Context.NoteDetail>
+@using PagedList.Mvc;
+@using PagedList;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--meta tags-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no">
+    <!--title-->
+    <title>Notes - MarketPlace</title>
+
+    <!--fav icon-->
+    <link rel="shortcut icon" href="~/Content/user/image/home/favicon.ico">
+
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="~/Content/user/Bootstrap/bootstrap.css">
+
+    <!--font awesome css-->
+    <link rel="stylesheet" href="~/Content/user/font-awesome/css/font-awesome.css">
+
+    <!--external css-->
+    <link rel="stylesheet" href="~/Content/user/css/Dashboard.css">
+
+    <!--responsive csss-->
+    <link rel="stylesheet" href="~/Content/user/css/responsive.css">
+
+    <!--Validation-->
+    <style>
+        .error{
+            font-family: Open Sans;
+            font-size: 13px;
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+    <section>
+        <header>
+            <nav id="mynav" class="nav navbar-fixed-top white-nav-top">
+                <div class="container">
+                    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="hamburger-icon">&#9776;</span>
+                            </button>
+                            <a class="logo"><img src="~/Content/user/image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="@Url.Action("SearchNotes","Home")"> Search Notes </a></li>
+                                    <li><a href="@Url.Action("Dashboard","Home")"> Sell Your Notes </a></li>
+                                    <li><a href="@Url.Action("BuyerRequests","Home")"> Buyer Requests </a></li>
+                                    <li><a href="@Url.Action("FAQ","Home")">FAQ</a></li>
+                                    <li><a href="@Url.Action("ContactUs","Home")"> Contact Us </a></li>
+                                    <li class="nav-item-drop-down">
+                                        <a class="nav-link navbar-user-photo" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="@Url.Action("UserProfile","Profile")">My Profile</a>
+                                            <a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")">My Downloads</a>
+                                            <a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")">My Sold Notes</a>
+                                            <a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")">My Rejected Notes</a>
+                                            <a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")">Change Password</a>
+                                            <a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")">Logout</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a role="button" href="@Url.Action("Logout","UserLogin")" class="btn btn-class last-child smooth-scroll">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="content-box-lg dashboard-content-box-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="dashboard-heading-left">
+                            <h4>Dashboard</h4>
+                        </div>
+                        <div id="dashboard-heading-right">
+                            <a class="btn btn-class smooth-scroll" role="button" href="@Url.Action("AddNotes","Home")" title="Add Note">ADD NOTE</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="content-box-lg dashboard-special-content-box">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-6 col-sm-6 col-xl-6">
+                        <div class="flex-container" id="dashboard-flex">
+                            <div id="dash-item-1" class="text-center">
+                                <img src="~/Content/user/image/Dashboard/earning-icon.svg" class="img-responsive" id="dimg" />
+                                <p>My Earnings</p>
+                            </div>
+                            <div class="text-center space">
+                                <a href="@Url.Action("MySoldNotes","Profile")"><h3 style="color:#6255a5">100</h3></a>
+                                <p>Number of Notes Sold</p>
+                            </div>
+                            <div class="text-center space">
+                                <a role="button" href="@Url.Action("MySoldNotes","Profile")"><h3 style="color:#6255a5">$10,00,000</h3></a>
+                                <p>Money Earned</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6">
+                        <div class="row" align="center">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="dashboard-border">
+                                    <a role="button" href="@Url.Action("MyDownloads","Profile")"><h3 style="color:#6255a5">38</h3></a>
+                                    <p>My Downloads</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4">
+                                <div class="dashboard-border">
+                                    <a role="button" href="@Url.Action("MyRejectedNotes","Profile")"><h3 style="color:#6255a5">12</h3></a>
+                                    <p>My Rejected Notes</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4">
+                                <div class="dashboard-border">
+                                    <a role="button" href="@Url.Action("BuyerRequests","Home")"><h3 style="color:#6255a5">102</h3></a>
+                                    <p>Buyes Requests</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-box-lg dashboard-content-box-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="dashboard-heading-left">
+                            <h4>In Progress Notes</h4>
+                        </div>
+                        <div id="dashboard-heading-right">
+                            <div class="form-group" id="dashboard-search-left">
+                                <input id="search-button" type="search" class="form-control search-field" placeholder="Search">
+                            </div>
+                            <div id="dashboard-search-right">
+                                <a class="btn btn-class smooth-scroll" role="button" href="#" title="Search">SEARCH</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="table-responsive" id="dashboard-table">
+                            <table class="table">
+
+                                @if (Model.Count() == 0)
+                                 {
+                                    <tr>
+                                        <td>No Records Found</td>
+                                    </tr>
+                                 }
+                                else
+                                {
+                                    <tr>
+                                         <th scope="col">ADDED DATE</th>
+                                         <th scope="col">TITLE</th>
+                                         <th scope="col">CATEGORY</th>
+                                         <th scope="col">STATUS</th>
+                                         <th scope="col">ACTIONS</th>
+                                    </tr>
+                                      foreach (var item in Model)
+                                      {
+                                         <tr class="search-button">
+                                            <td>@item.CreatedDate.Value.ToShortDateString()</td>
+                                            <td>@item.NoteTitle</td>
+                                            <td>@item.AddEditCategory.CategoryName</td>
+                                            <td>@item.StatusTable.StatusName</td>
+                                            @if (item.StatusTable.StatusName == "Draft")
+                                            {
+                                                <td>
+                                                    <div id="dashboard-buttons">
+                                                        <a href="@Url.Action("AddNotes","Home",new { id = item.ID,item.CreatedDate,item.NoteTitle,item.AddEditCategory.CategoryName,item.StatusTable.StatusName})"><img src="~/Content/user/image/Dashboard/edit.png" alt="edit" /></a>
+                                                        <a href="@Url.Action("DeleteNotes","Home",new { id = item.ID })"><i class="fa fa-trash" id="ellipsis"></i> </a>
+                                                    </div>
+                                                </td>
+                                            }
+                                            @if (item.StatusTable.StatusName == "Submitted For Review" || item.StatusTable.StatusName == "In Review")
+                                            {
+                                                <td>
+                                                    <div id="dashboard-buttons">
+                                                        <a href="@Url.Action("ViewNotes","Home")"><img src="~/Content/user/image/Dashboard/eye.png" alt="eye" /></a>
+                                                    </div>
+                                                </td>
+                                            }
+                                        </tr>
+                                      }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-box-md">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        @Html.PagedListPager(Model,i=>Url.Action("Dashboard","Home",new { i,search=Request.QueryString["search"]}))
+    <!--<div class="pagination">
+        <a href=""><i class="fa fa-angle-left"></i></a>
+        <a href="" class="active">1</a>
+        <a href="">2</a>
+        <a href="">3</a>
+        <a href="">4</a>
+        <a href="">5</a>
+        <a href=""><i class="fa fa-angle-right"></i></a>
+    </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-box-lg dashboard-content-box-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="dashboard-heading-left">
+                            <h4>Published Notes</h4>
+                        </div>
+                        <div id="dashboard-heading-right">
+                            <div class="form-group" id="dashboard-search-left">
+
+                                <input id="search-button" type="search" class="form-control search-field" placeholder="Search">
+                            </div>
+                            <div id="dashboard-search-right">
+                                <a class="btn  btn-class smooth-scroll" role="button" href="#" title="Search">SEARCH</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="table-responsive" id="dashboard-table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ADDED DATE</th>
+                                        <th scope="col">TITLE</th>
+                                        <th scope="col">CATEGORY</th>
+                                        <th scope="col">STATUS</th>
+                                        <th scope="col">ACTIONS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr class="search-button">
+                                        <td scope="row">09-10-2020</td>
+                                        <td>Data Science</td>
+                                        <td>Science</td>
+                                        <td>Draft</td>
+                                        <td>
+                                            <div id="dashboard-buttons">
+                                                <img src="~/Content/user/image/Dashboard/edit.png" alt="pencil" />
+                                                <i class="fa fa-trash" id="ellipsis"></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="search-button">
+                                        <td scope="row">10-10-2020</td>
+                                        <td>Accounts</td>
+                                        <td>Commerce</td>
+                                        <td>In Review</td>
+                                        <td>
+                                            <div id="dashboard-buttons">
+                                                <img src="~/Content/user/image/Dashboard/edit.png" alt="eye" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="search-button">
+                                        <td scope="row">11-10-2020</td>
+                                        <td>Social Studies</td>
+                                        <td>Social</td>
+                                        <td>Submitted</td>
+                                        <td>
+                                            <div id="dashboard-buttons">
+                                                <img src="~/Content/user/image/Dashboard/eye.png" alt="eye" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="search-button">
+                                        <td scope="row">12-10-2020</td>
+                                        <td>AI</td>
+                                        <td>IT</td>
+                                        <td>Submitted</td>
+                                        <td>
+                                            <div id="dashboard-buttons">
+                                                <img src="~/Content/user/image/Dashboard/edit.png" alt="eye" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="search-button">
+                                        <td scope="row">13-10-2020</td>
+                                        <td>Lorem ipsum dolor sit ametesectur</td>
+                                        <td>Lorem</td>
+                                        <td>Draft</td>
+                                        <td>
+                                            <div id="dashboard-buttons">
+                                                <img src="~/Content/user/image/Dashboard/edit.png" alt="pencil" />
+                                                <i class="fa fa-trash" id="ellipsis"></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-box-md downloads-pagination">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="pagination">
+                            <a href="#"><i class="fa fa-angle-left"></i></a>
+                            <a href="#" class="active">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#">5</a>
+                            <a href="#"><i class="fa fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <p>
+                            Copyright &copy; Tatvasoft All Rights Reserved
+                        </p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <ul class="social-list">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+    </section>
+    <!--Jquery-->
+    <script src="~/Scripts/user/jQuery-3.5.1.js"></script>
+    <!--Bootstrap Js-->
+    <script src="~/Scripts/user/bootstrap/bootstrap.js"></script>
+    <!--script.js-->
+    <script src="~/Scripts/user/script.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            }
+            $("#search-button").keyup(function () {
+                var searchText = $("#search-button").val().toLowerCase();
+                $(".search-button").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
