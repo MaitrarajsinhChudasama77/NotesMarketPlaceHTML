@@ -55,12 +55,38 @@
                                 <ul class="nav navbar-nav navbar-right">
                                     <li><a href="@Url.Action("SearchNotes", "Home")">Search Notes</a></li>
                                     <li><a href="@Url.Action("Dashboard", "Home")">Sell Your Notes</a></li>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li><a href="@Url.Action("BuyerRequests","Home")">Buyer Requests</a></li>
+                                    }
                                     <li><a href="@Url.Action("FAQ", "Home")">FAQ</a></li>
                                     <li><a href="@Url.Action("ContactUs", "Home")">Contact Us</a></li>
-                                    <li>
-                                        <a href="@Url.Action("Login", "UserLogin")" class="btn btn-class last-child" type="submit">Login</a>
-
-                                    </li>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li class="nav-item-drop-down">
+                                            <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic" /></a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")" style="padding-top:10px;padding-bottom:10px;padding-left:7px;Open Sans;font-size:14px;color:#6255a5;">My Profile</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Downloads</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Sold Notes</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Rejected Notes</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Change Password</a></li>
+                                                <li><a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")" style="padding-top: 10px; padding-bottom:10px;padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Logout</a></li>
+                                            </ul>
+                                        </li>
+                                    }
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li>
+                                            <button id="contactus-log-button" onclick="location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <button id="contactus-log-button" onclick="location.href='@Url.Action("Login","UserLogin")'" class="btn btn-class last-child" type="submit">Login</button>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -125,7 +151,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <button id="submit-button" type="submit" class="btn btn-primary" id="loginbutton">SUBMIT</button>
+                                <button id="submit-button" type="submit" class="btn btn-primary">SUBMIT</button>
                             </div>
                         </div>
 

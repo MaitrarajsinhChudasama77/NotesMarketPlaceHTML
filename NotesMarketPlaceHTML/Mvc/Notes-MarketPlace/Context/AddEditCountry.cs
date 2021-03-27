@@ -18,6 +18,7 @@ namespace Notes_MarketPlace.Context
         public AddEditCountry()
         {
             this.NoteDetails = new HashSet<NoteDetail>();
+            this.UserProfiles = new HashSet<UserProfile>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,7 @@ namespace Notes_MarketPlace.Context
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NoteDetail> NoteDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserProfile> UserProfiles { get; set; }
     }
 }

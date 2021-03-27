@@ -301,15 +301,20 @@
     <Content Include="Content\user\image\Userprofile\upload.png" />
     <Content Include="Context\dbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Notes-MarketPlace.edmx</DependentUpon>
+      <DependentUpon>Notes-Marketplace.edmx</DependentUpon>
       <LastGenOutput>dbModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Context\dbModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Notes-MarketPlace.edmx</DependentUpon>
+      <DependentUpon>Notes-Marketplace.edmx</DependentUpon>
       <LastGenOutput>dbModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Default\1.jpg" />
+    <Content Include="Default\Joker.jpg" />
     <Content Include="Global.asax" />
+    <Content Include="Members\37\DP_19-03-2021_10-41-01.jpg" />
+    <Content Include="Members\39\1005\DP_21-03-2021_17-05-51.jpg" />
+    <Content Include="Members\40\4\DP_05-03-2021_19-42-49.jpg" />
     <Content Include="obj\Debug\Notes-MarketPlace.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\Notes-MarketPlace.dll" />
     <Content Include="obj\Debug\Notes-MarketPlace.pdb" />
@@ -421,10 +426,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Context\Notes-MarketPlace.Designer.cs">
+    <Compile Include="Context\Notes-Marketplace.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Notes-MarketPlace.edmx</DependentUpon>
+      <DependentUpon>Notes-Marketplace.edmx</DependentUpon>
     </Compile>
     <Compile Include="Context\DownloadedNote.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
@@ -441,7 +446,7 @@
     <Compile Include="Context\SellerNotesAttachment.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Context\SpamReport.cs">
+    <Compile Include="Context\SpamReportsTable.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\StatusTable.cs">
@@ -463,10 +468,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddNotesModel.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\ContactUsModel.cs" />
     <Compile Include="Models\ForgotPasswordModel.cs" />
+    <Compile Include="Models\SearchNotesModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
+    <Compile Include="Models\UserProfileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -498,13 +506,51 @@
     <Content Include="Content\user\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\user\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Content\user\image\NotesDetails\Thumbs.db" />
-    <EntityDeploy Include="Context\Notes-MarketPlace.edmx">
+    <Content Include="Members\38\1010\Attachment\Attachment_1_17-03-2021_10-49-35_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\38\1010\Attachment\Attachment_1_17-03-2021_10-50-18_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\38\5\Attachment\Attachment_1_05-03-2021_19-54-45_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\38\5\Attachment\Attachment_1_07-03-2021_20-26-00_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1004\Attachment\Attachment_1_16-03-2021_15-58-03_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1004\Attachment\Attachment_1_16-03-2021_16-36-33_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1004\Attachment\Attachment_1_16-03-2021_16-55-03_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1005\Attachment\Attachment_1_16-03-2021_16-44-25_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1005\Attachment\Attachment_1_21-03-2021_16-32-16_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1005\Attachment\Attachment_1_21-03-2021_16-35-16_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1005\Attachment\Attachment_1_21-03-2021_17-05-51_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1006\Attachment\Attachment_1_16-03-2021_16-47-25_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1006\Attachment\Attachment_1_17-03-2021_11-26-16_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1007\Attachment\Attachment_1_16-03-2021_16-50-18_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1007\Attachment\Attachment_1_21-03-2021_16-32-27_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1007\Attachment\Attachment_1_21-03-2021_16-35-30_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1008\Attachment\Attachment_1_16-03-2021_16-52-13_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1008\Attachment\Attachment_1_21-03-2021_16-32-37_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1008\Attachment\Attachment_1_21-03-2021_16-35-39_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1009\Attachment\Attachment_1_16-03-2021_16-53-56_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1009\Attachment\Attachment_1_21-03-2021_16-32-49_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1009\Attachment\Attachment_1_21-03-2021_16-35-48_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1011\Attachment\Attachment_1_19-03-2021_11-39-11_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1011\Attachment\Attachment_1_19-03-2021_11-39-40_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1011\Attachment\Attachment_1_21-03-2021_16-33-02_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1011\Attachment\Attachment_1_21-03-2021_16-35-59_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1012\Attachment\Attachment_1_21-03-2021_16-25-51_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1012\Attachment\Attachment_1_21-03-2021_16-33-14_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1012\Attachment\Attachment_1_21-03-2021_16-36-09_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1013\Attachment\Attachment_1_21-03-2021_16-27-20_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1013\Attachment\Attachment_1_21-03-2021_16-33-27_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1013\Attachment\Attachment_1_21-03-2021_16-36-21_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1014\Attachment\Attachment_1_21-03-2021_16-28-33_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1014\Attachment\Attachment_1_21-03-2021_16-33-39_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\1014\Attachment\Attachment_1_21-03-2021_16-36-31_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\39\3\Attachment\Attachment_1_05-03-2021_19-30-29_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <Content Include="Members\40\4\Attachment\Attachment_1_05-03-2021_19-42-50_TS_SRS_Notes_marketplace_v1.0.pdf" />
+    <EntityDeploy Include="Context\Notes-Marketplace.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Notes-MarketPlace.Designer.cs</LastGenOutput>
+      <LastGenOutput>Notes-Marketplace.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Context\Notes-MarketPlace.edmx.diagram">
-      <DependentUpon>Notes-MarketPlace.edmx</DependentUpon>
+    <Content Include="Context\Notes-Marketplace.edmx.diagram">
+      <DependentUpon>Notes-Marketplace.edmx</DependentUpon>
     </Content>
+    <Content Include="Default\170210107013_PRACTICAL-6.pdf" />
     <None Include="packages.config" />
     <Content Include="packages\Microsoft.AspNet.Mvc.5.2.7\.signature.p7s" />
     <Content Include="packages\Microsoft.AspNet.Mvc.5.2.7\Content\Web.config.install.xdt" />
@@ -566,12 +612,10 @@
     <Content Include="Views\UserLogin\EmailVerification.cshtml" />
     <Content Include="Views\Home\AddNotes.cshtml" />
     <Content Include="Views\Home\NoteDetails.cshtml" />
-    <Content Include="Views\Home\demodash.cshtml" />
     <Content Include="Views\Profile\MyDownloads.cshtml" />
     <Content Include="Views\Profile\MySoldNotes.cshtml" />
     <Content Include="Views\Profile\MyRejectedNotes.cshtml" />
     <Content Include="Views\Profile\UserProfile.cshtml" />
-    <Content Include="Views\Home\EditNotes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -581,8 +625,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Default\" />
-    <Folder Include="Members\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>

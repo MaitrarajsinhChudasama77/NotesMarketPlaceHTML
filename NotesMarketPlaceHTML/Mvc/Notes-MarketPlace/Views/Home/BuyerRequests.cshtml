@@ -1,4 +1,4 @@
-﻿@model PagedList<Notes_MarketPlace.Context.NoteDetail>
+﻿@model IPagedList<Notes_MarketPlace.Context.DownloadedNote>
 @using PagedList.Mvc;
 @using PagedList;
 @{ int cnt = 0;}
@@ -42,7 +42,7 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                                 <span class="hamburger-icon">&#9776;</span>
                             </button>
-                            <a class="logo"><img src="~/Content/user/image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
+                            <a class="logo"><img src="~/Content/user/image/home/logo.png" id="notes-logo" alt="Logo" width="180"></a>
                         </div>
                         <div class="container">
                             <div class="collapse navbar-collapse" id="myNavbar">
@@ -52,9 +52,19 @@
                                     <li><a href="@Url.Action("BuyerRequests","Home")">Buyer Requests</a></li>
                                     <li><a href="@Url.Action("FAQ","Home")">FAQ</a></li>
                                     <li><a href="@Url.Action("ContactUs","Home")">Contact Us</a></li>
-                                    <li><img id="user-img" src="~/Content/user/image/Add-notes/user-img.png"></li>
+                                    <li class="nav-item-drop-down">
+                                        <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic" /></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")" style="padding-top:10px;padding-bottom:10px;padding-left:7px;Open Sans;font-size:14px;color:#6255a5;">My Profile</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Downloads</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Sold Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Rejected Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Change Password</a></li>
+                                            <li><a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")" style="padding-top: 10px; padding-bottom:10px;padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Logout</a></li>
+                                        </ul>
+                                    </li>
                                     <li>
-                                        <a role="button" href="@Url.Action("Logout","UserLogin")" class="btn btn-class last-child" type="submit">Logout</a>
+                                        <button id="buyerrequest-log-button" role="button" onclick="location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
                                     </li>
                                 </ul>
                             </div>
@@ -68,18 +78,20 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div id="dashboard-heading-left">
-                            <h4>Buyer Requests</h4>
-                        </div>
-                        <div id="dashboard-heading-right">
-                            <div class="form-group" id="dashboard-search-left">
-
-                                <input id="search-button" type="search" class="form-control search-field" placeholder="Search">
+                        @using (Html.BeginForm("BuyerRequests", "Home", FormMethod.Get))
+                        {
+                            <div id="dashboard-heading-left">
+                                <h4>Buyer Requests</h4>
                             </div>
-                            <div id="dashboard-search-right">
-                                <a class="btn  btn-class smooth-scroll" role="button" href="#" title="Search">SEARCH</a>
+                            <div id="dashboard-heading-right">
+                                <div class="form-group" id="dashboard-search-left">
+                                    <input name = "search" id="search-button" type="search" class="form-control search-field" placeholder="Search">
+                                </div>
+                                <div id="dashboard-search-right">
+                                    <a href = "#" class="btn  btn-class smooth-scroll" role="button" title="Search">SEARCH</a>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
 
@@ -88,51 +100,57 @@
                                 @if (Model.Count() == 0)
                                 {
                                     <tr>
-                                        <td>No Records Found</td>
+                                        <th scope="col"><h4 style="font-family:Open Sans;font-size:18px;color:#333333">No Records Found</h4></th>
                                     </tr>
                                 }
                                 else
                                 {
                                     <tr>
                                         <th class="about-item text-center" scope="col">SR NO.</th>
-                                        <th scope="col">NOTE TITLE</th>
-                                        <th scope="col">CATEGORY</th>
+                                        <th scope="col" style="color: black">@Html.ActionLink("NOTE TITLE", "BuyerRequests", new { sortBy = ViewBag.SortNoteTitle, search = Request.QueryString["search"] })</th>
+                                        <th scope="col" style="color: black">@Html.ActionLink("CATEGORY", "BuyerRequests", new { sortBy = ViewBag.SortCategory, search = Request.QueryString["search"] })</th>
                                         <th scope="col">BUYER</th>
                                         <th scope="col">PHONE NO.</th>
                                         <th scope="col">SELL TYPE</th>
                                         <th scope="col">PRICE</th>
-                                        <th scope="col">DOWNLOADED DATE/TIME</th>
+                                        <th scope="col" style="color: black">@Html.ActionLink("DOWNLOADED DATE/TIME", "BuyerRequests", new { sortBy = ViewBag.SortDate, search = Request.QueryString["search"] })</th>
                                         <th scope="col"></th>
                                     </tr>
                                     foreach (var item in Model)
                                     {
-                                        cnt = cnt + 1;
-                                        <tr>
-                                            <td class="about-item text-center" scope="row">@cnt</td>
-                                            <td style="color: #6255a5">@item.NoteTitle</td>
-                                            <td>@item.AddEditCategory.CategoryName</td>
-                                            <td>testting123@gmail.com</td>
-                                            <td>+91 9874563527</td>
-                                            <td>@item.IsPaid</td>
-                                            <td>@item.SellingPrice_USD</td>
-                                            <td>@item.CreatedDate</td>
-                                            <td>
-                                                <div class="col-md-12 col-sm-12 col-xs-12" id="dashboard-buttons">
-                                                    <img src="~/Content/user/image/Dashboard/eye.png" alt="eye" />
+                                       
+                                            cnt = cnt + 1;
+
+                                            <tr class="search-button">
+                                                <td class="about-item text-center" scope="row">@cnt</td>
+                                                <td style="color: #6255a5">@item.NoteTitle</td>
+                                                <td>@item.Category</td>
+                                                <td>@item.User.EmailID</td>
+                                                <td>@item.User.UserProfiles.Select(x => x.PhoneNumber_CountryCode).FirstOrDefault() @item.User.UserProfiles.Select(x => x.PhoneNumber).FirstOrDefault()</td>
+                                                @if (@item.IsPaid == false)// true == 1 false == 0
+                                                {
+                                                    <td>Free</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>Paid</td>
+                                                }
+                                                <td>@item.PurchasedPrice</td>
+                                                <td>@item.AttachmentDownloadedDate</td>
+                                                <td class="dropdown">
+                                                    <!--<a href="Url.Action("NoteDetails", "Home", new { id = item.NoteID })"><img src="~/Content/user/image/Dashboard/eye.png" alt="eye" /></a>-->
                                                     <div class="dropdown">
-                                                        <i onclick="mybuyerrequestDropdown(1)" class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
-                                                        <div id="myDropdown_1" class="dropdown-content">
-                                                            <a href="#">Allow Download</a>
+                                                        <i class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                        <div class="dropdown">
+                                                            <div class="dropdown-content">
+                                                                <a href="@Url.Action("AllowDownload", "Home", new { id = item.ID })">Allow Download</a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
                                     }
-
                                 }
-
-
                             </table>
                         </div>
                     </div>
@@ -143,15 +161,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <div class="pagination">
-                            <a href="#"><i class="fa fa-angle-left"></i></a>
-                            <a href="#" class="active">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">5</a>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
+                        @Html.PagedListPager(Model, i => Url.Action("BuyerRequests", "Home", new { i, search = Request.QueryString["search"] }))
                     </div>
                 </div>
             </div>
@@ -194,5 +204,27 @@
     <script src="~/Scripts/user/bootstrap/bootstrap.js"></script>
     <!--script.js-->
     <script src="~/Scripts/user/script.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            }
+            $("#search-button").keyup(function () {
+                var searchText = $("#search-button").val().toLowerCase();
+                $(".search-button").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

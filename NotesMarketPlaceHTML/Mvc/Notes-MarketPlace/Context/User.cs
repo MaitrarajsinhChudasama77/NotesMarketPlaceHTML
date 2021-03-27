@@ -17,8 +17,11 @@ namespace Notes_MarketPlace.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.DownloadedNotes = new HashSet<DownloadedNote>();
+            this.DownloadedNotes1 = new HashSet<DownloadedNote>();
             this.NoteDetails = new HashSet<NoteDetail>();
-            this.SpamReports = new HashSet<SpamReport>();
+            this.NoteReviews = new HashSet<NoteReview>();
+            this.SpamReportsTables = new HashSet<SpamReportsTable>();
             this.UserProfiles = new HashSet<UserProfile>();
         }
     
@@ -37,9 +40,15 @@ namespace Notes_MarketPlace.Context
         public Nullable<System.Guid> ActivationCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DownloadedNote> DownloadedNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DownloadedNote> DownloadedNotes1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NoteDetail> NoteDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SpamReport> SpamReports { get; set; }
+        public virtual ICollection<NoteReview> NoteReviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SpamReportsTable> SpamReportsTables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
         public virtual UserRole UserRole { get; set; }

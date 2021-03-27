@@ -13,10 +13,10 @@ namespace Notes_MarketPlace.Context
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class NotesMarketPlaceEntities1 : DbContext
+    public partial class NotesMarketPlaceEntities6 : DbContext
     {
-        public NotesMarketPlaceEntities1()
-            : base("name=NotesMarketPlaceEntities1")
+        public NotesMarketPlaceEntities6()
+            : base("name=NotesMarketPlaceEntities6")
         {
         }
     
@@ -34,7 +34,7 @@ namespace Notes_MarketPlace.Context
         public virtual DbSet<NoteDetail> NoteDetails { get; set; }
         public virtual DbSet<NoteReview> NoteReviews { get; set; }
         public virtual DbSet<SellerNotesAttachment> SellerNotesAttachments { get; set; }
-        public virtual DbSet<SpamReport> SpamReports { get; set; }
+        public virtual DbSet<SpamReportsTable> SpamReportsTables { get; set; }
         public virtual DbSet<StatusTable> StatusTables { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }

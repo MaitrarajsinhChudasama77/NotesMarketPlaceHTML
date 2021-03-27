@@ -9,23 +9,6 @@ $(".toggle-password").click(function(){
     }
 });
 
-
-/* Dropdown Menu for MyDownloads Page */
-function mydownloadDropdown(id) {
-  document.getElementById("myDropdown_" + id).classList.toggle("show");
-}
-/* Dropdown Menu for MySoldNotes Page */
-function mysoldnotesDropdown(id) {
-  document.getElementById("myDropdown_" + id).classList.toggle("show");
-}
-/* Dropdown Menu for MyRejectedNotes Page */
-function myrejectednotesDropdown(id) {
-  document.getElementById("myDropdown_" + id).classList.toggle("show");
-}
-/* Dropdown Menu for BuyerRequests Page */
-function mybuyerrequestDropdown(id) {
-  document.getElementById("myDropdown_" + id).classList.toggle("show");
-}
 // Close the dropdown for outside click
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
@@ -65,3 +48,10 @@ $("button.accordion").click(
         $(".accordion.active").next().css('border-bottom','1px solid #f3f3f3'); 
    }
 );
+
+$('input:radio').click(function () {
+    $("#inputSellPrice").prop("disabled", true);
+    if ($(this).hasClass('enable_tb')) {
+        $("#inputSellPrice").prop("disabled", false);
+    }
+});

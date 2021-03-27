@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Notes_MarketPlace.Models.UserProfileModel
+<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -28,6 +29,15 @@
     <!--responsive css-->
     <link rel="stylesheet" href="~/Content/user/css/responsive.css">
 
+    <!--Validation-->
+    <style>
+        .error {
+            font-family: Open Sans;
+            font-size: 13px;
+            color: red;
+        }
+    </style>
+
 </head>
 <body>
     <section>
@@ -39,7 +49,7 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                                 <span class="hamburger-icon">&#9776;</span>
                             </button>
-                            <a class="logo"><img src="~/Content/user/image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
+                            <a class="logo"><img src="~/Content/user/image/home/logo.png" id="notes-logo" alt="Logo" width="180"></a>
                         </div>
                         <div class="container">
                             <div class="collapse navbar-collapse" id="myNavbar">
@@ -49,9 +59,19 @@
                                     <li><a href="@Url.Action("BuyerRequests","Home")"> Buyer Requests </a></li>
                                     <li><a href="@Url.Action("FAQ","Home")">FAQ</a></li>
                                     <li><a href="@Url.Action("ContactUs","Home")"> Contact Us </a></li>
-                                    <li><img id="user-img" src="~/Content/user/image/Add-notes/user-img.png"></li>
+                                    <li class="nav-item-drop-down">
+                                        <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic" /></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")" style="padding-top:10px;padding-bottom:10px;padding-left:7px;Open Sans;font-size:14px;color:#6255a5;">My Profile</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Downloads</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Sold Notes</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Rejected Notes</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Change Password</a></li>
+                                                 <li><a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")" style="padding-top: 10px; padding-bottom:10px;padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Logout</a></li>
+                                        </ul>
+                                    </li>
                                     <li>
-                                        <button href="@Url.Action("Login","UserLogin")" class="btn btn-class last-child" type="submit">Login</button>
+                                        <button id="logout-btn" onclick="location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
                                     </li>
                                 </ul>
                             </div>
@@ -72,59 +92,74 @@
             <div class="row">
                 <div class="col-md-12">
                     <div id="basic-div-user-profile">
-                        <form>
+                        @using (Html.BeginForm("UserProfile", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
                             <div class="user-profile-heading">
                                 <h4>Basic Profile Details</h4>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
+                                    @Html.HiddenFor(x => x.ID)
                                     <label class="label-class" for="formGroupExampleInput2">First Name *</label>
-                                    <input type="text" class="form-control" placeholder="Enter your first name">
+                                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", @placeholder = "Enter your first name" })
+                                    @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "error" })
+
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="label-class" for="formGroupExampleInput2">Last Name *</label>
-                                    <input type="text" class="form-control" placeholder="Enter your last name">
+                                    @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", @placeholder = "Enter your last name" })
+                                    @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "error" })
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="label-class" for="formGroupExampleInput2">Email *</label>
-                                    <input type="email" class="form-control" placeholder="Enter your email address">
+                                    @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control", @placeholder = "Enter your email address"})
+                                    @Html.ValidationMessageFor(x => x.EmailID, "", new { @class = "error" })
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="label-class" for="formGroupExampleInput2">Date Of Birth</label>
-                                    <input type="date" id="dob" class="form-control" placeholder="Enter your date of birth">
+                                    @Html.TextBoxFor(x => x.DateOfBirth, "{0:yyyy-MM-dd}" ,new { @type="date", @class = "form-control", @placeholder = "Enter your date of birth", @id = "dob" })
+                                    @Html.ValidationMessageFor(x => x.DateOfBirth, "", new { @class = "error" })
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="label-class" for="exampleFormControlSelect1">Gender</label>
-                                    <select id="special-select" class="form-control form-control-lg">
-                                        <option selected>Select your gender</option>
-                                        <option>Male</option>
-                                        <option>Female</option>
-                                        <option>Other</option>
-                                    </select>
+                                    @Html.DropDownListFor(x => x.Gender, new SelectList(ViewBag.list), "Select your gender", new { @class="form-control", @id="special-select"})
+                                    <!--
+                                        <select id="special-select" class="form-control form-control-lg">
+                                            <option selected>Select your gender</option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                            <option>Other</option>
+                                        </select>
+                                    -->
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="phone-number" class="label-class">Phone Number</label>
+                                            <label for="phone-number" class="label-class">Phone Number *</label>
                                         </div>
 
                                         <div class="col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <select id="special-select" class="form-control">
-                                                    <option value="op-1" selected>+91</option>
-                                                    <option value="op-2">+90</option>
-                                                    <option value="op-3">+92</option>
-                                                </select>
+                                                @Html.DropDownListFor(x => x.PhoneNumber_CountryCode, new SelectList(ViewBag.PhoneNumber_CountryCode, "Value", "Text"), new { @class = "form-control", @id = "special-select" })
+                                                <!--
+                                                    <select id="special-select" class="form-control">
+                                                        <option value="op-1" selected>+91</option>
+                                                        <option value="op-2">+90</option>
+                                                        <option value="op-3">+92</option>
+                                                    </select>
+                                                -->
                                             </div>
                                         </div>
 
                                         <div class="col-md-9 col-sm-9">
                                             <div class="form-group">
-                                                <input type="text" class="form-control label-class" aria-describedby="textHelp" placeholder="Enter your phone number" required>
+                                                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", @placeholder = "Enter your phone number" })
+                                                @Html.ValidationMessageFor(x => x.PhoneNumber, "", new { @class = "error" })
+                                                <!--<input type="text" class="form-control label-class" aria-describedby="textHelp" placeholder="Enter your phone number" required>-->
                                             </div>
                                         </div>
                                     </div>
@@ -134,88 +169,104 @@
                                 <div class="col-md-6">
                                     <div class="form-group" id="form-ftext">
                                         <label for="fname" class="label-class">Profile Picture</label>
-                                        <textarea class="form-control" placeholder="Upload a picture"></textarea>
-                                        <img src="~/Content/user/image/Userprofile/upload.png" alt="upload" />
+                                        @Html.TextBoxFor(x => x.ProfilePicture, new { @class = "form-control special-textarea", @onchange = "return picturevalidation()", type = "file" })
+                                        <!--<textarea class="form-control" placeholder="Upload a picture"></textarea>
+                                        <img src="~/Content/user/image/Userprofile/upload.png" alt="upload" />-->
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="address-div-user-profile">
 
-                        </form>
+                                        <div class="user-profile-heading">
+                                            <h4>Address Details</h4>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="label-class">Address Line 1 *</label>
+                                                @Html.TextBoxFor(x => x.AddressLine_1, new { @class = "form-control", @placeholder = "Enter your address", @id="addressline1" })
+                                                @Html.ValidationMessageFor(x => x.AddressLine_1, "", new { @class = "error" })
+                                                
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="label-class">Address Line 2 *</label>
+                                                @Html.TextBoxFor(x => x.AddressLine_2, new { @class = "form-control", @placeholder = "Enter your address", @id="addressline2" })
+                                                @Html.ValidationMessageFor(x => x.AddressLine_2, "", new { @class = "error" })
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="label-class">City *</label>
+                                                @Html.TextBoxFor(x => x.City, new { @class = "form-control", @placeholder = "Enter your city", @id = "inputCity" })
+                                                @Html.ValidationMessageFor(x => x.City, "", new { @class = "error" })
+                                                
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="label-class">State *</label>
+                                                @Html.TextBoxFor(x => x.State, new { @class = "form-control", @placeholder = "Enter your state", @id = "inputState" })
+                                                @Html.ValidationMessageFor(x => x.State, "", new { @class = "error" })
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="label-class">ZipCode *</label>
+                                                @Html.TextBoxFor(x => x.ZipCode, new { @class = "form-control", @placeholder = "Enter your zipcode", @id = "inputZip" })
+                                                @Html.ValidationMessageFor(x => x.ZipCode, "", new { @class = "error" })
+                                                
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="label-class">Country *</label>
+                                                @Html.DropDownListFor(x => x.CountryID, new SelectList(ViewBag.Country, "Value", "Text"), "Select your country", new { @class = "form-control", @id = "special-select" })
+                                                <!--<select id="special-select" class="form-control form-control-lg">
+                                                    <option selected>Select your country</option>
+                                                    <option>India</option>
+                                                    <option>Australia</option>
+                                                    <option>Canada</option>
+                                                </select>-->
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="university-info-div-user-profile">
+
+                                        <div class="user-profile-heading">
+                                            <h4>University and College Information</h4>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="label-class">University</label>
+                                                @Html.TextBoxFor(x => x.University, new { @class = "form-control", @placeholder = "Enter your university" })
+                                                @Html.ValidationMessageFor(x => x.University, "", new { @class = "error" })
+                                                
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="label-class">College</label>
+                                                @Html.TextBoxFor(x => x.College, new { @class = "form-control", @placeholder = "Enter your college" })
+                                                @Html.ValidationMessageFor(x => x.College, "", new { @class = "error" })
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <button id="User-submit" type="submit" class="btn btn-primary">SUBMIT</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                         }
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="address-div-user-profile">
-                        <form>
-                            <div class="user-profile-heading">
-                                <h4>Address Details</h4>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label class="label-class">Address Line 1 *</label>
-                                    <input type="text" class="form-control" id="addressline1" placeholder="Enter your address">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="label-class">Address Line 2</label>
-                                    <input type="text" class="form-control" id="addressline2" placeholder="Enter your address">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label class="label-class">City *</label>
-                                    <input type="text" class="form-control" id="inputCity" placeholder="Enter your city">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="label-class">State *</label>
-                                    <input type="text" class="form-control" id="inputState" placeholder="Enter your state">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label class="label-class">ZipCode *</label>
-                                    <input type="text" class="form-control" id="inputZip" placeholder="Enter your zipcode">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="label-class">Country *</label>
-                                    <select id="special-select" class="form-control form-control-lg">
-                                        <option selected>Select your country</option>
-                                        <option>India</option>
-                                        <option>Australia</option>
-                                        <option>Canada</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="university-info-div-user-profile">
-                        <form>
-                            <div class="user-profile-heading">
-                                <h4>University and College Information</h4>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label class="label-class">University</label>
-                                    <input type="text" class="form-control" placeholder="Enter your university">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="label-class">College</label>
-                                    <input type="text" class="form-control" placeholder="Enter your college">
-                                </div>
-                            </div>
-                            <button id="User-submit" type="submit" class="btn btn-primary" id="loginbutton">SUBMIT</button>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <footer>
             <div class="container">
@@ -250,13 +301,13 @@
         </footer>
     </section>
     <!--Jquery-->
-    <script src="js/jQuery-3.5.1.js"></script>
+    <script src="~/Scripts/user/jQuery-3.5.1.js"></script>
     <!--Bootstrap Js-->
-    <script src="js/bootstrap/bootstrap.js"></script>
+    <script src="~/Scripts/user/bootstrap/bootstrap.js"></script>
     <!--script.js-->
-    <script src="js/script.js"></script>
     <script src="~/Scripts/user/script.js"></script>
-    <script src="~/Scripts/user/homeheader.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 </body>
 </html>
 

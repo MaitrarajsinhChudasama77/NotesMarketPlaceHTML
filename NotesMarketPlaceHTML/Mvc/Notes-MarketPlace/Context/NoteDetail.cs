@@ -20,7 +20,7 @@ namespace Notes_MarketPlace.Context
             this.DownloadedNotes = new HashSet<DownloadedNote>();
             this.NoteReviews = new HashSet<NoteReview>();
             this.SellerNotesAttachments = new HashSet<SellerNotesAttachment>();
-            this.SpamReports = new HashSet<SpamReport>();
+            this.SpamReportsTables = new HashSet<SpamReportsTable>();
         }
     
         public int ID { get; set; }
@@ -43,6 +43,9 @@ namespace Notes_MarketPlace.Context
         public string NotesPreview { get; set; }
         public int ActionBy { get; set; }
         public string Remark { get; set; }
+        public int? Star { get; set; }
+        public int? Review { get; set; }
+        public int? Spam { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
@@ -60,7 +63,7 @@ namespace Notes_MarketPlace.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SellerNotesAttachment> SellerNotesAttachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SpamReport> SpamReports { get; set; }
+        public virtual ICollection<SpamReportsTable> SpamReportsTables { get; set; }
         public virtual StatusTable StatusTable { get; set; }
     }
 }

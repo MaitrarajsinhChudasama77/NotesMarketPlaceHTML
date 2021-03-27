@@ -14,19 +14,36 @@ namespace Notes_MarketPlace.Context
     
     public partial class DownloadedNote
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DownloadedNote()
+        {
+            this.NoteReviews = new HashSet<NoteReview>();
+            this.SpamReportsTables = new HashSet<SpamReportsTable>();
+        }
+    
         public int ID { get; set; }
         public int NoteID { get; set; }
+        public int Seller { get; set; }
+        public int Downloader { get; set; }
+        public bool HasSellerAllowedDownload { get; set; }
+        public string AttachmentPath { get; set; }
+        public bool IsAttachmentDownloaded { get; set; }
+        public Nullable<System.DateTime> AttachmentDownloadedDate { get; set; }
+        public bool IsPaid { get; set; }
+        public Nullable<decimal> PurchasedPrice { get; set; }
         public string NoteTitle { get; set; }
         public string Category { get; set; }
-        public string Buyer { get; set; }
-        public string Seller { get; set; }
-        public string SellType { get; set; }
-        public string Price { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
     
+        public virtual User User { get; set; }
         public virtual NoteDetail NoteDetail { get; set; }
+        public virtual User User1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NoteReview> NoteReviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SpamReportsTable> SpamReportsTables { get; set; }
     }
 }

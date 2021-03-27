@@ -21,13 +21,13 @@ namespace Notes_MarketPlace.Context
         public string Gender { get; set; }
         public string PhoneNumber_CountryCode { get; set; }
         public string PhoneNumber { get; set; }
-        public byte[] ProfilePicture { get; set; }
+        public string ProfilePicture { get; set; }
         public string AddressLine_1 { get; set; }
         public string AddressLine_2 { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
-        public string Country { get; set; }
+        public int CountryID { get; set; }
         public string University { get; set; }
         public string College { get; set; }
         public Nullable<System.DateTime> SubmittedDate { get; set; }
@@ -35,6 +35,7 @@ namespace Notes_MarketPlace.Context
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
     
+        public virtual AddEditCountry AddEditCountry { get; set; }
         public virtual User User { get; set; }
     }
 }

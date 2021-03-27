@@ -12,17 +12,19 @@ namespace Notes_MarketPlace.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class SpamReport
+    public partial class SpamReportsTable
     {
         public int ID { get; set; }
         public int NoteID { get; set; }
-        public int ReportedBy { get; set; }
-        public string Remark { get; set; }
+        public int ReportedByID { get; set; }
+        public int AgainstDownloadsID { get; set; }
+        public string Remarks { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
     
+        public virtual DownloadedNote DownloadedNote { get; set; }
         public virtual NoteDetail NoteDetail { get; set; }
         public virtual User User { get; set; }
     }

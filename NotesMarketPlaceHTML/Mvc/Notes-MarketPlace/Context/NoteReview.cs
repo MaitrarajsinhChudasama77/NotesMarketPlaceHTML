@@ -16,13 +16,18 @@ namespace Notes_MarketPlace.Context
     {
         public int ID { get; set; }
         public int NoteID { get; set; }
-        public int Rate { get; set; }
-        public string Comment { get; set; }
+        public int ReviewedByID { get; set; }
+        public int AgainstDownloadsID { get; set; }
+        public int Ratings { get; set; }
+        public string Comments { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
+        public bool IsActive { get; set; }
     
+        public virtual DownloadedNote DownloadedNote { get; set; }
         public virtual NoteDetail NoteDetail { get; set; }
+        public virtual User User { get; set; }
     }
 }

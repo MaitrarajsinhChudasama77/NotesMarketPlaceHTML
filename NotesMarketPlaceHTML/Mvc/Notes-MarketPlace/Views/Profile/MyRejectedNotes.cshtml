@@ -47,7 +47,7 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                                 <span class="hamburger-icon">&#9776;</span>
                             </button>
-                            <a class="logo"><img src="~/Content/user/image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
+                            <a class="logo" href="@Url.Action("Home","Home")"><img src="~/Content/user/image/home/logo.png" id="notes-logo" alt="Logo" width="180px"></a>
                         </div>
                         <div class="container">
                             <div class="collapse navbar-collapse" id="myNavbar">
@@ -57,7 +57,17 @@
                                     <li><a href="@Url.Action("BuyerRequests","Home")">Buyer Requests</a></li>
                                     <li><a href="@Url.Action("FAQ","Home")">FAQ</a></li>
                                     <li><a href="@Url.Action("ContactUs","Home")">Contact Us</a></li>
-                                    <li><img id="user-img" src="~/Content/user/image/Add-notes/user-img.png"/></li>
+                                    <li class="nav-item-drop-down">
+                                         <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic"/></a>
+                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                             <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")" style="padding-top:10px;padding-bottom:10px;padding-left:7px;Open Sans;font-size:14px;color:#6255a5;">My Profile</a></li>
+                                             <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Downloads</a></li>
+                                             <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Sold Notes</a></li>
+                                             <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Rejected Notes</a></li>
+                                             <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Change Password</a></li>
+                                             <li><a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")" style="padding-top: 10px; padding-bottom:10px;padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Logout</a></li>
+                                         </ul>
+                                    </li>
                                     <li>
                                         <button href="@Url.Action("Logout","UserLogin")" class="btn btn-class last-child" type="submit">Logout</button>
                                     </li>
@@ -88,18 +98,17 @@
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
 
-                        <div class="table-responsive" id="dashboard-table">
+                        <div class="table-responsive-md" id="dashboard-table">
                             <table class="table">
                                 <thead>
                                     <tr>
-
                                         <th class="about-item text-center" scope="col">SR NO.</th>
                                         <th scope="col">NOTE TITLE</th>
                                         <th scope="col">CATEGORY</th>
                                         <th scope="col">REMARKS</th>
                                         <th scope="col">CLONE</th>
                                         <th scope="col"></th>
-
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -119,6 +128,7 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td class="about-item text-center" scope="row">2</td>
@@ -136,7 +146,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td><td></td>
                                     </tr>
                                     <tr>
                                         <td class="about-item text-center" scope="row">3</td>
@@ -154,7 +164,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td><td></td>
                                     </tr>
                                     <tr>
                                         <td class="about-item text-center" scope="row">4</td>
@@ -172,7 +182,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td><td></td>
                                     </tr>
                                     <tr>
                                         <td class="about-item text-center" scope="row">5</td>
@@ -190,7 +200,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td><td></td>
                                     </tr>
                                     <tr>
                                         <td class="about-item text-center" scope="row">6</td>
@@ -208,7 +218,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td><td></td>
                                     </tr>
                                     <tr>
                                         <td class="about-item text-center" scope="row">7</td>
@@ -226,7 +236,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td><td></td>
                                     </tr>
                                     <tr>
                                         <td class="about-item text-center" scope="row">8</td>
@@ -244,7 +254,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td><td></td>
                                     </tr>
                                     <tr>
                                         <td class="about-item text-center" scope="row">9</td>
@@ -262,7 +272,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td><td></td>
                                     </tr>
                                     <tr>
                                         <td class="about-item text-center" scope="row">10</td>
@@ -280,7 +290,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td><td></td>
                                     </tr>
                                 </tbody>
                             </table>

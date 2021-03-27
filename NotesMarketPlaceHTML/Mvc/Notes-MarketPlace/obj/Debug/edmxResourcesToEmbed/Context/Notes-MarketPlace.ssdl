@@ -54,14 +54,18 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NoteID" Type="int" Nullable="false" />
+    <Property Name="Seller" Type="int" Nullable="false" />
+    <Property Name="Downloader" Type="int" Nullable="false" />
+    <Property Name="HasSellerAllowedDownload" Type="bit" Nullable="false" />
+    <Property Name="AttachmentPath" Type="varchar(max)" />
+    <Property Name="IsAttachmentDownloaded" Type="bit" Nullable="false" />
+    <Property Name="AttachmentDownloadedDate" Type="datetime" />
+    <Property Name="IsPaid" Type="bit" Nullable="false" />
+    <Property Name="PurchasedPrice" Type="decimal" Precision="18" Scale="0" />
     <Property Name="NoteTitle" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Buyer" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="Seller" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="SellType" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Price" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Category" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
@@ -109,6 +113,9 @@
     <Property Name="NotesPreview" Type="varchar(max)" />
     <Property Name="ActionBy" Type="int" Nullable="false" />
     <Property Name="Remark" Type="varchar" MaxLength="200" />
+    <Property Name="Spam" Type="int" />
+    <Property Name="Review" Type="int" />
+    <Property Name="Star" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
@@ -119,14 +126,17 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NoteID" Type="int" Nullable="false" />
-    <Property Name="Rate" Type="int" Nullable="false" />
-    <Property Name="Comment" Type="varchar(max)" Nullable="false" />
+    <Property Name="ReviewedByID" Type="int" Nullable="false" />
+    <Property Name="AgainstDownloadsID" Type="int" Nullable="false" />
+    <Property Name="Ratings" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="varchar(max)" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="SellerNotesAttachment">
     <Key>
@@ -142,14 +152,15 @@
     <Property Name="ModifiedBy" Type="int" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="SpamReports">
+  <EntityType Name="SpamReportsTable">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NoteID" Type="int" Nullable="false" />
-    <Property Name="ReportedBy" Type="int" Nullable="false" />
-    <Property Name="Remark" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="ReportedByID" Type="int" Nullable="false" />
+    <Property Name="AgainstDownloadsID" Type="int" Nullable="false" />
+    <Property Name="Remarks" Type="varchar(max)" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
@@ -172,20 +183,20 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="SecondaryEmail" Type="varchar" MaxLength="100" />
     <Property Name="DateOfBirth" Type="datetime" />
     <Property Name="Gender" Type="varchar" MaxLength="6" />
-    <Property Name="PhoneNumber_CountryCode" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="PhoneNumber_CountryCode" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
-    <Property Name="ProfilePicture" Type="varbinary(max)" />
+    <Property Name="ProfilePicture" Type="varchar(max)" />
     <Property Name="AddressLine_1" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="AddressLine_2" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="ZipCode" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
     <Property Name="University" Type="varchar" MaxLength="100" />
     <Property Name="College" Type="varchar" MaxLength="100" />
     <Property Name="SubmittedDate" Type="datetime" />
@@ -224,7 +235,19 @@
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="ActivationCode" Type="uniqueidentifier" />
   </EntityType>
-  <Association Name="FK__Downloade__NoteI__46E78A0C">
+  <Association Name="FK__Downloade__Downl__778AC167">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="DownloadedNotes" Type="Self.DownloadedNotes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownloadedNotes">
+        <PropertyRef Name="Downloader" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Downloade__NoteI__75A278F5">
     <End Role="NoteDetails" Type="Self.NoteDetails" Multiplicity="1" />
     <End Role="DownloadedNotes" Type="Self.DownloadedNotes" Multiplicity="*" />
     <ReferentialConstraint>
@@ -233,6 +256,18 @@
       </Principal>
       <Dependent Role="DownloadedNotes">
         <PropertyRef Name="NoteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Downloade__Selle__76969D2E">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="DownloadedNotes" Type="Self.DownloadedNotes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownloadedNotes">
+        <PropertyRef Name="Seller" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -284,7 +319,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__NoteRevie__NoteI__5165187F">
+  <Association Name="FK__NoteRevie__Again__7C4F7684">
+    <End Role="DownloadedNotes" Type="Self.DownloadedNotes" Multiplicity="1" />
+    <End Role="NoteReview" Type="Self.NoteReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DownloadedNotes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NoteReview">
+        <PropertyRef Name="AgainstDownloadsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NoteRevie__NoteI__7A672E12">
     <End Role="NoteDetails" Type="Self.NoteDetails" Multiplicity="1" />
     <End Role="NoteReview" Type="Self.NoteReview" Multiplicity="*" />
     <ReferentialConstraint>
@@ -293,6 +340,18 @@
       </Principal>
       <Dependent Role="NoteReview">
         <PropertyRef Name="NoteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NoteRevie__Revie__7B5B524B">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="NoteReview" Type="Self.NoteReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NoteReview">
+        <PropertyRef Name="ReviewedByID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -308,27 +367,39 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SpamRepor__NoteI__4BAC3F29">
+  <Association Name="FK__SpamRepor__Again__01142BA1">
+    <End Role="DownloadedNotes" Type="Self.DownloadedNotes" Multiplicity="1" />
+    <End Role="SpamReportsTable" Type="Self.SpamReportsTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DownloadedNotes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SpamReportsTable">
+        <PropertyRef Name="AgainstDownloadsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SpamRepor__NoteI__7F2BE32F">
     <End Role="NoteDetails" Type="Self.NoteDetails" Multiplicity="1" />
-    <End Role="SpamReports" Type="Self.SpamReports" Multiplicity="*" />
+    <End Role="SpamReportsTable" Type="Self.SpamReportsTable" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="NoteDetails">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="SpamReports">
+      <Dependent Role="SpamReportsTable">
         <PropertyRef Name="NoteID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SpamRepor__Repor__4CA06362">
+  <Association Name="FK__SpamRepor__Repor__00200768">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="SpamReports" Type="Self.SpamReports" Multiplicity="*" />
+    <End Role="SpamReportsTable" Type="Self.SpamReportsTable" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="SpamReports">
-        <PropertyRef Name="ReportedBy" />
+      <Dependent Role="SpamReportsTable">
+        <PropertyRef Name="ReportedByID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -368,6 +439,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserProfile_AddEditCountry">
+    <End Role="AddEditCountry" Type="Self.AddEditCountry" Multiplicity="1" />
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddEditCountry">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="NotesMarketPlaceModelStoreContainer">
     <EntitySet Name="AddEditCategory" EntityType="Self.AddEditCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AddEditCountry" EntityType="Self.AddEditCountry" Schema="dbo" store:Type="Tables" />
@@ -378,13 +461,21 @@
     <EntitySet Name="NoteDetails" EntityType="Self.NoteDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NoteReview" EntityType="Self.NoteReview" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SellerNotesAttachment" EntityType="Self.SellerNotesAttachment" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="SpamReports" EntityType="Self.SpamReports" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SpamReportsTable" EntityType="Self.SpamReportsTable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StatusTable" EntityType="Self.StatusTable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Downloade__NoteI__46E78A0C" Association="Self.FK__Downloade__NoteI__46E78A0C">
+    <AssociationSet Name="FK__Downloade__Downl__778AC167" Association="Self.FK__Downloade__Downl__778AC167">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="DownloadedNotes" EntitySet="DownloadedNotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Downloade__NoteI__75A278F5" Association="Self.FK__Downloade__NoteI__75A278F5">
       <End Role="NoteDetails" EntitySet="NoteDetails" />
+      <End Role="DownloadedNotes" EntitySet="DownloadedNotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Downloade__Selle__76969D2E" Association="Self.FK__Downloade__Selle__76969D2E">
+      <End Role="Users" EntitySet="Users" />
       <End Role="DownloadedNotes" EntitySet="DownloadedNotes" />
     </AssociationSet>
     <AssociationSet Name="FK__NoteDetai__Categ__3D5E1FD2" Association="Self.FK__NoteDetai__Categ__3D5E1FD2">
@@ -403,21 +494,33 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="NoteDetails" EntitySet="NoteDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__NoteRevie__NoteI__5165187F" Association="Self.FK__NoteRevie__NoteI__5165187F">
+    <AssociationSet Name="FK__NoteRevie__Again__7C4F7684" Association="Self.FK__NoteRevie__Again__7C4F7684">
+      <End Role="DownloadedNotes" EntitySet="DownloadedNotes" />
+      <End Role="NoteReview" EntitySet="NoteReview" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NoteRevie__NoteI__7A672E12" Association="Self.FK__NoteRevie__NoteI__7A672E12">
       <End Role="NoteDetails" EntitySet="NoteDetails" />
+      <End Role="NoteReview" EntitySet="NoteReview" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NoteRevie__Revie__7B5B524B" Association="Self.FK__NoteRevie__Revie__7B5B524B">
+      <End Role="Users" EntitySet="Users" />
       <End Role="NoteReview" EntitySet="NoteReview" />
     </AssociationSet>
     <AssociationSet Name="FK__SellerNot__NoteI__4316F928" Association="Self.FK__SellerNot__NoteI__4316F928">
       <End Role="NoteDetails" EntitySet="NoteDetails" />
       <End Role="SellerNotesAttachment" EntitySet="SellerNotesAttachment" />
     </AssociationSet>
-    <AssociationSet Name="FK__SpamRepor__NoteI__4BAC3F29" Association="Self.FK__SpamRepor__NoteI__4BAC3F29">
-      <End Role="NoteDetails" EntitySet="NoteDetails" />
-      <End Role="SpamReports" EntitySet="SpamReports" />
+    <AssociationSet Name="FK__SpamRepor__Again__01142BA1" Association="Self.FK__SpamRepor__Again__01142BA1">
+      <End Role="DownloadedNotes" EntitySet="DownloadedNotes" />
+      <End Role="SpamReportsTable" EntitySet="SpamReportsTable" />
     </AssociationSet>
-    <AssociationSet Name="FK__SpamRepor__Repor__4CA06362" Association="Self.FK__SpamRepor__Repor__4CA06362">
+    <AssociationSet Name="FK__SpamRepor__NoteI__7F2BE32F" Association="Self.FK__SpamRepor__NoteI__7F2BE32F">
+      <End Role="NoteDetails" EntitySet="NoteDetails" />
+      <End Role="SpamReportsTable" EntitySet="SpamReportsTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SpamRepor__Repor__00200768" Association="Self.FK__SpamRepor__Repor__00200768">
       <End Role="Users" EntitySet="Users" />
-      <End Role="SpamReports" EntitySet="SpamReports" />
+      <End Role="SpamReportsTable" EntitySet="SpamReportsTable" />
     </AssociationSet>
     <AssociationSet Name="FK__UserProfi__UserI__2D27B809" Association="Self.FK__UserProfi__UserI__2D27B809">
       <End Role="Users" EntitySet="Users" />
@@ -430,6 +533,10 @@
     <AssociationSet Name="FK_NoteDetails_StatusTable" Association="Self.FK_NoteDetails_StatusTable">
       <End Role="StatusTable" EntitySet="StatusTable" />
       <End Role="NoteDetails" EntitySet="NoteDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfile_AddEditCountry" Association="Self.FK_UserProfile_AddEditCountry">
+      <End Role="AddEditCountry" EntitySet="AddEditCountry" />
+      <End Role="UserProfile" EntitySet="UserProfile" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

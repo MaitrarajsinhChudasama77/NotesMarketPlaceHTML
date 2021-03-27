@@ -8,7 +8,7 @@ namespace Notes_MarketPlace.Models
 {
     public class AddNotesModel
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public int UserID { get; set; }
         public int CategoryID { get; set; }
         public int TypeID { get; set; }
@@ -37,5 +37,6 @@ namespace Notes_MarketPlace.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public bool IsActive { get; set; }
+        public int Rate { get; set; }
     }
 }

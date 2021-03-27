@@ -11,7 +11,7 @@ namespace Notes_MarketPlace.Models
         public int ID { get; set; }
         [Required]
         public string FullName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The EmailID is not a valid e-mail address.")]
         [EmailAddress]
         public string EmailId { get; set; }
         [Required]

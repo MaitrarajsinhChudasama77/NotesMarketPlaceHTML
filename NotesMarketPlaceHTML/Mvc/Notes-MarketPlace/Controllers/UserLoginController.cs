@@ -13,7 +13,7 @@ namespace Notes_MarketPlace.Controllers
 {
     public class UserLoginController : Controller
     {
-        NotesMarketPlaceEntities1 dbObj = new NotesMarketPlaceEntities1();
+        NotesMarketPlaceEntities6 dbObj = new NotesMarketPlaceEntities6();
         [HttpGet]
         [Route("UserLogin/Login")]
         public ActionResult Login()
@@ -26,7 +26,7 @@ namespace Notes_MarketPlace.Controllers
         public ActionResult Login(UserLoginModel login, string ReturnUrl = "")
         {
             string message = "";
-            using (NotesMarketPlaceEntities1 dbObj = new NotesMarketPlaceEntities1())
+            using (NotesMarketPlaceEntities6 dbObj = new NotesMarketPlaceEntities6())
             {
                 var v = dbObj.Users.Where(a => a.EmailID == login.EmailID).FirstOrDefault();
                 if (v != null)
@@ -41,15 +41,28 @@ namespace Notes_MarketPlace.Controllers
                         cookie.HttpOnly = true;
                         Response.Cookies.Add(cookie);
 
-
-                        if (Url.IsLocalUrl(ReturnUrl))
+                        var upobj = dbObj.UserProfiles.Where(a => a.UserID == v.ID).FirstOrDefault();
+                        if (upobj == null)
+                        {
+                            return RedirectToAction("UserProfile", "Profile");
+                        }
+                        else if (!String.IsNullOrEmpty(ReturnUrl))
                         {
                             return Redirect(ReturnUrl);
                         }
                         else
                         {
-                            return RedirectToAction("Dashboard", "Home");
+                            return RedirectToAction("SearchNotes", "Home");
                         }
+
+                        /*if (Url.IsLocalUrl(ReturnUrl))
+                        {
+                            return Redirect(ReturnUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("UserProfile", "Profile");
+                        }*/
                     }
                     else
                     {
@@ -73,6 +86,7 @@ namespace Notes_MarketPlace.Controllers
         }
         [HttpGet]
         [Route("UserLogin/ForgotPassword")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -90,7 +104,7 @@ namespace Notes_MarketPlace.Controllers
                     return View(model);
                 }
                 Context.User obj = dbObj.Users.Where(x => x.EmailID == model.EmailID).FirstOrDefault();
-                string pwd = Membership.GeneratePassword(9, 2);
+                string pwd = Membership.GeneratePassword(10, 2);
                 obj.Password = pwd;
                 dbObj.SaveChanges();
                 SendPasswordEmail(obj.EmailID, pwd);
@@ -99,13 +113,48 @@ namespace Notes_MarketPlace.Controllers
             ModelState.Clear();
             return RedirectToAction("Login");
         }
+        [Authorize]
+        [HttpGet]
         [Route("UserLogin/ChangePassword")]
         public ActionResult ChangePassword()
         {
             return View();
         }
+        [HttpPost]
+        [Route("UserLogin/ChangePassword")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
+        public ActionResult ChangePassword(Models.ChangePasswordModel model)
+        {
+            string message = "";
+            var emailid = User.Identity.Name.ToString();
+            var v = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
+            Context.User obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
+            if (ModelState.IsValid)
+            {
+                if (v != null)
+                {
+                    if (string.Compare(model.OldPassword, v.Password) == 0)
+                    {
+                        obj.Password = model.NewPassword;
+                        dbObj.SaveChanges();
+                    }
+                    else
+                    {
+                        message = "Old Password does not match with Current Password";
+                    }
+                }
+                else
+                {
+                    message = "Invalid credential provided";
+                }
+                TempData["Success"] = "Your password has been changed";
+            }
+            ModelState.Clear();
+            return RedirectToAction("Login");
+        }
         [HttpGet]
         [Route("UserLogin/SignUp")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult SignUp()
         {
             return View();
@@ -138,7 +187,7 @@ namespace Notes_MarketPlace.Controllers
         public ActionResult EmailVerification(Models.User model,string code)
         {
             Context.User obj = dbObj.Users.Where(x=>x.ActivationCode.ToString()==code).FirstOrDefault();
-            ViewBag.name = obj.FirstName;
+            
             return View();
         }
         [Route("UserLogin/VerifyEmail")]
@@ -152,7 +201,7 @@ namespace Notes_MarketPlace.Controllers
         [NonAction]
         public bool IsEmailExist(string EmailID)
         {
-            using (NotesMarketPlaceEntities1 dbObj = new NotesMarketPlaceEntities1())
+            using (NotesMarketPlaceEntities6 dbObj = new NotesMarketPlaceEntities6())
             {
                 var v = dbObj.Users.Where(a => a.EmailID == EmailID).FirstOrDefault();
                 return v != null;
