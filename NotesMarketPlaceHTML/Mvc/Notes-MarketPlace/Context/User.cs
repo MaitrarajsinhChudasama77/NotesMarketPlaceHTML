@@ -17,6 +17,7 @@ namespace Notes_MarketPlace.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.Admins = new HashSet<Admin>();
             this.DownloadedNotes = new HashSet<DownloadedNote>();
             this.DownloadedNotes1 = new HashSet<DownloadedNote>();
             this.NoteDetails = new HashSet<NoteDetail>();
@@ -39,6 +40,8 @@ namespace Notes_MarketPlace.Context
         public bool IsActive { get; set; }
         public Nullable<System.Guid> ActivationCode { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admin> Admins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DownloadedNote> DownloadedNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

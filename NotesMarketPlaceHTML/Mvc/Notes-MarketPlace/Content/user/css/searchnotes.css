@@ -127,7 +127,22 @@ ul.navbar-nav > li > a:focus
     background-color: #6255a5;
     color: #fff;
 }
-#statement-div {margin-top: 100px;
+.dropdown-menu li a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 7px;
+    font-family: Open Sans;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #6255a5;
+    color: #ffffff;
+}
+#statement-div {
+    margin-top: 100px;
     min-height: 250px;
     display: -webkit-box;
     display: -ms-flexbox;

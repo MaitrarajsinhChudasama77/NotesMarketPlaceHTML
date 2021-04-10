@@ -51,7 +51,17 @@ $("button.accordion").click(
 
 $('input:radio').click(function () {
     $("#inputSellPrice").prop("disabled", true);
-    if ($(this).hasClass('enable_tb')) {
+    if ($(this).hasClass('enable_price')) {
         $("#inputSellPrice").prop("disabled", false);
+    }
+});
+$(':radio[name=flexRadioDefault]').change(function () {
+    if ($(this).val() == 'Paid') {
+
+        document.getElementById('attach-for-paid').innerHTML = "Upload Preview Notes"
+    }
+    else {
+
+        document.getElementById('attach-for-paid').innerHTML = ""
     }
 });

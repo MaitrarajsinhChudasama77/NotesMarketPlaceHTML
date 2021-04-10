@@ -1,4 +1,4 @@
-﻿@model Notes_MarketPlace.Models.User
+﻿@model Notes_MarketPlace.Context.User
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +33,7 @@
     <div class="background">
         <div class="mail-container">
             <div id="logo-img">
-                <img src="~/Content/user/image/logo.png" height="32px">
+                <img src="~/Content/user/image/logo.png" height="32">
             </div>
             <div id="mini-container">
                  
@@ -41,12 +41,11 @@
                         <p>Email Verification</p>
                     </div>
                     <div id="second">
-                        <p id="bold">Dear @ViewBag.name</p>
+                        <p id="bold">Dear @TempData["FirstName"]</p>
                         <p id="semibold1">Thanks for Signing up!</p>
                         <p id="semibold2">Simply click below for email verification.</p>
                     </div>
-                    <a href="@Url.Action("VerifyEmail","UserLogin")" type="submit" class="btn btn-primary btn-block" id="verifyemail-button">VERIFY EMAIL ADDRESS</a>
-                
+                    <a href="@Url.Action("VerifyEmail","UserLogin", new { emailid = Model.EmailID})" type="submit" class="btn btn-primary btn-block" id="verifyemail-button">VERIFY EMAIL ADDRESS</a>
             </div>
         </div>
     </div>

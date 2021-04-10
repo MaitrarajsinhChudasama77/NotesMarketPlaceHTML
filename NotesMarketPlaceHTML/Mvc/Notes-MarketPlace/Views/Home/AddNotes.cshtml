@@ -67,25 +67,25 @@
                                         <li class="nav-item-drop-down">
                                             <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic" /></a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")" style="padding-top:10px;padding-bottom:10px;padding-left:7px;Open Sans;font-size:14px;color:#6255a5;">My Profile</a></li>
-                                                <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Downloads</a></li>
-                                                <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Sold Notes</a></li>
-                                                <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Rejected Notes</a></li>
-                                                <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Change Password</a></li>
-                                                <li><a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")" style="padding-top: 10px; padding-bottom:10px;padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Logout</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")">My Profile</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")">My Downloads</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")">My Sold Notes</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")">My Rejected Notes</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")">Change Password</a></li>
+                                                <li><a class="dropdown-item row-color" onclick="return confirm('Are you sure, you want to logout?')" href="@Url.Action("Logout","UserLogin")">LOGOUT</a></li>
                                             </ul>
                                         </li>
                                     }
                                     @if (User.Identity.IsAuthenticated)
                                     {
                                         <li>
-                                            <button id="searchnotes-log-button" onclick="location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
+                                            <button id="addnotes-log-button" onclick="if(confirm('Are you sure, you want to logout?')) location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
                                         </li>
                                     }
                                     else
                                     {
                                         <li>
-                                            <button id="searchnotes-log-button" onclick="location.href='@Url.Action("Login","UserLogin")'" class="btn btn-class last-child" type="submit">Login</button>
+                                            <button id="addnotes-log-button" onclick="location.href='@Url.Action("Login","UserLogin")'" class="btn btn-class last-child" type="submit">Login</button>
                                         </li>
                                     }
                                 </ul>
@@ -212,9 +212,9 @@
                                     <label class="label-class">Sell For *</label>
                                     <!--<br>-->
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input sell-radio-button" type="radio" name="IsPaid" value="False" id="flexRadioDefault1" checked>
+                                        <input class="form-check-input" type="radio" name="IsPaid" value="False" id="flexRadioDefault1" checked>
                                         <label class="form-check-label label-text" for="flexRadioDefault1">Free</label>
-                                        <input class="form-check-input sell-radio-button enable_tb" type="radio" name="IsPaid" value="True" id="flexRadioDefault2">
+                                        <input class="form-check-input enable_price" type="radio" name="IsPaid" value="True" id="flexRadioDefault2">
                                         <label class="form-check-label label-text" for="flexRadioDefault2">Paid</label>
                                     </div>
                                 </div>
@@ -222,7 +222,7 @@
                             <div class="row" style="margin-top: 8px">
                                 <div class="form-group col-md-12">
                                     <label class="label-class" id="professor">Sell Price *</label>
-                                    @Html.TextBoxFor(x => x.SellingPrice_USD, new { @class = "form-control", @id = "inputSellPrice", @placeholder = "Enter your price" })
+                                    @Html.TextBoxFor(x => x.SellingPrice_USD, new { @class = "form-control", @id="inputSellPrice",  @placeholder = "Enter your price", @disabled="disabled"})
                                     @Html.ValidationMessageFor(x => x.SellingPrice_USD, "", new { @class = "error" })
                                 </div>
                             </div>
@@ -236,7 +236,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <button type="submit" id="save-button" class="btn btn-primary" name="submitbutton" value="1">SAVE</button>
-                            <button type="submit" id="publish-button" class="btn btn-primary" name="submitbutton" value="2">PUBLISH</button>
+                            <button onclick="return confirm('Publishing this note will send note to administrator for review, once administrator review and approve then this note will be published to portal. Press Ok to continue.”')" type="submit" id="publish-button" class="btn btn-primary" name="submitbutton" value="2">PUBLISH</button>
                         </div>
                     </div>
                 }

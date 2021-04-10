@@ -13,7 +13,7 @@ namespace Notes_MarketPlace.Controllers
 {
     public class UserLoginController : Controller
     {
-        NotesMarketPlaceEntities6 dbObj = new NotesMarketPlaceEntities6();
+        NotesMarketPlaceEntities8 dbObj = new NotesMarketPlaceEntities8();
         [HttpGet]
         [Route("UserLogin/Login")]
         public ActionResult Login()
@@ -25,57 +25,80 @@ namespace Notes_MarketPlace.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(UserLoginModel login, string ReturnUrl = "")
         {
-            string message = "";
-            using (NotesMarketPlaceEntities6 dbObj = new NotesMarketPlaceEntities6())
+            using (NotesMarketPlaceEntities8 dbObj = new NotesMarketPlaceEntities8())
             {
                 var v = dbObj.Users.Where(a => a.EmailID == login.EmailID).FirstOrDefault();
                 if (v != null)
                 {
-                    if (string.Compare(login.Password, v.Password) == 0)
+                    if(v.IsActive == true)
                     {
-                        int timeout = login.RememberMe ? 525600 : 20; // 525600 min = 1 year
-                        var ticket = new FormsAuthenticationTicket(login.EmailID, login.RememberMe, timeout);
-                        string encrypted = FormsAuthentication.Encrypt(ticket);
-                        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
-                        cookie.Expires = DateTime.Now.AddMinutes(timeout);
-                        cookie.HttpOnly = true;
-                        Response.Cookies.Add(cookie);
+                        if(v.IsEmailVerified == true) 
+                        {
+                            if (string.Compare(login.Password, v.Password) == 0)
+                            {
+                                int timeout = login.RememberMe ? 525600 : 20;
+                                var ticket = new FormsAuthenticationTicket(login.EmailID, login.RememberMe, timeout);
+                                string encrypted = FormsAuthentication.Encrypt(ticket);
+                                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+                                cookie.Expires = DateTime.Now.AddMinutes(timeout);
+                                cookie.HttpOnly = true;
+                                Response.Cookies.Add(cookie);
 
-                        var upobj = dbObj.UserProfiles.Where(a => a.UserID == v.ID).FirstOrDefault();
-                        if (upobj == null)
-                        {
-                            return RedirectToAction("UserProfile", "Profile");
-                        }
-                        else if (!String.IsNullOrEmpty(ReturnUrl))
-                        {
-                            return Redirect(ReturnUrl);
+                                var upobj = dbObj.UserProfiles.Where(a => a.UserID == v.ID).FirstOrDefault();
+                                if (upobj == null)
+                                {
+                                    if (v.RoleID == 2 || v.RoleID == 1)
+                                    {
+                                        return RedirectToAction("Dashboard", "AdminDashboard");
+                                    }
+                                    return RedirectToAction("UserProfile", "Profile");
+                                }
+                                else if (!String.IsNullOrEmpty(ReturnUrl))
+                                {
+                                    return Redirect(ReturnUrl);
+                                }
+                                else
+                                {
+                                    if (v.RoleID == 2 || v.RoleID == 1)
+                                    {
+                                        return RedirectToAction("Dashboard", "AdminDashboard");
+                                    }
+                                    return RedirectToAction("SearchNotes", "Home");
+                                }
+
+                                /*if (Url.IsLocalUrl(ReturnUrl))
+                                {
+                                    return Redirect(ReturnUrl);
+                                }
+                                else
+                                {
+                                    return RedirectToAction("UserProfile", "Profile");
+                                }*/
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("Password", "Invalid Password");
+                                return View(login);
+                            }
                         }
                         else
                         {
-                            return RedirectToAction("SearchNotes", "Home");
+                            ModelState.AddModelError("EmailID","Email Address is not verified");
+                            return View(login);
                         }
-
-                        /*if (Url.IsLocalUrl(ReturnUrl))
-                        {
-                            return Redirect(ReturnUrl);
-                        }
-                        else
-                        {
-                            return RedirectToAction("UserProfile", "Profile");
-                        }*/
                     }
                     else
                     {
-                        message = "Invalid credential provided";
-                    }
+                        ModelState.AddModelError("EmailID", "This user is not active");
+                        return View(login);
+                    }                    
                 }
                 else
                 {
-                    message = "Invalid credential provided";
+                    ModelState.AddModelError("EmailID","Invalid Email Address");
+                    return View(login);
                 }
-            }
-            ViewBag.Message = message;
-            return View();
+            }            
         }
         
         [Route("UserLogin/Logout")]
@@ -103,12 +126,15 @@ namespace Notes_MarketPlace.Controllers
                     ModelState.AddModelError("EmailID", "Email Does not exist");
                     return View(model);
                 }
-                Context.User obj = dbObj.Users.Where(x => x.EmailID == model.EmailID).FirstOrDefault();
-                string pwd = Membership.GeneratePassword(10, 2);
-                obj.Password = pwd;
-                dbObj.SaveChanges();
-                SendPasswordEmail(obj.EmailID, pwd);
-                TempData["Success"] = "New password has been sent to your email";
+                else
+                {
+                    Context.User obj = dbObj.Users.Where(x => x.EmailID == model.EmailID).FirstOrDefault();
+                    string pwd = Membership.GeneratePassword(10, 2);
+                    obj.Password = pwd;
+                    dbObj.SaveChanges();
+                    SendPasswordEmail(obj.EmailID, pwd);
+                    ViewBag.msg = "New password has been sent to your email";
+                }
             }
             ModelState.Clear();
             return RedirectToAction("Login");
@@ -125,7 +151,6 @@ namespace Notes_MarketPlace.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult ChangePassword(Models.ChangePasswordModel model)
         {
-            string message = "";
             var emailid = User.Identity.Name.ToString();
             var v = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
             Context.User obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
@@ -140,14 +165,13 @@ namespace Notes_MarketPlace.Controllers
                     }
                     else
                     {
-                        message = "Old Password does not match with Current Password";
+                        ModelState.AddModelError("Password","Old Password does not match with Current Password");
                     }
                 }
                 else
                 {
-                    message = "Invalid credential provided";
+                    ModelState.AddModelError("EmailID","Invalid  Email Address");
                 }
-                TempData["Success"] = "Your password has been changed";
             }
             ModelState.Clear();
             return RedirectToAction("Login");
@@ -165,6 +189,12 @@ namespace Notes_MarketPlace.Controllers
         {
             if (ModelState.IsValid)
             {
+                var isExist = IsEmailExist(model.EmailID);
+                if (isExist)
+                {
+                    ModelState.AddModelError("EmailID", "Email Does not exist");
+                    return View(model);
+                }
                 Context.User obj = new Context.User();
                 obj.RoleID = 3;
                 obj.FirstName = model.FirstName;
@@ -172,36 +202,22 @@ namespace Notes_MarketPlace.Controllers
                 obj.EmailID = model.EmailID;
                 obj.Password = model.Password;
                 obj.IsEmailVerified = false;
-                obj.IsActive = true;
-                obj.ActivationCode = Guid.NewGuid();
+                obj.CreatedDate = DateTime.Now;
+                obj.IsActive = false;
+                //obj.ActivationCode = Guid.NewGuid();
                 dbObj.Users.Add(obj);
                 dbObj.SaveChanges();
 
-                SendVerificationLinkEmail(model.EmailID, model.FirstName,model.ActivationCode.ToString());
-                TempData["Success"] = "Your Account Is Created Successfully"; 
+                TempData["Success"] = "Your Account Is Created Successfully";
+                SendVerificationLinkEmail(obj.EmailID,obj.FirstName); 
             }
-            ModelState.Clear();
             return RedirectToAction("SignUp");
         }
-        [Route("UserLogin/EmailVerification")]
-        public ActionResult EmailVerification(Models.User model,string code)
-        {
-            Context.User obj = dbObj.Users.Where(x=>x.ActivationCode.ToString()==code).FirstOrDefault();
-            
-            return View();
-        }
-        [Route("UserLogin/VerifyEmail")]
-        public ActionResult VerifyEmail(string code)
-        {
-            Context.User obj = dbObj.Users.Where(x=>x.ActivationCode.ToString()==code).FirstOrDefault();
-            obj.IsEmailVerified = true;
-            dbObj.SaveChanges();
-            return RedirectToAction("Login");
-        }
+        
         [NonAction]
         public bool IsEmailExist(string EmailID)
         {
-            using (NotesMarketPlaceEntities6 dbObj = new NotesMarketPlaceEntities6())
+            using (NotesMarketPlaceEntities8 dbObj = new NotesMarketPlaceEntities8())
             {
                 var v = dbObj.Users.Where(a => a.EmailID == EmailID).FirstOrDefault();
                 return v != null;
@@ -210,9 +226,10 @@ namespace Notes_MarketPlace.Controllers
         [NonAction]
         public void SendPasswordEmail(string EmailID, string pwd)
         {
-            var fromEmail = new MailAddress("thehamojha@gmail.com");
+
+            var fromEmail = new MailAddress(dbObj.ManageSystemConfigurations.FirstOrDefault().SupportEmail);
             var toEmail = new MailAddress(EmailID);
-            var fromEmailPassword = "244466666";
+            var fromEmailPassword = dbObj.ManageSystemConfigurations.FirstOrDefault().SupportPassword;
             string subject = "New Temporary Password has been created for you";
 
             string body = "Hello," +
@@ -239,14 +256,15 @@ namespace Notes_MarketPlace.Controllers
                 smtp.Send(message);
         }
         [NonAction]
-        public void SendVerificationLinkEmail(string EmailID, string FirstName, string ActivationCode)
+        public void SendVerificationLinkEmail(string EmailID, string FirstName)
         {
-            var verifyUrl = "/UserLogin/EmailVerification/";
+            var obj = dbObj.Users.Where(x => x.EmailID == EmailID).FirstOrDefault();
+            var verifyUrl = "/UserLogin/EmailVerification?emailid=" + obj.EmailID;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-            var fromEmail = new MailAddress("thehamojha@gmail.com");
+            var fromEmail = new MailAddress(dbObj.ManageSystemConfigurations.FirstOrDefault().SupportEmail);
             var toEmail = new MailAddress(EmailID);
-            var fromEmailPassword = "244466666";
+            var fromEmailPassword = dbObj.ManageSystemConfigurations.FirstOrDefault().SupportPassword;
             string subject = "Notes MarketPlace - Email Verification";
 
             string body = "Hello " + FirstName + "," +
@@ -271,6 +289,22 @@ namespace Notes_MarketPlace.Controllers
                 IsBodyHtml = true
             })
                 smtp.Send(message);
+        }
+        [Route("UserLogin/EmailVerification")]
+        public ActionResult EmailVerification(string emailid)
+        {
+            var obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
+            TempData["FirstName"] = obj.FirstName;
+            return View(obj);
+        }
+        [Route("UserLogin/VerifyEmail")]
+        public ActionResult VerifyEmail(string emailid)
+        {
+            var obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
+            obj.IsEmailVerified = true;
+            obj.IsActive = true;
+            dbObj.SaveChanges();
+            return RedirectToAction("Login");
         }
     }
 }

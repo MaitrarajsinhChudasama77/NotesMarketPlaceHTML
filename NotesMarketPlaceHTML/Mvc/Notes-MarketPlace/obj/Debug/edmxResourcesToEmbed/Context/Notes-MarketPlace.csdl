@@ -1,45 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="NotesMarketPlaceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="AddEditCategory">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-    <Property Name="ModifiedBy" Type="Int32" />
-    <NavigationProperty Name="NoteDetails" Relationship="Self.FK__NoteDetai__Categ__3D5E1FD2" FromRole="AddEditCategory" ToRole="NoteDetails" />
-  </EntityType>
-  <EntityType Name="AddEditCountry">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="CountryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="CountryCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-    <Property Name="ModifiedBy" Type="Int32" />
-    <NavigationProperty Name="NoteDetails" Relationship="Self.FK__NoteDetai__Count__3F466844" FromRole="AddEditCountry" ToRole="NoteDetails" />
-    <NavigationProperty Name="UserProfiles" Relationship="Self.FK_UserProfile_AddEditCountry" FromRole="AddEditCountry" ToRole="UserProfile" />
-  </EntityType>
-  <EntityType Name="AddEditType">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-    <Property Name="ModifiedBy" Type="Int32" />
-    <NavigationProperty Name="NoteDetails" Relationship="Self.FK__NoteDetai__TypeI__3E52440B" FromRole="AddEditType" ToRole="NoteDetails" />
-  </EntityType>
   <EntityType Name="ContactU">
     <Key>
       <PropertyRef Name="ID" />
@@ -80,24 +40,6 @@
     <NavigationProperty Name="NoteReviews" Relationship="Self.FK__NoteRevie__Again__7C4F7684" FromRole="DownloadedNotes" ToRole="NoteReview" />
     <NavigationProperty Name="SpamReportsTables" Relationship="Self.FK__SpamRepor__Again__01142BA1" FromRole="DownloadedNotes" ToRole="SpamReportsTable" />
   </EntityType>
-  <EntityType Name="ManageSystemConfiguration">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="SupportEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="SupportContactNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="EmailAddress_es" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="FacebookURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="TwitterURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="LinkedInURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="DefaultNoteDisplayImage" Type="Binary" MaxLength="1" FixedLength="false" Nullable="false" />
-    <Property Name="DefaultProfilePicture" Type="Binary" MaxLength="1" FixedLength="false" Nullable="false" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-    <Property Name="ModifiedBy" Type="Int32" />
-  </EntityType>
   <EntityType Name="NoteDetail">
     <Key>
       <PropertyRef Name="ID" />
@@ -122,23 +64,23 @@
     <Property Name="NotesPreview" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ActionBy" Type="Int32" Nullable="false" />
     <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Spam" Type="Int32" />
+    <Property Name="Review" Type="Int32" />
+    <Property Name="Star" Type="Int32" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedBy" Type="Int32" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="AddEditCategory" Relationship="Self.FK__NoteDetai__Categ__3D5E1FD2" FromRole="NoteDetails" ToRole="AddEditCategory" />
-    <NavigationProperty Name="AddEditCountry" Relationship="Self.FK__NoteDetai__Count__3F466844" FromRole="NoteDetails" ToRole="AddEditCountry" />
-    <NavigationProperty Name="AddEditType" Relationship="Self.FK__NoteDetai__TypeI__3E52440B" FromRole="NoteDetails" ToRole="AddEditType" />
     <NavigationProperty Name="DownloadedNotes" Relationship="Self.FK__Downloade__NoteI__75A278F5" FromRole="NoteDetails" ToRole="DownloadedNotes" />
     <NavigationProperty Name="User" Relationship="Self.FK__NoteDetai__UserI__3C69FB99" FromRole="NoteDetails" ToRole="Users" />
     <NavigationProperty Name="NoteReviews" Relationship="Self.FK__NoteRevie__NoteI__7A672E12" FromRole="NoteDetails" ToRole="NoteReview" />
     <NavigationProperty Name="SellerNotesAttachments" Relationship="Self.FK__SellerNot__NoteI__4316F928" FromRole="NoteDetails" ToRole="SellerNotesAttachment" />
     <NavigationProperty Name="SpamReportsTables" Relationship="Self.FK__SpamRepor__NoteI__7F2BE32F" FromRole="NoteDetails" ToRole="SpamReportsTable" />
     <NavigationProperty Name="StatusTable" Relationship="Self.FK_NoteDetails_StatusTable" FromRole="NoteDetails" ToRole="StatusTable" />
-    <Property Name="Spam" Type="Int32" />
-    <Property Name="Review" Type="Int32" />
-    <Property Name="Star" Type="Int32" />
+    <NavigationProperty Name="AddEditCategory" Relationship="NotesMarketPlaceModel.FK__NoteDetai__Categ__3D5E1FD2" FromRole="NoteDetail" ToRole="AddEditCategory" />
+    <NavigationProperty Name="AddEditCountry" Relationship="NotesMarketPlaceModel.FK__NoteDetai__Count__3F466844" FromRole="NoteDetail" ToRole="AddEditCountry" />
+    <NavigationProperty Name="AddEditType" Relationship="NotesMarketPlaceModel.FK__NoteDetai__TypeI__3E52440B" FromRole="NoteDetail" ToRole="AddEditType" />
   </EntityType>
   <EntityType Name="NoteReview">
     <Key>
@@ -229,8 +171,8 @@
     <Property Name="SubmittedBy" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedBy" Type="Int32" />
-    <NavigationProperty Name="AddEditCountry" Relationship="Self.FK_UserProfile_AddEditCountry" FromRole="UserProfile" ToRole="AddEditCountry" />
     <NavigationProperty Name="User" Relationship="Self.FK__UserProfi__UserI__2D27B809" FromRole="UserProfile" ToRole="Users" />
+    <NavigationProperty Name="AddEditCountry" Relationship="NotesMarketPlaceModel.FK_UserProfile_AddEditCountry" FromRole="UserProfile" ToRole="AddEditCountry" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>
@@ -270,55 +212,8 @@
     <NavigationProperty Name="SpamReportsTables" Relationship="Self.FK__SpamRepor__Repor__00200768" FromRole="Users" ToRole="SpamReportsTable" />
     <NavigationProperty Name="UserProfiles" Relationship="Self.FK__UserProfi__UserI__2D27B809" FromRole="Users" ToRole="UserProfile" />
     <NavigationProperty Name="UserRole" Relationship="Self.FK__Users__RoleID__286302EC" FromRole="Users" ToRole="UserRoles" />
+    <NavigationProperty Name="Admins" Relationship="NotesMarketPlaceModel.FK_Admin_Users" FromRole="User" ToRole="Admin" />
   </EntityType>
-  <Association Name="FK__NoteDetai__Categ__3D5E1FD2">
-    <End Role="AddEditCategory" Type="Self.AddEditCategory" Multiplicity="1" />
-    <End Role="NoteDetails" Type="Self.NoteDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AddEditCategory">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="NoteDetails">
-        <PropertyRef Name="CategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__NoteDetai__Count__3F466844">
-    <End Role="AddEditCountry" Type="Self.AddEditCountry" Multiplicity="1" />
-    <End Role="NoteDetails" Type="Self.NoteDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AddEditCountry">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="NoteDetails">
-        <PropertyRef Name="CountryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserProfile_AddEditCountry">
-    <End Role="AddEditCountry" Type="Self.AddEditCountry" Multiplicity="1" />
-    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AddEditCountry">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="UserProfile">
-        <PropertyRef Name="CountryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__NoteDetai__TypeI__3E52440B">
-    <End Role="AddEditType" Type="Self.AddEditType" Multiplicity="1" />
-    <End Role="NoteDetails" Type="Self.NoteDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AddEditType">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="NoteDetails">
-        <PropertyRef Name="TypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__Downloade__Downl__778AC167">
     <End Role="Users" Type="Self.User" Multiplicity="1" />
     <End Role="DownloadedNotes" Type="Self.DownloadedNote" Multiplicity="*" />
@@ -487,13 +382,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="NotesMarketPlaceEntities6" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="AddEditCategories" EntityType="Self.AddEditCategory" />
-    <EntitySet Name="AddEditCountries" EntityType="Self.AddEditCountry" />
-    <EntitySet Name="AddEditTypes" EntityType="Self.AddEditType" />
+  <EntityContainer Name="NotesMarketPlaceEntities8" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="ContactUs" EntityType="Self.ContactU" />
     <EntitySet Name="DownloadedNotes" EntityType="Self.DownloadedNote" />
-    <EntitySet Name="ManageSystemConfigurations" EntityType="Self.ManageSystemConfiguration" />
     <EntitySet Name="NoteDetails" EntityType="Self.NoteDetail" />
     <EntitySet Name="NoteReviews" EntityType="Self.NoteReview" />
     <EntitySet Name="SellerNotesAttachments" EntityType="Self.SellerNotesAttachment" />
@@ -502,22 +393,6 @@
     <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
     <EntitySet Name="Users" EntityType="Self.User" />
-    <AssociationSet Name="FK__NoteDetai__Categ__3D5E1FD2" Association="Self.FK__NoteDetai__Categ__3D5E1FD2">
-      <End Role="AddEditCategory" EntitySet="AddEditCategories" />
-      <End Role="NoteDetails" EntitySet="NoteDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK__NoteDetai__Count__3F466844" Association="Self.FK__NoteDetai__Count__3F466844">
-      <End Role="AddEditCountry" EntitySet="AddEditCountries" />
-      <End Role="NoteDetails" EntitySet="NoteDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserProfile_AddEditCountry" Association="Self.FK_UserProfile_AddEditCountry">
-      <End Role="AddEditCountry" EntitySet="AddEditCountries" />
-      <End Role="UserProfile" EntitySet="UserProfiles" />
-    </AssociationSet>
-    <AssociationSet Name="FK__NoteDetai__TypeI__3E52440B" Association="Self.FK__NoteDetai__TypeI__3E52440B">
-      <End Role="AddEditType" EntitySet="AddEditTypes" />
-      <End Role="NoteDetails" EntitySet="NoteDetails" />
-    </AssociationSet>
     <AssociationSet Name="FK__Downloade__Downl__778AC167" Association="Self.FK__Downloade__Downl__778AC167">
       <End Role="Users" EntitySet="Users" />
       <End Role="DownloadedNotes" EntitySet="DownloadedNotes" />
@@ -574,5 +449,169 @@
       <End Role="UserRoles" EntitySet="UserRoles" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
+    <EntitySet Name="Admins" EntityType="NotesMarketPlaceModel.Admin" />
+    <AssociationSet Name="FK_Admin_Users" Association="NotesMarketPlaceModel.FK_Admin_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Admin" EntitySet="Admins" />
+    </AssociationSet>
+    <EntitySet Name="AddEditCategories" EntityType="NotesMarketPlaceModel.AddEditCategory" />
+    <EntitySet Name="AddEditCountries" EntityType="NotesMarketPlaceModel.AddEditCountry" />
+    <EntitySet Name="AddEditTypes" EntityType="NotesMarketPlaceModel.AddEditType" />
+    <AssociationSet Name="FK__NoteDetai__Categ__3D5E1FD2" Association="NotesMarketPlaceModel.FK__NoteDetai__Categ__3D5E1FD2">
+      <End Role="AddEditCategory" EntitySet="AddEditCategories" />
+      <End Role="NoteDetail" EntitySet="NoteDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NoteDetai__Count__3F466844" Association="NotesMarketPlaceModel.FK__NoteDetai__Count__3F466844">
+      <End Role="AddEditCountry" EntitySet="AddEditCountries" />
+      <End Role="NoteDetail" EntitySet="NoteDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfile_AddEditCountry" Association="NotesMarketPlaceModel.FK_UserProfile_AddEditCountry">
+      <End Role="AddEditCountry" EntitySet="AddEditCountries" />
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NoteDetai__TypeI__3E52440B" Association="NotesMarketPlaceModel.FK__NoteDetai__TypeI__3E52440B">
+      <End Role="AddEditType" EntitySet="AddEditTypes" />
+      <End Role="NoteDetail" EntitySet="NoteDetails" />
+    </AssociationSet>
+    <EntitySet Name="ManageSystemConfigurations" EntityType="NotesMarketPlaceModel.ManageSystemConfiguration" />
   </EntityContainer>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AID" Type="Int32" Nullable="false" />
+    <Property Name="SecondaryEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber_CountryCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ProfilePicture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="NotesMarketPlaceModel.FK_Admin_Users" FromRole="Admin" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Admin_Users">
+    <End Type="NotesMarketPlaceModel.User" Role="User" Multiplicity="1" />
+    <End Type="NotesMarketPlaceModel.Admin" Role="Admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="AID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AddEditCategory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="NoteDetails" Relationship="NotesMarketPlaceModel.FK__NoteDetai__Categ__3D5E1FD2" FromRole="AddEditCategory" ToRole="NoteDetail" />
+  </EntityType>
+  <EntityType Name="AddEditCountry">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CountryCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="NoteDetails" Relationship="NotesMarketPlaceModel.FK__NoteDetai__Count__3F466844" FromRole="AddEditCountry" ToRole="NoteDetail" />
+    <NavigationProperty Name="UserProfiles" Relationship="NotesMarketPlaceModel.FK_UserProfile_AddEditCountry" FromRole="AddEditCountry" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="AddEditType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="NoteDetails" Relationship="NotesMarketPlaceModel.FK__NoteDetai__TypeI__3E52440B" FromRole="AddEditType" ToRole="NoteDetail" />
+  </EntityType>
+  <Association Name="FK__NoteDetai__Categ__3D5E1FD2">
+    <End Type="NotesMarketPlaceModel.AddEditCategory" Role="AddEditCategory" Multiplicity="1" />
+    <End Type="NotesMarketPlaceModel.NoteDetail" Role="NoteDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddEditCategory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NoteDetail">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NoteDetai__Count__3F466844">
+    <End Type="NotesMarketPlaceModel.AddEditCountry" Role="AddEditCountry" Multiplicity="1" />
+    <End Type="NotesMarketPlaceModel.NoteDetail" Role="NoteDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddEditCountry">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NoteDetail">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfile_AddEditCountry">
+    <End Type="NotesMarketPlaceModel.AddEditCountry" Role="AddEditCountry" Multiplicity="1" />
+    <End Type="NotesMarketPlaceModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddEditCountry">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NoteDetai__TypeI__3E52440B">
+    <End Type="NotesMarketPlaceModel.AddEditType" Role="AddEditType" Multiplicity="1" />
+    <End Type="NotesMarketPlaceModel.NoteDetail" Role="NoteDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddEditType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NoteDetail">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ManageSystemConfiguration">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="SupportEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SupportPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SupportContactNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="EmailAddress_es" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FacebookURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TwitterURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LinkedInURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DefaultNoteDisplayImage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DefaultProfilePicture" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" />
+  </EntityType>
 </Schema>

@@ -17,29 +17,31 @@ namespace Notes_MarketPlace.Controllers
 {
     public class ProfileController : Controller
     {
-        NotesMarketPlaceEntities6 dbObj = new NotesMarketPlaceEntities6();
+        NotesMarketPlaceEntities8 dbObj = new NotesMarketPlaceEntities8();
         
-        [Authorize]
+        [Authorize(Roles = "User")]
         [HttpGet]
         [Route("Profile/MyDownloads")]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        public ActionResult MyDownloads(int? i, string search, string sortBy)
+        public ActionResult MyDownloads(int? i, string Search, string sortBy)
         {
             ViewBag.SortDate = string.IsNullOrEmpty(sortBy) ? "Date Desc" : "";
             ViewBag.SortNoteTitle = sortBy == "Title" ? "Title Desc" : "Title";
             ViewBag.SortCategory = sortBy == "Category" ? "Category Desc" : "Category";
-            var filterTitle = dbObj.DownloadedNotes.Where(x => x.NoteTitle.Contains(search) || search == null);
-            var filterCategory = dbObj.DownloadedNotes.Where(x => x.Category.Contains(search));
+            ViewBag.SortSeller = sortBy == "Seller" ? "Seller Desc" : "Seller";
+            var filterTitle = dbObj.DownloadedNotes.Where(x => x.NoteTitle.Contains(Search) || Search == null);
+            var filterCategory = dbObj.DownloadedNotes.Where(x => x.Category.Contains(Search) || Search == null);
             var filtereddata = filterTitle.Union(filterCategory);
 
             var emailid = User.Identity.Name.ToString();
             Context.User obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
-            var record = dbObj.DownloadedNotes.Where(x => x.Downloader == obj.ID).ToList().AsQueryable();
+            var record = dbObj.DownloadedNotes.Where(x => x.NoteTitle.Contains(Search) || x.Category.Contains(Search) || x.User.FirstName.Contains(Search) || x.User.LastName.Contains(Search) || (x.User.FirstName + " " + x.User.LastName).Contains(Search) || Search == null).ToList().AsQueryable();
+            record = record.Where(x => x.Downloader == obj.ID).ToList().AsQueryable();
 
             switch (sortBy)
             {
                 case "Date Desc":
-                    record = record.OrderByDescending(x => x.CreatedDate);
+                    record = record.OrderByDescending(x => x.AttachmentDownloadedDate);
                     break;
                 case "Title":
                     record = record.OrderBy(x => x.NoteTitle);
@@ -53,8 +55,14 @@ namespace Notes_MarketPlace.Controllers
                 case "Category Desc":
                     record = record.OrderByDescending(x => x.Category);
                     break;
+                case "Seller":
+                    record = record.OrderBy(x => (x.User.FirstName + x.User.LastName));
+                    break;
+                case "Seller Desc":
+                    record = record.OrderByDescending(x => (x.User.FirstName + x.User.LastName));
+                    break;
                 default:
-                    record = record.OrderBy(x => x.CreatedDate);
+                    record = record.OrderBy(x => x.AttachmentDownloadedDate);
                     break;
             }
             ViewBag.pic = dbObj.UserProfiles.Where(x => x.UserID == obj.ID).Select(x => x.ProfilePicture).FirstOrDefault();
@@ -139,7 +147,6 @@ namespace Notes_MarketPlace.Controllers
 
             return RedirectToAction("MyDownloads", "Profile");
         }
-
         [HttpPost]
         public ActionResult MarkInappropriate(int id, string Remark)
         {
@@ -200,31 +207,93 @@ namespace Notes_MarketPlace.Controllers
                 smtp.Send(message);
             return RedirectToAction("MyDownloads", "Profile");
         }
-        [Authorize]
+        [Authorize(Roles="User")]
         [HttpGet]
         [Route("Profile/MySoldNotes")]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        public ActionResult MySoldNotes(int? i)
+        public ActionResult MySoldNotes(int? i, string Search, string sortBy)
         {
             var emailid = User.Identity.Name.ToString();
             Context.User obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
+
+            ViewBag.SortDate = string.IsNullOrEmpty(sortBy) ? "Date Desc" : "";
+            ViewBag.SortTitle = sortBy == "Title" ? "Title Desc" : "Title";
+            ViewBag.SortCategory = sortBy == "Category" ? "Category Desc" : "Category";
+            ViewBag.SortBuyer = sortBy == "Buyer" ? "Buyer Desc" : "Buyer";
             ViewBag.pic = dbObj.UserProfiles.Where(x => x.UserID == obj.ID).Select(x => x.ProfilePicture).FirstOrDefault();
-            var record = dbObj.DownloadedNotes.Where(x => x.Seller == obj.ID).ToList().AsQueryable();
+            
+            var record = dbObj.DownloadedNotes.Where(x => x.NoteTitle.Contains(Search) || x.Category.Contains(Search) || x.User.EmailID.Contains(Search) || Search == null).ToList().AsQueryable();
+            record = record.Where(x => x.Seller == obj.ID).ToList().AsQueryable();
+            
+            switch (sortBy)
+            {
+                case "Date Desc":
+                    record = record.OrderByDescending(x => x.AttachmentDownloadedDate);
+                    break;
+                case "Title":
+                    record = record.OrderBy(x => x.NoteTitle);
+                    break;
+                case "Title Desc":
+                    record = record.OrderByDescending(x => x.NoteTitle);
+                    break;
+                case "Category":
+                    record = record.OrderBy(x => x.Category);
+                    break;
+                case "Category Desc":
+                    record = record.OrderByDescending(x => x.Category);
+                    break;
+                case "Buyer":
+                    record = record.OrderBy(x => x.User.EmailID);
+                    break;
+                case "Buyer Desc":
+                    record = record.OrderByDescending(x => x.User.EmailID);
+                    break;
+                default:
+                    record = record.OrderBy(x => x.AttachmentDownloadedDate);
+                    break;
+            }
+
             return View(record.ToPagedList(i ?? 1, 10));
         }
-        [Authorize]
+        [Authorize(Roles="User")]
         [HttpGet]
         [Route("MyRejectedNotes/UserProfile")]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        public ActionResult MyRejectedNotes(int? i)
+        public ActionResult MyRejectedNotes(int? i,string Search, string sortBy)
         {
             var emailid = User.Identity.Name.ToString();
             Context.User obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
+            
+            ViewBag.SortTitle = sortBy == "Title" ? "Title Desc" : "Title";
+            ViewBag.SortCategory = sortBy == "Category" ? "Category Desc" : "Category";
             ViewBag.pic = dbObj.UserProfiles.Where(x => x.UserID == obj.ID).Select(x => x.ProfilePicture).FirstOrDefault();
-            return View();
+            
+            var record = dbObj.NoteDetails.Where(x=>x.NoteTitle.Contains(Search) || x.AddEditCategory.CategoryName.Contains(Search) || x.Remark.Contains(Search) ||  Search == null).ToList().AsQueryable();
+            record = record.Where(x => x.UserID == obj.ID && x.Status == 5).Include(x => x.StatusTable).ToList().AsQueryable();
+
+            switch (sortBy)
+            {
+                case "Title":
+                    record = record.OrderBy(x => x.NoteTitle);
+                    break;
+                case "Title Desc":
+                    record = record.OrderByDescending(x => x.NoteTitle);
+                    break;
+                case "Category":
+                    record = record.OrderBy(x => x.AddEditCategory.CategoryName);
+                    break;
+                case "Category Desc":
+                    record = record.OrderByDescending(x => x.AddEditCategory.CategoryName);
+                    break;
+                default:
+                    record = record.OrderBy(x => x.ModifiedDate);
+                    break;
+            }
+
+            return View(record.ToPagedList(i ?? 1, 10));
         }
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles="User")]
         [Route("Profile/UserProfile")]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult UserProfile()
@@ -329,7 +398,7 @@ namespace Notes_MarketPlace.Controllers
                     if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0)
                     {
                         var displayimagename = "DP_" + DateTime.Now.ToString("dd-MM-yyyy").Replace(':', '-').Replace(' ', '_') + Path.GetExtension(model.ProfilePicture.FileName);
-                        var ImageSavePath = Path.Combine(Server.MapPath("Members/" + obj.ID + "/") +  displayimagename);
+                        var ImageSavePath = Path.Combine(Server.MapPath("~/Members/" + obj.ID + "/") +  displayimagename);
                         model.ProfilePicture.SaveAs(ImageSavePath);
                         userobj.ProfilePicture = Path.Combine(("Members/" + obj.ID + "/"), displayimagename);
                         dbObj.SaveChanges();

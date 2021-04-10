@@ -1,0 +1,321 @@
+﻿@using Notes_MarketPlace.Context
+
+@model Notes_MarketPlace.Context.NoteDetail
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--meta tags-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--title-->
+    <title>Notes - MarketPlace</title>
+
+    <!--fav icon-->
+    <link rel="shortcut icon" href="~/Content/admin/image/home/favicon.ico">
+
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="~/Content/admin/Bootstrap/bootstrap.css">
+
+    <!--font awesome css-->
+    <link rel="stylesheet" href="~/Content/admin/font-awesome/css/font-awesome.css">
+
+    <!--external css-->
+    <link rel="stylesheet" href="~/Content/admin/NoteDetails.css">
+
+    <!--responsive css-->
+    <link rel="stylesheet" href="~/Content/admin/responsive.css">
+
+</head>
+<body>
+    <section>
+        <header>
+            <nav id="mynav" class="nav navbar-fixed-top white-nav-top">
+                <div class="container">
+                    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="hamburger-icon">&#9776;</span>
+                            </button>
+                            <a class="logo" href="@Url.Action("Home","Home")"><img src="~/Content/admin/image/home/logo.png" id="notes-logo" alt="Logo" width="180"></a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="@Url.Action("Dashboard","AdminDashboard")">Dashboard</a></li>
+                                    <li class="nav-item-drop-down">
+                                        <a data-toggle="dropdown">Notes</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("NotesUnderReview","AdminNotes")">Notes Under Review</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("PublishedNotes","AdminNotes")">Published Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DownloadedNotes","AdminNotes")">Downloaded Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("RejectedNotes","AdminNotes")">Rejected Notes</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="@Url.Action("Members","AdminMembers")">Members</a></li>
+                                    <li class="nav-item-drop-down">
+                                        <a data-toggle="dropdown">Reports</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("SpamReports","AdminReports")">Spam Reports</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item-drop-down">
+                                        <a data-toggle="dropdown">Settings</a>
+                                        <ul id="simplehover" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageSystemConfiguration","AdminSettings")">Manage System Configuration</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageAdministrator","AdminSettings")">Manage Administrator</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageCategory","AdminSettings")">Manage Category</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageType","AdminSettings")">Manage Type</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageCountry","AdminSettings")">Manage Country</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item-drop-down">
+                                        <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../../@ViewBag.pic" /></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("MyProfile","AdminProfile")">Update Profile</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")">Change Password</a></li>
+                                            <li><a class="dropdown-item logout-special" onclick="if(confirm('Are you sure, you want to logout?')) location.href='@Url.Action("Logout","AdminProfile")'">LOGOUT</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <button onclick="if(confirm('Are you sure, you want to logout?')) location.href = '@Url.Action("Logout","AdminProfile")'" class="btn btn-class last-child" type="submit">Logout</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="content-box-lg Notes-Details">
+            <div class="container contu">
+                <div class="NoteDetails-title">
+                    <h4>Notes Details</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 book-div">
+                        @if (Model.DisplayPicture == null)
+                        {
+                            Model.DisplayPicture = "../Default/1.jpg";
+                        }
+                        <img id="book-img" src="../../@Model.DisplayPicture.Trim('~')" class="img-responsive" alt="Book" height="350" width="250">
+                        <div class="book-details-div">
+                            <h3>@Model.NoteTitle</h3>
+                            <h5>@Model.AddEditCategory.CategoryName</h5>
+                            <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente aspernatur harum libero et nostrum sequi consequatur, tempore accusamus ab esse, voluptatem laudantium voluptas rerum? Laborum id ad alias saepe nemo,alias saepe ne consequatur.-->
+                            <p>@Model.Description</p>
+                            <button id="download-button" type="submit" onclick="location.href = '@Url.Action("NotesDownload","AdminNotes",new { id=Model.ID})'" class="btn btn-primary">DOWNLOAD</button>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 book-extra-details">
+                        <p>Institution: <span>@Model.InstituitionName</span></p>
+                        <p>Country: <span>@Model.AddEditCountry.CountryName</span></p>
+                        <p>Course Name: <span>@Model.Course</span></p>
+                        <p>Course Code: <span>@Model.CourseCode</span></p>
+                        <p>Professor: <span>@Model.Professor</span></p>
+                        <p>Number of Pages: <span>@Model.NumberOfPages</span></p>
+                        <p>Approved Date: <span>@Model.ModifiedDate</span></p>
+                        <p>
+                            Rating:
+                            <span>
+                                <span class="score" style="float:left;">
+                                    <span class="score-wrap">
+                                        <span class="stars-active" style="width:@ViewBag.Rating%">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="stars-inactive">
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span style="float:right; margin-left:5px;">@ViewBag.totalreviews Reviews</span>
+                            </span>
+
+                        </p>
+                        <p>@ViewBag.flagcount Users marked this note as inappropriate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Notes Details Bottom Content Box-->
+        <div class="content-box-lg Notes-Details-Bottom-content-box">
+            <div class="container Notes-Details-Bottom">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="notes-preview-heading">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Notes Preview</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Notes Preview-->
+                        <div class="notes-preview">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="Iframe-Cicis-Menu-To-Go" class="set-margin-cicis-menu-to-go set-padding-cicis-menu-to-go set-border-cicis-menu-to-go set-box-shadow-cicis-menu-to-go center-block-horiz">
+                                        <div class="responsive-wrapper responsive-wrapper-padding-bottom-90pct" style="-webkit-overflow-scrolling: touch; overflow: auto;">
+                                            @if (Model.NotesPreview == null)
+                                            {
+                                                Model.NotesPreview = "../Default/170210107013_PRACTICAL-6.pdf";
+                                            }
+                                            <iframe src="@Model.NotesPreview">
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Customer Reviews-->
+                    <div class="col-md-7">
+                        <div class="review-heading">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Customer Reviews</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="customer-box" style="height:410px; overflow:scroll;">
+                            <div class="row">
+                                @{
+                                    NotesMarketPlaceEntities8 dbObj = new NotesMarketPlaceEntities8();
+                                    var creview = dbObj.NoteReviews.Where(x => x.NoteID == Model.ID).ToList();
+                                }
+                                @foreach (var item in creview)
+                                {
+                                    <!-- Customer-01 -->
+                                    <div class="col-md-1">
+                                        <img src="../../@item.User.UserProfiles.Where(x => x.UserID == item.User.ID).Select(x => x.ProfilePicture).FirstOrDefault()" class="rounded-circle img-circle" alt="Customer Image" height="50" width="50" />
+                                    </div>
+                                    <div class="col-md-11">
+                                        <div id="customer-details">
+                                            <ul>
+                                                <li>
+                                                    <h6>@item.User.FirstName @item.User.LastName</h6><a href="@Url.Action("DeleteReview","AdminNotes", new { id = item.ID, note = item.NoteID })" style="text-decoration: none; color:black;"><i class="fa fa-trash pull-right" style="font-size: x-large;"></i></a>
+                                                </li>
+                                                <li>
+                                                    <span>
+                                                        <span class="score" style="float:left;">
+                                                            <span class="score-wrap">
+                                                                <span class="stars-active" style="width:@item.Ratings*20%">
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                </span>
+                                                                <span class="stars-inactive">
+                                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <p style="margin-top:40px;">@item.Comments</p>
+                                                </li>
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 bottom-border">
+                                        <div id="border"></div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-left">
+                        <div class="footer-text-1">
+                            <p>
+                                Version: 1.1.24
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                        <div class="footer-text-2">
+                            <p>
+                                Copyright &copy; Tatvasoft All Rights Reserved
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!--Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button id="close-button" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            &times;
+                        </button>
+                        <div class="myHeader">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <img id="download-modal-icon" src="~/Content/admin/image/NotesDetails/SUCCESS.png" class="img-responsive">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <h7 class="modal-title" id="exampleModalLabel">Thank you for purchasing!</h7>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <h6 id="customer-name">Dear @ViewBag.Buyer,</h6>
+                        <p>As this is paid notes - you need to pay to seller <b>@Model.User.FirstName @Model.User.LastName</b> offline. We will send him an email that you want to download this note. He may contact you further for payment process completion.</p>
+                        <p>In case, you have emergency,<br>Please contact us on <b>+91 95377345959</b>.</p>
+                        <p>Once he receives payment and acknoledge us - selected notes you can see over my downloads tab for download.</p>
+                        <p>Have a good day.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal End-->
+        }
+    </section>
+    <!--Jquery-->
+    <script src="~/Scripts/admin/jQuery-3.5.1.js"></script>
+    <!--Bootstrap Js-->
+    <script src="~/Scripts/admin/bootstrap/bootstrap.js"></script>
+    <!--script.js-->
+    <script src="~/Scripts/admin/script.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>
+
+

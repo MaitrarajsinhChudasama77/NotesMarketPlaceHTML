@@ -1,0 +1,224 @@
+﻿@model IPagedList<Notes_MarketPlace.Context.User>
+@using PagedList.Mvc;
+@using PagedList;
+@{ int cnt = 0;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--meta tags-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--title-->
+    <title>Notes - MarketPlace</title>
+
+    <!--fav icon-->
+    <link rel="shortcut icon" href="~/Content/admin/image/home/favicon.ico">
+
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="~/Content/admin/Bootstrap/bootstrap.css">
+
+    <!--font awesome css-->
+    <link rel="stylesheet" href="~/Content/admin/font-awesome/css/font-awesome.css">
+
+    <!--external css-->
+    <link rel="stylesheet" href="~/Content/admin/style.css">
+
+    <!--responsive css-->
+    <link rel="stylesheet" href="~/Content/admin/responsive.css">
+
+</head>
+<body>
+    <section>
+        <header>
+            <nav id="mynav" class="nav navbar-fixed-top white-nav-top">
+                <div class="container">
+                    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="hamburger-icon">&#9776;</span>
+                            </button>
+                            <a class="logo" href="@Url.Action("Home","Home")"><img src="~/Content/admin/image/home/logo.png" id="notes-logo" alt="Logo" width="180"></a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="@Url.Action("Dashboard","AdminDashboard")">Dashboard</a></li>
+                                    <li class="nav-item-drop-down">
+                                        <a data-toggle="dropdown">Notes</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("NotesUnderReview","AdminNotes")">Notes Under Review</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("PublishedNotes","AdminNotes")">Published Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DownloadedNotes","AdminNotes")">Downloaded Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("RejectedNotes","AdminNotes")">Rejected Notes</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="@Url.Action("Members","AdminMembers")">Members</a></li>
+                                    <li class="nav-item-drop-down">
+                                        <a data-toggle="dropdown">Reports</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("SpamReports","AdminReports")">Spam Reports</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item-drop-down">
+                                        <a data-toggle="dropdown">Settings</a>
+                                        <ul id="simplehover" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageSystemConfiguration","AdminSettings")">Manage System Configuration</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageAdministrator","AdminSettings")">Manage Administrator</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageCategory","AdminSettings")">Manage Category</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageType","AdminSettings")">Manage Type</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageCountry","AdminSettings")">Manage Country</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item-drop-down">
+                                        <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic" /></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("MyProfile","AdminProfile")">Update Profile</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")">Change Password</a></li>
+                                            <li><a class="dropdown-item logout-special" onclick="if(confirm('Are you sure, you want to logout?')) location.href='@Url.Action("Logout","AdminProfile")'">LOGOUT</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <button onclick="if(confirm('Are you sure, you want to logout?')) location.href = '@Url.Action("Logout","AdminProfile")'" class="btn btn-class last-child" type="submit">Logout</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="content-box-lg manage-admin-content-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="dashboard-heading-left">
+                            <h4>Members</h4>
+                        </div>
+                        @using (Html.BeginForm("Members", "AdminMembers", FormMethod.Get))
+                        {
+                            <div id="dashboard-heading-right">
+                                <div class="form-group" id="dashboard-search-left">
+
+                                    <input name="Search" id="special-search" type="search" class="form-control search-field" placeholder="Search">
+                                </div>
+                                <div id="dashboard-search-right">
+                                    <button class="btn btn-class smooth-scroll" type="submit" title="Search">SEARCH</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="table-responsive" id="dashboard-table">
+                            <table class="table Members-table">
+                                <thead>
+                                    <tr>
+                                        <th class="about-item text-center" scope="col">SR NO.</th>
+                                        <th scope="col">@Html.ActionLink("FIRST NAME", "Members", new { sortBy = ViewBag.SortFname, search = Request.QueryString["search"] })</th>
+                                        <th scope="col">@Html.ActionLink("LAST NAME", "Members", new { sortBy = ViewBag.SortLname, search = Request.QueryString["search"] })</th>
+                                        <th scope="col">@Html.ActionLink("EMAIL", "Members", new { sortBy = ViewBag.SortEmail, search = Request.QueryString["search"] })</th>
+                                        <th scope="col">@Html.ActionLink("JOINING DATE", "Members", new { sortBy = ViewBag.SortDate, search = Request.QueryString["search"] })</th>
+                                        <th class="about-item text-center" scope="col">UNDER REVIEW<br />NOTES</th>
+                                        <th class="about-item text-center" scope="col">PUBLISHED<br />NOTES</th>
+                                        <th class="about-item text-center" scope="col">DOWNLOADED<br />NOTES</th>
+                                        <th class="about-item text-center" scope="col">TOTAL<br />EXPENSES</th>
+                                        <th class="about-item text-center" scope="col">TOTAL<br />EARNINGS</th>
+                                        <th class="about-item text-center" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        cnt = cnt + 1;
+                                        <tr>
+                                            <td class="about-item text-center" scope="row">@cnt</td>
+                                            <td>@item.FirstName</td>
+                                            <td>@item.LastName</td>
+                                            <td>@item.EmailID</td>
+                                            <td>@item.CreatedDate</td>
+                                            <td class="about-item text-center"><a href="@Url.Action("NotesUnderReview","AdminNotes")" style="text-decoration:none;color:#6255a5;">@item.NoteDetails.Where(x => x.UserID == item.ID && x.Status == 3).Count()</a></td>
+                                            <td class="about-item text-center"><a href="@Url.Action("PublishedNotes","AdminNotes")" style="text-decoration:none;color:#6255a5;">@item.NoteDetails.Where(x => x.UserID == item.ID && x.Status == 4).Count()</a></td>
+                                            @{
+                                                Notes_MarketPlace.Context.NotesMarketPlaceEntities8 dbObj = new Notes_MarketPlace.Context.NotesMarketPlaceEntities8();
+                                                int totaldownloadednotes = dbObj.DownloadedNotes.Where(x => x.Downloader == item.ID && x.IsAttachmentDownloaded == true).Count();
+                                                decimal totalexpenses = dbObj.DownloadedNotes.Where(x => x.Downloader == item.ID && x.IsAttachmentDownloaded == true).Sum(x => x.PurchasedPrice) ?? 0;
+                                                decimal totalearnings = dbObj.DownloadedNotes.Where(x => x.Seller == item.ID && x.HasSellerAllowedDownload == true).Sum(x => x.PurchasedPrice) ?? 0;
+
+                                            }
+                                            <td class="about-item text-center"><a href="@Url.Action("DownloadedNotes","AdminNotes")" style="text-decoration:none;color:#6255a5;">$@totaldownloadednotes</a></td>
+                                            <td class="about-item text-center"><a href="@Url.Action("DownloadedNotes","AdminNotes")" style="text-decoration:none;color:#6255a5;">$@totalexpenses</a></td>
+                                            <td class="about-item text-center">$@totalearnings</td>
+                                            <td class="about-item text-center dropdown">
+                                                <i class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                <div class="dropdown">
+                                                    <div class="dropdown-content">
+                                                        <a href="@Url.Action("MemberDetails","AdminMembers",new { id=item.ID})">View More Details</a>
+                                                        @if (item.IsActive)
+                                                        {
+                                                            <a onclick="if (confirm('Are you sure you want to make this member inactive?')) location.href='@Url.Action("DeactivateMember", "AdminMembers", new { id = item.ID })'">Deactivate</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a onclick = "if (confirm('Are you sure you want to make this member active?')) location.href='@Url.Action("DeactivateMember","AdminMembers",new { id=item.ID})'" >Reactivate</a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Pagination -->
+        <div class="content-box-md downloads-pagination">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center pagination">
+                        @Html.PagedListPager(Model, i => Url.Action("Members", "AdminMembers", new { i, search = Request.QueryString["search"] }))
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-left">
+                        <div class="footer-text-1">
+                            <p>
+                                Version: 1.1.24
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                        <div class="footer-text-2">
+                            <p>
+                                Copyright &copy; Tatvasoft All Rights Reserved
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+    <!--Jquery-->
+    <script src="~/Scripts/admin/jQuery-3.5.1.js"></script>
+    <!--Bootstrap Js-->
+    <script src="~/Scripts/admin/bootstrap/bootstrap.js"></script>
+    <!--script.js-->
+    <script src="~/Scripts/admin/script.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>

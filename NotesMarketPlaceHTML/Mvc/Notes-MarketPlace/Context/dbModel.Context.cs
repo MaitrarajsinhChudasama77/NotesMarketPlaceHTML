@@ -13,10 +13,10 @@ namespace Notes_MarketPlace.Context
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class NotesMarketPlaceEntities6 : DbContext
+    public partial class NotesMarketPlaceEntities8 : DbContext
     {
-        public NotesMarketPlaceEntities6()
-            : base("name=NotesMarketPlaceEntities6")
+        public NotesMarketPlaceEntities8()
+            : base("name=NotesMarketPlaceEntities8")
         {
         }
     
@@ -28,6 +28,7 @@ namespace Notes_MarketPlace.Context
         public virtual DbSet<AddEditCategory> AddEditCategories { get; set; }
         public virtual DbSet<AddEditCountry> AddEditCountries { get; set; }
         public virtual DbSet<AddEditType> AddEditTypes { get; set; }
+        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<ContactU> ContactUs { get; set; }
         public virtual DbSet<DownloadedNote> DownloadedNotes { get; set; }
         public virtual DbSet<ManageSystemConfiguration> ManageSystemConfigurations { get; set; }

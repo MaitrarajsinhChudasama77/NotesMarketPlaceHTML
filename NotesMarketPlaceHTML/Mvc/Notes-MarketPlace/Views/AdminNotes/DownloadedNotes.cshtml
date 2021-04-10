@@ -1,0 +1,256 @@
+﻿@model IPagedList<Notes_MarketPlace.Context.DownloadedNote>
+@using PagedList.Mvc;
+@using PagedList;
+@{ int cnt = 0;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--meta tags-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--title-->
+    <title>Notes - MarketPlace</title>
+
+    <!--fav icon-->
+    <link rel="shortcut icon" href="~/Content/admin/image/home/favicon.ico">
+
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="~/Content/admin/Bootstrap/bootstrap.css">
+
+    <!--font awesome css-->
+    <link rel="stylesheet" href="~/Content/admin/font-awesome/css/font-awesome.css">
+
+    <!--external css-->
+    <link rel="stylesheet" href="~/Content/admin/style.css">
+
+    <!--responsive css-->
+    <link rel="stylesheet" href="~/Content/admin/responsive.css">
+
+</head>
+<body>
+    <section>
+        <header>
+            <nav id="mynav" class="nav navbar-fixed-top white-nav-top">
+                <div class="container">
+                    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="hamburger-icon">&#9776;</span>
+                            </button>
+                            <a class="logo" href="@Url.Action("Home","Home")"><img src="~/Content/admin/image/home/logo.png" id="notes-logo" alt="Logo" width="180"></a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="@Url.Action("Dashboard","AdminDashboard")">Dashboard</a></li>
+                                    <li class="nav-item-drop-down">
+                                        <a data-toggle="dropdown">Notes</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("NotesUnderReview","AdminNotes")">Notes Under Review</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("PublishedNotes","AdminNotes")">Published Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DownloadedNotes","AdminNotes")">Downloaded Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("RejectedNotes","AdminNotes")">Rejected Notes</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="@Url.Action("Members","AdminMembers")">Members</a></li>
+                                    <li class="nav-item-drop-down">
+                                        <a data-toggle="dropdown">Reports</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("SpamReports","AdminReports")">Spam Reports</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item-drop-down">
+                                        <a data-toggle="dropdown">Settings</a>
+                                        <ul id="simplehover" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageSystemConfiguration","AdminSettings")">Manage System Configuration</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageAdministrator","AdminSettings")">Manage Administrator</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageCategory","AdminSettings")">Manage Category</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageType","AdminSettings")">Manage Type</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ManageCountry","AdminSettings")">Manage Country</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item-drop-down">
+                                        <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic" /></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="@Url.Action("MyProfile","AdminProfile")">Update Profile</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")">Change Password</a></li>
+                                            <li><a class="dropdown-item logout-special" onclick="if(confirm('Are you sure, you want to logout?')) location.href='@Url.Action("Logout","AdminProfile")'">LOGOUT</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <button onclick="if(confirm('Are you sure, you want to logout?')) location.href = '@Url.Action("Logout","AdminProfile")'" class="btn btn-class last-child" type="submit">Logout</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="content-box-md manage-admin-content-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Downloaded Notes</p>
+                    </div>
+                    @using (Html.BeginForm("DownloadedNotes", "AdminNotes", FormMethod.Get))
+                    {
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div id="NUR-left">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label id="NUR-special-label" class="label-text">Note</label>
+                                            @Html.DropDownList("Note", ViewBag.Note as SelectList, "Select note", new { @class = "form-control", @id = "special-select", onchange = "this.form.submit()" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label id="NUR-special-label" class="label-text">Seller</label>
+                                            @Html.DropDownList("Seller", ViewBag.Seller as SelectList, "Select seller", new { @class = "form-control", @id = "special-select", onchange = "this.form.submit()" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label id="NUR-special-label" class="label-text">Buyer</label>
+                                            @Html.DropDownList("Buyer", ViewBag.Buyer as SelectList, "Select buyer", new { @class = "form-control", @id = "special-select", onchange = "this.form.submit()" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="NUR-right">
+                                <div class="form-group" id="NUR-search-left">
+                                    <input id="special-search" type="search" name="Search_Keyword" class="form-control search-field" placeholder="Search">
+                                </div>
+                                <div id="NUR-search-right">
+                                    <button id="NUR-search-btn" class="btn btn-class smooth-scroll" type="submit" value="Search" title="Search">SEARCH</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive" id="dashboard-table">
+                            <table class="table">
+                                @if (Model.Count == 0)
+                                {
+                                    <tr>
+                                        <th scope="col"><h4 style="font-family:Open Sans;font-size:18px;color:#333333">No Records Found</h4></th>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">SR NO.</th>
+                                            <th scope="col">@Html.ActionLink("NOTE TITLE", "DownloadedNotes", new { sortBy = ViewBag.SortTitle, search = Request.QueryString["search"] })</th>
+                                            <th scope="col">@Html.ActionLink("CATEGORY", "DownloadedNotes", new { sortBy = ViewBag.SortCategory, search = Request.QueryString["search"] })</th>
+                                            <th scope="col">@Html.ActionLink("BUYER", "DownloadedNotes", new { sortBy = ViewBag.SortBuyer, search = Request.QueryString["search"] })</th>
+                                            <th scope="col"></th>
+                                            <th scope="col">SELLER</th>
+                                            <th scope="col"></th>
+                                            <th scope="col">SELL TYPE</th>
+                                            <th scope="col">PRICE</th>
+                                            <th scope="col" class="text-center">@Html.ActionLink("DOWNLOADED DATE/TIME", "DownloadedNotes", new { sortBy = ViewBag.SortDate, search = Request.QueryString["search"] })</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            cnt = cnt + 1;
+                                        <tr>
+                                            <td class="text-center" scope="row">@cnt</td>
+                                            <td class="row-color"><a href="@Url.Action("ViewNotes","AdminNotes",new { id=item.NoteID})" style="text-decoration:none;color:#6255a5;">@item.NoteTitle</a></td>
+                                            <td>@item.Category</td>
+                                            <td>@item.User.FirstName @item.User.LastName</td><!--Buyer-->
+                                            <td>
+                                                <a href="@Url.Action("MemberDetails","AdminMembers",new { id=item.Downloader})"><img src="~/Content/admin/image/assets/eye.png"></a>
+                                            </td>
+                                            <td>@item.User1.FirstName @item.User1.LastName</td><!--Seller-->
+                                            <td>
+                                                <a href="@Url.Action("MemberDetails","AdminMembers",new { id=item.Seller})"><img src="~/Content/admin/image/assets/eye.png"></a>
+                                            </td>
+                                            @if (item.IsPaid == false)
+                                            {
+                                                <td>Free</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Paid</td>
+                                            }
+                                            <td>$@item.PurchasedPrice</td>
+                                            @if (item.AttachmentDownloadedDate == null)
+                                            {
+                                                <td class="text-center">Not Downloaded</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-center">@item.AttachmentDownloadedDate</td>
+                                            }
+                                            <td class="dropdown">
+                                                <i class="fa fa-ellipsis-v dropbtn" id="ellipsis"></i>
+                                                <div class="dropdown">
+                                                    <div class="dropdown-content">
+                                                        <a href="@Url.Action("NotesDownload","AdminNotes",new { id = item.NoteID})">Download Note</a>
+                                                        <a href="@Url.Action("ViewNotes","AdminNotes",new { id = item.NoteID})">View More Details</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Pagination -->
+        <div class="content-box-md downloads-pagination">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center pagination">
+                        @Html.PagedListPager(Model, i => Url.Action("DownloadedNotes", "AdminNotes", new { i, search = Request.QueryString["search"] }))
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-left">
+                        <div class="footer-text-1">
+                            <p>
+                                Version: 1.1.24
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                        <div class="footer-text-2">
+                            <p>
+                                Copyright &copy; Tatvasoft All Rights Reserved
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+    <!--Jquery-->
+    <script src="~/Scripts/admin/jQuery-3.5.1.js"></script>
+    <!--Bootstrap Js-->
+    <script src="~/Scripts/admin/bootstrap/bootstrap.js"></script>
+    <!--script.js-->
+    <script src="~/Scripts/admin/script.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>

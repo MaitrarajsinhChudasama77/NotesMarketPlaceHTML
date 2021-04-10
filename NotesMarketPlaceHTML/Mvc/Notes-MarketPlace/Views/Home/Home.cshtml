@@ -57,19 +57,19 @@
                                         <li class="nav-item-drop-down">
                                              <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic"/></a>
                                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                 <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")" style="padding-top:10px;padding-bottom:10px;padding-left:7px;Open Sans;font-size:14px;color:#6255a5;">My Profile</a></li>
-                                                 <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Downloads</a></li>
-                                                 <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Sold Notes</a></li>
-                                                 <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Rejected Notes</a></li>
-                                                 <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Change Password</a></li>
-                                                 <li><a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")" style="padding-top: 10px; padding-bottom:10px;padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Logout</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")">My Profile</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")">My Downloads</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")">My Sold Notes</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")">My Rejected Notes</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")">Change Password</a></li>
+                                                 <li><a class="dropdown-item row-color" onclick="return confirm('Are you sure, you want to logout?')" href="@Url.Action("Logout","UserLogin")">LOGOUT</a></li>
                                              </ul>
                                         </li>
                                     }
                                     @if (User.Identity.IsAuthenticated)
                                     {
                                         <li>
-                                            <button id="home-log-button" onclick="location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
+                                            <button id="home-log-button" onclick="if(confirm('Are you sure, you want to logout?')) location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
                                         </li>
                                     }
                                     else

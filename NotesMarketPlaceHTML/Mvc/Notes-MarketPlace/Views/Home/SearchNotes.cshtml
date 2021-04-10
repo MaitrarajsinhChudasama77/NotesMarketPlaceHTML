@@ -62,19 +62,19 @@
                                         <li id="special-nav-a" class="nav-item-drop-down">
                                             <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic"/></a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")" style="padding-top:10px;padding-bottom:10px;padding-left:7px;Open Sans;font-size:14px;color:#6255a5;">My Profile</a></li>
-                                                <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Downloads</a></li>
-                                                <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Sold Notes</a></li>
-                                                <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Rejected Notes</a></li>
-                                                <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Change Password</a></li>
-                                                <li><a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")" style="padding-top: 10px; padding-bottom:10px;padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Logout</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")">My Profile</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")">My Downloads</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")">My Sold Notes</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")">My Rejected Notes</a></li>
+                                                <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")">Change Password</a></li>
+                                                <li><a class="dropdown-item" onclick="return confirm('Are you sure, you want to logout?')" href="@Url.Action("Logout","UserLogin")">LOGOUT</a></li>
                                             </ul>
                                         </li>
                                     }
                                     @if (User.Identity.IsAuthenticated)
                                     {
                                         <li id="special-nav-a">
-                                           <button id="searchnotes-log-button" onclick="location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
+                                           <button id="searchnotes-log-button" onclick="if(confirm('Are you sure, you want to logout?')) location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
                                         </li>
                                     }
                                     else
@@ -110,7 +110,6 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group has-search">
-                                        
                                         <input id="large-search-bar" name="Search_keyword" type="search" class="form-control search-field" placeholder="Search notes here...">
                                     </div>
                                 </div>
@@ -119,13 +118,9 @@
                                 <div class="form-group col-md-2">
                                     @Html.DropDownListFor(x => x.Type, new SelectList(Model.Type, "ID", "Type"), "Select type", new { @class = "form-control", @id = "special-select", name = "notetype", onchange = "note_search()" })
                                     
-
                                 </div>
                                 <div class="form-group col-md-2">
                                     @Html.DropDownListFor(x => x.Category, new SelectList(Model.Category, "ID", "CategoryName"), "Select category", new { @class = "form-control", @id = "special-select", onchange = "note_search()" })
-                                    
-
-
                                 </div>
                                 <div class="form-group col-md-2">
                                     @Html.DropDownListFor(x => x.University, new SelectList(Model.University), "Select university", new { @class = "form-control", @id = "special-select", onchange = "note_search()" })
@@ -176,20 +171,16 @@
                     {
                         foreach (var item in Model.Note)
                         {
-                            string path = "";
+                            <!--string path="";-->
                             <!-- Card -->
                             <div class="col-md-4 col-sm-4">
                                 <div class="card">
-                                    @if (item.DisplayPicture != null)
+                                    @if (item.DisplayPicture == null)
                                     {
-                                        path = "../Members/" + item.UserID + "/" + item.ID + "/" + "DP_" + item.ModifiedDate?.ToString("dd-MM-yy") + ".jpg";
-                                    }
-                                    else
-                                    {
-                                        path = "../Default/1.jpg";
+                                        item.DisplayPicture = "../Default/1.jpg";
                                     }
                                     <!--~/Content/user/image/Search/1.jpg-->
-                                    <img src="@path" alt="Book Image" width="100%" class="card-img" />
+                                    <img src="../@item.DisplayPicture.Trim('~')" alt="Book Image" style="width:100%; height:250px" class="card-img" />
                                     <div class="card-body">
                                         <a href="@Url.Action("NoteDetails", "Home",new { id = item.ID })" style="text-decoration:none;"><h4 class="card-title">@item.NoteTitle</h4></a>
                                         <div class="card-text">
@@ -215,10 +206,10 @@
                                                     }
                                                     else
                                                     {
-                                                        
+
                                                         avgrate = (double)(item.Star / item.Review) * 20;
                                                     }
-                                                    
+
                                                     <span>
                                                         <span class="score" style="float:left;">
                                                             <span class="score-wrap">
@@ -240,7 +231,7 @@
                                                         </span>
                                                         <span>@item.Review Reviews</span>
                                                     </span>
-                                                    
+
                                                 </li>
                                             </ul>
                                         </div>
@@ -297,6 +288,7 @@
     <script src="~/Scripts/user/jQuery-3.5.1.js"></script>
     <!--Bootstrap Js-->
     <script src="~/Scripts/user/bootstrap/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <!--script.js-->
     <script src="~/Scripts/user/script.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>

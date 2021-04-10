@@ -9,39 +9,39 @@ $(".toggle-password").click(function(){
     }
 });
 /*--Dropdown Menu for Admin-Members Page--*/
-function myAdminMembersDropdown(id) {
+/*function myAdminMembersDropdown(id) {
   document.getElementById("myDropdown_" + id).classList.toggle("show");
-}
-
-/*--Dropdown Menu for Spam-Report Page--*/
+}*/
+/*
+*//*--Dropdown Menu for Spam-Report Page--*//*
 function mySpamReportDropdown(id) {
   document.getElementById("myDropdown_" + id).classList.toggle("show");
 }
 
-/*--Dropdown Menu for Published-Notes Page--*/
+*//*--Dropdown Menu for Published-Notes Page--*//*
 function myPublishedNotesDropdown(id) {
   document.getElementById("myDropdown_" + id).classList.toggle("show");
 }
 
-/*--Dropdown Menu for Rejected-Notes Page--*/
+*//*--Dropdown Menu for Rejected-Notes Page--*//*
 function myRejectedNotesDropdown(id) {
   document.getElementById("myDropdown_" + id).classList.toggle("show");
 }
 
-/*--Dropdown Menu for Member-Details Page--*/
+*//*--Dropdown Menu for Member-Details Page--*//*
 function myMemberDetailsDropdown(id) {
   document.getElementById("myDropdown_" + id).classList.toggle("show");
 }
 
-/*--Dropdown Menu for Download-Notes Page--*/
+*//*--Dropdown Menu for Download-Notes Page--*//*
 function myDownloadedNotesDropdown(id) {
   document.getElementById("myDropdown_" + id).classList.toggle("show");
 }
 
-/*--Dropdown Menu for Dashboard Page--*/
+*//*--Dropdown Menu for Dashboard Page--*//*
 function myDashboardDropdown(id) {
   document.getElementById("myDropdown_" + id).classList.toggle("show");
-}
+}*/
 
 // Close the dropdown for outside click
 window.onclick = function(event) {

@@ -43,9 +43,9 @@ namespace Notes_MarketPlace.Context
         public string NotesPreview { get; set; }
         public int ActionBy { get; set; }
         public string Remark { get; set; }
-        public int? Star { get; set; }
-        public int? Review { get; set; }
-        public int? Spam { get; set; }
+        public Nullable<int> Spam { get; set; }
+        public Nullable<int> Review { get; set; }
+        public Nullable<int> Star { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }

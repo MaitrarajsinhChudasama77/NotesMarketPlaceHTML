@@ -60,19 +60,19 @@
                                         <li class="nav-item-drop-down">
                                              <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic"/></a>
                                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                 <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")" style="padding-top:10px;padding-bottom:10px;padding-left:7px;Open Sans;font-size:14px;color:#6255a5;">My Profile</a></li>
-                                                 <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Downloads</a></li>
-                                                 <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Sold Notes</a></li>
-                                                 <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Rejected Notes</a></li>
-                                                 <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Change Password</a></li>
-                                                 <li><a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")" style="padding-top: 10px; padding-bottom:10px;padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Logout</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")">My Profile</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")">My Downloads</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")">My Sold Notes</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")">My Rejected Notes</a></li>
+                                                 <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")">Change Password</a></li>
+                                                 <li><a class="dropdown-item row-color" onclick="return confirm('Are you sure, you want to logout?')" href="@Url.Action("Logout","UserLogin")">LOGOUT</a></li>
                                              </ul>
                                         </li>
                                     }
                                         @if (User.Identity.IsAuthenticated)
                                         {
                                             <li>
-                                                <button id="notedetails-log-button" onclick="location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
+                                                <button id="notedetails-log-button" onclick="if(confirm('Are you sure, you want to logout?')) location.href='@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child" type="submit">Logout</button>
                                             </li>
                                         }
                                         else
@@ -96,38 +96,65 @@
                 </div>
                     <div class="row">
                         <div class="col-md-7 book-div">
-                            @{string path = ""; }
-                            @if (Model.DisplayPicture != null)
+                            
+                            @if (Model.DisplayPicture == null)
                             {
-                                path = "../Members/" + Model.UserID + "/" + Model.ID + "/" + "DP_" + Model.ModifiedDate?.ToString("dd-MM-yy") + ".jpg";
+                                Model.DisplayPicture = "../Default/1.jpg";
                             }
-                            else
-                            {
-                                path = "../Default/1.jpg";
-                            }
-                            <img id="book-img" src="@path" class="img-responsive" alt="Book" height="350" width="250">
+                            <img id="book-img" src="../@Model.DisplayPicture.Trim('~')" class="img-responsive" alt="Book" height="350" width="250">
                             <div class="book-details-div">
                                 <h3>@Model.NoteTitle</h3>
                                 <h5>@Model.AddEditCategory.CategoryName</h5>
-                                <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente aspernatur harum libero et nostrum sequi consequatur, tempore accusamus ab esse, voluptatem laudantium voluptas rerum? Laborum id ad alias saepe nemo,alias saepe ne consequatur.-->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente aspernatur harum libero et nostrum sequi consequatur, tempore accusamus ab esse, voluptatem laudantium voluptas rerum? Laborum id ad alias saepe nemo,alias saepe ne consequatur.</p>
+                                <p>@Model.Description</p>
 
 
                                 @using (Html.BeginForm("NotesDownload", "Home", FormMethod.Post))
                                 {
+
                                     @Html.HiddenFor(x => x.ID)
                                     if (User.Identity.IsAuthenticated)
                                     {
                                         if (Model.IsPaid == false)
                                         {
-                                            <button id="download-button" type="submit" class="btn btn-primary">DOWNLOAD</button>
-                                            <div id="login-msg">
-                                                <p>@TempData["ErrorMsg"]</p>
-                                            </div>
+                                            if (ViewBag.requested != null)
+                                            {
+                                                if (ViewBag.isdownloaded)
+                                                {
+                                                    <button id="download-button" class="btn btn-primary" disabled>Purchased</button>
+                                                }
+                                                else
+                                                {
+                                                    <button id="download-button" class="btn btn-primary" disabled>Requested</button>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <button id="download-button" type="submit" class="btn btn-primary">DOWNLOAD</button>
+                                                <div id="login-msg">
+                                                    <p>@TempData["ErrorMsg"]</p>
+                                                </div>
+                                            }
+
                                         }
                                         else
                                         {
-                                            <button id="download-button" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="return confirm('Are you sure you want to download this Paid note? Please Confirm.')">DOWNLOAD / $@Model.SellingPrice_USD</button>
+                                            if (ViewBag.requested != null)
+                                            {
+                                                if (ViewBag.isdownloaded)
+                                                {
+                                                    <button id="download-button" class="btn btn-primary" disabled>Purchased</button>
+                                                }
+                                                else
+                                                {
+                                                    <button id="download-button" class="btn btn-primary" disabled>Requested</button>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <button id="download-button" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">DOWNLOAD / $@Model.SellingPrice_USD</button>
+                                            }
+
+                                            
                                         }
                                     }
                                     else
@@ -179,7 +206,6 @@
                                 </span>
                                 
                             </p>
-                            
                             <p>@ViewBag.flagcount Users marked this note as inappropriate</p>
                         </div>
                     </div>
@@ -204,16 +230,12 @@
                                     <div class="col-md-12">
                                         <div id="Iframe-Cicis-Menu-To-Go" class="set-margin-cicis-menu-to-go set-padding-cicis-menu-to-go set-border-cicis-menu-to-go set-box-shadow-cicis-menu-to-go center-block-horiz">
                                             <div class="responsive-wrapper responsive-wrapper-padding-bottom-90pct" style="-webkit-overflow-scrolling: touch; overflow: auto;">
-                                                @{string previewpath = "";}
-                                                @if (Model.NotesPreview != null)
+                                                
+                                                @if (Model.NotesPreview == null)
                                                 {
-                                                    previewpath = "../Members/" + Model.UserID + "/" + Model.ID + "/" + "DP_" + Model.ModifiedDate?.ToString("dd-MM-yy") + ".pdf";
+                                                    Model.NotesPreview = "../Default/170210107013_PRACTICAL-6.pdf";
                                                 }
-                                                else
-                                                {
-                                                    previewpath = "../Default/170210107013_PRACTICAL-6.pdf";
-                                                }
-                                                <iframe src="@previewpath">
+                                                <iframe src="@Model.NotesPreview">
                                                 </iframe>
                                             </div>
                                         </div>
@@ -231,75 +253,60 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="customer-box">
+                            <div class="customer-box" style="height:410px; overflow:scroll;">
                                 <div class="row">
-                                    <!-- Customer-01 -->
-                                    <div class="col-md-1">
-                                        <img src="~/Content/user/image/home/customer-1.png" class="rounded-circle" alt="Customer Image" height="50" width="50" />
-                                    </div>
-                                    <div class="col-md-11">
-                                        <div id="customer-details">
-                                            <ul>
-                                                <li>
-                                                    <h6>Richard Brown</h6>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star-o"></i>
-                                                </li>
-                                                <li>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit cupiditate distinctio voluptas deleniti nobis. Non dignissimos ipsum sed earum voluptatum.</p>
-                                                </li>
-                                            </ul>
+                                    @{ 
+                                        NotesMarketPlaceEntities8 dbObj = new NotesMarketPlaceEntities8();
+                                        var creview = dbObj.NoteReviews.Where(x => x.NoteID == Model.ID).ToList();
+                                    }
+                                    @foreach (var item in creview)
+                                    {
+                                        <!-- Customer-01 -->
+                                        <div class="col-md-1">
+                                            <img src="../../@item.User.UserProfiles.Where(x => x.UserID == item.User.ID).Select(x => x.ProfilePicture).FirstOrDefault()" class="rounded-circle img-circle" alt="Customer Image" height="50" width="50" />
                                         </div>
-                                    </div>
+                                        <div class="col-md-11">
+                                            <div id="customer-details">
+                                                <ul>
+                                                    <li>
+                                                        <h6>@item.User.FirstName @item.User.LastName</h6>
+                                                    </li>
+                                                    <li>
+                                                        <span>
+                                                            <span class="score" style="float:left;">
+                                                                <span class="score-wrap">
+                                                                    <span class="stars-active" style="width:@item.Ratings*20%">
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    </span>
+                                                                    <span class="stars-inactive">
+                                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <p style="margin-top:40px;">@item.Comments</p>
+                                                    </li>
 
-                                    <div class="col-md-12 bottom-border">
-                                        <div id="border"></div>
-                                    </div>
 
-                                    <!-- Customer-02 -->
-                                    <div class="col-md-1">
-                                        <img src="~/Content/user/image/home/customer-2.png" class="rounded-circle" alt="Customer Image" height="50" width="50" />
-                                    </div>
-                                    <div class="col-md-11">
-                                        <div id="customer-details">
-                                            <ul>
-                                                <li>
-                                                    <h6>Richard Harrison</h6>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star-o"></i>
-                                                </li>
-                                                <li>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit cupiditate distinctio voluptas deleniti nobis. Non dignissimos ipsum sed earum voluptatum.</p>
-                                                </li>
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-12 bottom-border">
-                                        <div id="border"></div>
-                                    </div>
-
-                                    <!-- Customer-03 -->
-                                    <div class="col-md-1">
-                                        <img src="~/Content/user/image/home/customer-3.png" class="rounded-circle" alt="Customer" height="50" width="50" />
-                                    </div>
-                                    <div class="col-md-11">
-                                        <div id="customer-details">
-                                            <ul>
-                                                <li>
-                                                    <h6>Paula Shughart</h6>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star" id="star"></i><i class="fa fa-star-o"></i>
-                                                </li>
-                                                <li>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit cupiditate distinctio voluptas deleniti nobis. Non dignissimos ipsum sed earum voluptatum.</p>
-                                                </li>
-                                            </ul>
+                                        <div class="col-md-12 bottom-border">
+                                            <div id="border"></div>
                                         </div>
-                                    </div>
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -343,7 +350,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button id="close-button" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                &times;<!--<img src="~/Content/user/image/NotesDetails/close.png" />-->
+                                &times;
                             </button>
                             <div class="myHeader">
                                 <div class="row">
@@ -369,7 +376,6 @@
                 </div>
             </div>
             <!--Modal End-->
-
         }
     </section>
     <!--Jquery-->

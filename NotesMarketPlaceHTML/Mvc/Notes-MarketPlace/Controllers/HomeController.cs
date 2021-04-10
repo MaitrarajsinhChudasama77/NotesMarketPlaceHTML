@@ -17,7 +17,7 @@ namespace Notes_MarketPlace.Controllers
 {
     public class HomeController : Controller
     {
-        NotesMarketPlaceEntities6 dbObj = new NotesMarketPlaceEntities6();
+        NotesMarketPlaceEntities8 dbObj = new NotesMarketPlaceEntities8();
         public ActionResult Home()
         {
             var emailid = User.Identity.Name.ToString();
@@ -48,6 +48,7 @@ namespace Notes_MarketPlace.Controllers
                 var university = dbObj.NoteDetails.Where(x => x.InstituitionName != null).Select(x => x.InstituitionName).Distinct().ToList();
                 var course = dbObj.NoteDetails.Where(x => x.Course != null).Select(x => x.Course).Distinct().ToList();
                 var note = dbObj.NoteDetails.Where(x => x.NoteTitle.Contains(Search_keyword) || Search_keyword == null).ToList().AsQueryable();
+                note = note.Where(x => x.Status == 4).ToList().AsQueryable();
                 var dropdownitems = new SearchNotesModel()
                 {
                     Country = country,
@@ -59,7 +60,7 @@ namespace Notes_MarketPlace.Controllers
 
                 };
                 ViewBag.flagcount = dbObj.SpamReportsTables.Where(x => x.NoteID == i).Select(x => x.NoteID).Count();
-                ViewBag.countnotes = dbObj.NoteDetails.Count();
+                ViewBag.countnotes = dbObj.NoteDetails.Where(x=>x.Status == 4).Count();
                 return View(dropdownitems);
             }
             else
@@ -70,6 +71,7 @@ namespace Notes_MarketPlace.Controllers
                 var university = dbObj.NoteDetails.Where(x => x.InstituitionName != null).Select(x => x.InstituitionName).Distinct().ToList();
                 var course = dbObj.NoteDetails.Where(x => x.Course != null).Select(x => x.Course).Distinct().ToList();
                 var note = dbObj.NoteDetails.Where(x => x.NoteTitle.Contains(Search_keyword) || Search_keyword == null).ToList().AsQueryable();
+                note = note.Where(x => x.Status == 4).ToList().AsQueryable();
                 
                 ViewBag.pic = dbObj.UserProfiles.Where(x => x.UserID == obj.ID).Select(x => x.ProfilePicture).FirstOrDefault();
                 ViewBag.flagcount = dbObj.SpamReportsTables.Where(x => x.NoteID == i).Select(x => x.NoteID).Count();
@@ -83,21 +85,30 @@ namespace Notes_MarketPlace.Controllers
                     Note = note.Where(x => x.TypeID.ToString() == Type || String.IsNullOrEmpty(Type) && x.CategoryID.ToString() == Category || String.IsNullOrEmpty(Category) && x.InstituitionName == University || String.IsNullOrEmpty(University) && x.Course == Courses || String.IsNullOrEmpty(Courses) && x.CountryID.ToString() == Country || String.IsNullOrEmpty(Country)).ToPagedList(i ?? 1, 9)
 
                 };
-                ViewBag.countnotes = dbObj.NoteDetails.Count();
+                ViewBag.countnotes = dbObj.NoteDetails.Where(x=>x.Status == 4).Count();
                 return View(dropdownitems);
             }
         }
         
         [Authorize]
         [OutputCache(NoStore = true,Duration =0,VaryByParam ="None")]
-        public ActionResult Dashboard(int? i, string search, string sortBy)
+        public ActionResult Dashboard(int? i, int? j, string Search, string Search2, string sortBy, string sortBy2)
         {
             ViewBag.SortDate = string.IsNullOrEmpty(sortBy) ? "Date Desc" : "";
             ViewBag.SortTitle = sortBy == "Title" ? "Title Desc" : "Title";
             ViewBag.SortCategory = sortBy == "Category" ? "Category Desc" : "Category";
-            var filterTitle = dbObj.NoteDetails.Where(x => x.NoteTitle.Contains(search) || search == null);
-            var filterCategory = dbObj.NoteDetails.Where(x => x.AddEditCategory.CategoryName.Contains(search));
+
+            ViewBag.SortDate2 = string.IsNullOrEmpty(sortBy2) ? "Date Desc" : "";
+            ViewBag.SortTitle2 = sortBy2 == "Title" ? "Title Desc" : "Title";
+            ViewBag.SortCategory2 = sortBy2 == "Category" ? "Category Desc" : "Category";
+
+            var filterTitle = dbObj.NoteDetails.Where(x => x.NoteTitle.Contains(Search) || Search == null);
+            var filterCategory = dbObj.NoteDetails.Where(x => x.AddEditCategory.CategoryName.Contains(Search));
             var filtereddata = filterTitle.Union(filterCategory);
+
+            var filterTitle2 = dbObj.NoteDetails.Where(x => x.NoteTitle.Contains(Search2) || Search2 == null);
+            var filterCategory2 = dbObj.NoteDetails.Where(x => x.AddEditCategory.CategoryName.Contains(Search2));
+            var filtereddata2 = filterTitle2.Union(filterCategory2);
 
             var emailid = User.Identity.Name.ToString();
             Context.User obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
@@ -105,7 +116,15 @@ namespace Notes_MarketPlace.Controllers
             ViewBag.buyerrequestscount = dbObj.DownloadedNotes.Where(x => x.Seller == obj.ID).Count();
             ViewBag.earningcount = dbObj.DownloadedNotes.Where(x => x.Seller == obj.ID && (x.HasSellerAllowedDownload == true)).Select(x => x.PurchasedPrice).Sum() ?? 0;
             ViewBag.soldnotescount = dbObj.DownloadedNotes.Where(x => x.Seller == obj.ID && (x.HasSellerAllowedDownload == true)).Count();
-            var record = filtereddata.Where(x => x.UserID == obj.ID && (x.Status == 1 || x.Status == 2 || x.Status == 3)).Include(x => x.StatusTable).ToList().AsQueryable();
+            ViewBag.rejectednotescount = dbObj.NoteDetails.Where(x => x.UserID == obj.ID && (x.Status == 5)).Include(x => x.StatusTable).Count();
+
+            DashboardModel dm = new DashboardModel();
+
+            var record = filtereddata.Where(x => x.UserID == obj.ID).ToList().AsQueryable();
+            record = record.Where(x=>x.Status == 1 || x.Status == 2 || x.Status == 3).Include(x => x.StatusTable).ToList().AsQueryable();
+
+            var record2 = filtereddata2.Where(x => x.UserID == obj.ID).ToList().AsQueryable();
+            record2 = record2.Where(x => x.Status == 4).Include(x => x.StatusTable).ToList().AsQueryable();
 
             switch (sortBy)
             {
@@ -128,28 +147,56 @@ namespace Notes_MarketPlace.Controllers
                     record = record.OrderBy(x => x.CreatedDate);
                     break;
             }
+            switch (sortBy2)
+            {
+                case "Date Desc":
+                    record2 = record2.OrderByDescending(x => x.ModifiedDate);
+                    break;
+                case "Title":
+                    record2 = record2.OrderBy(x => x.NoteTitle);
+                    break;
+                case "Title Desc":
+                    record2 = record2.OrderByDescending(x => x.NoteTitle);
+                    break;
+                case "Category":
+                    record2 = record2.OrderBy(x => x.AddEditCategory.CategoryName);
+                    break;
+                case "Category Desc":
+                    record2 = record2.OrderByDescending(x => x.AddEditCategory.CategoryName);
+                    break;
+                default:
+                    record2 = record2.OrderBy(x => x.ModifiedDate);
+                    break;
+            }
             ViewBag.pic = dbObj.UserProfiles.Where(x => x.UserID == obj.ID).Select(x => x.ProfilePicture).FirstOrDefault();
-            return View(record.ToPagedList(i ?? 1,5));
+
+            dm.Note = record.ToPagedList(i ?? 1, 5);
+            dm.Note2 = record2.ToPagedList(j ?? 1, 5);
+
+            return View(dm);
         }
+        [Authorize(Roles = "User")]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult BuyerRequests(int? i, string sortBy, string search)
         {
             ViewBag.SortDate = string.IsNullOrEmpty(sortBy) ? "Date Desc" : "";
             ViewBag.SortNoteTitle = sortBy == "Title" ? "Title Desc" : "Title";
             ViewBag.SortCategory = sortBy == "Category" ? "Category Desc" : "Category";
+            ViewBag.SortBuyer = sortBy == "Buyer" ? "Buyer Desc" : "Buyer";
             var filterTitle = dbObj.DownloadedNotes.Where(x => x.NoteTitle.Contains(search) || search == null);
-            var filterCategory = dbObj.DownloadedNotes.Where(x => x.Category.Contains(search));
-            var filtereddata = filterTitle.Union(filterCategory);
+            var filterCategory = dbObj.DownloadedNotes.Where(x => x.Category.Contains(search) || search == null);
+            var filteremail = dbObj.DownloadedNotes.Where(x => x.User.EmailID.Contains(search) || search == null);
+            var filtereddata = filterTitle.Union(filterCategory).Union(filteremail);
             
             var emailid = User.Identity.Name.ToString();
             Context.User obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
             NoteDetail noteID = dbObj.NoteDetails.Where(x => x.UserID == obj.ID).FirstOrDefault();
-            var record = dbObj.DownloadedNotes.Where(x => x.Seller == noteID.UserID).ToList().AsQueryable();
+            var record = filtereddata.Where(x => x.Seller == noteID.UserID).ToList().AsQueryable();
             
             switch (sortBy)
             {
                 case "Date Desc":
-                    record = record.OrderByDescending(x => x.CreatedDate);
+                    record = record.OrderByDescending(x => x.AttachmentDownloadedDate);
                     break;
                 case "Title":
                     record = record.OrderBy(x => x.NoteTitle);
@@ -164,7 +211,7 @@ namespace Notes_MarketPlace.Controllers
                     record = record.OrderByDescending(x => x.Category);
                     break;
                 default:
-                    record = record.OrderBy(x => x.CreatedDate);
+                    record = record.OrderBy(x => x.AttachmentDownloadedDate);
                     break;
             }
             ViewBag.pic = dbObj.UserProfiles.Where(x => x.UserID == obj.ID).Select(x => x.ProfilePicture).FirstOrDefault();
@@ -185,9 +232,9 @@ namespace Notes_MarketPlace.Controllers
             downloads.AttachmentPath = sellernotes.FilePath;
             dbObj.SaveChanges();
 
-            var fromEmail = new MailAddress("thehamojha@gmail.com"); //Email of Company
+            var fromEmail = new MailAddress(dbObj.ManageSystemConfigurations.FirstOrDefault().SupportEmail); //Email of Company
             var toEmail = new MailAddress(downloads.User1.EmailID); //Buyer EmailAddress
-            var fromEmailPassword = "244466666"; // Replace with actual password
+            var fromEmailPassword = dbObj.ManageSystemConfigurations.FirstOrDefault().SupportPassword; // Replace with actual password
             string subject = downloads.User.FirstName + " - Allows you to download a note";
 
             string body = "Hello " + downloads.User1.FirstName + "," +
@@ -262,6 +309,7 @@ namespace Notes_MarketPlace.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "User")]
         [Route("Home/AddNotes")]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult AddNotes(int? id)
@@ -270,7 +318,7 @@ namespace Notes_MarketPlace.Controllers
             Context.User obj = dbObj.Users.Where(x => x.EmailID == emailid).FirstOrDefault();
             if (id != null)
             {
-                NoteDetail noteobj = dbObj.NoteDetails.Where(x=>x.ID==id).FirstOrDefault();
+                NoteDetail noteobj = dbObj.NoteDetails.Where(x=>x.ID == id).FirstOrDefault();
                 AddNotesModel editobj = new AddNotesModel();
                 editobj.ID = noteobj.ID;
                 editobj.NoteTitle = noteobj.NoteTitle;
@@ -377,19 +425,6 @@ namespace Notes_MarketPlace.Controllers
                         addnoteobj.DisplayPicture = Path.Combine(("~/Members/" + obj.ID + "/" + addnoteobj.ID + "/"), displayimagename);
                         dbObj.SaveChanges();
                     }
-                    /*else
-                    {
-                        addnoteobj.DisplayPicture = "C:/Users/Maitrarajsinh/source/repos/Notes-MarketPlace/Default/1.jpg";
-                        dbObj.SaveChanges();
-                    }
-                    if (model.NotesPreview != null && model.NotesPreview.ContentLength > 0)
-                    {
-                        var notespreviewname = "Preview_" + Path.GetFileName(model.NotesPreview.FileName);
-                        var PreviewSavePath = Path.Combine(Server.MapPath("~/Members/" + obj.ID + "/" + addnoteobj.ID + "/") + DateTime.Now.ToString("dd-MM-yy").Replace(':', '-').Replace(' ', '_') + "_" + notespreviewname);
-                        model.NotesPreview.SaveAs(PreviewSavePath);
-                        addnoteobj.NotesPreview = Path.Combine(("~/Members/" + obj.ID + "/" + addnoteobj.ID + "/"), notespreviewname);
-                        dbObj.SaveChanges();
-                    }*/
 
                     if (model.NotesPreview != null && model.NotesPreview.ContentLength > 0)
                     {
@@ -478,6 +513,10 @@ namespace Notes_MarketPlace.Controllers
 
                     var NoteID = editnoteobj.ID;
                     string finalpath = Path.Combine(Server.MapPath("~/Members/" + obj.ID), NoteID.ToString());
+                    if (Directory.Exists(finalpath))
+                    {
+                        Directory.Delete(finalpath,true);
+                    }
 
                     if (!Directory.Exists(finalpath))
                     {
@@ -596,6 +635,8 @@ namespace Notes_MarketPlace.Controllers
                     ViewBag.Rating = (totalstars / totalreview)*20;
                 }
                 Context.NoteDetail record = dbObj.NoteDetails.Where(x => x.ID == id).FirstOrDefault();
+                ViewBag.requested = dbObj.DownloadedNotes.Where(x => x.NoteID == id && x.Downloader == obj.ID).FirstOrDefault();
+                ViewBag.isdownloaded = dbObj.DownloadedNotes.Where(x => x.NoteID == id && x.Downloader == obj.ID).Select(x=>x.IsAttachmentDownloaded).FirstOrDefault();
                 return View(record);
             }
         }
@@ -666,12 +707,22 @@ namespace Notes_MarketPlace.Controllers
             }
             return RedirectToAction("NoteDetails", "Home", new  { id=noteobj.ID});
         }
+        public ActionResult MyNoteDownloadReject(int id)
+        {
+            NoteDetail noteobj = dbObj.NoteDetails.Where(x => x.ID == id).FirstOrDefault();
+            SellerNotesAttachment sellerattachobj = dbObj.SellerNotesAttachments.Where(x => x.NoteID == id).FirstOrDefault();
+            Response.ContentType = "application/pdf";
+            Response.AppendHeader("Content-Disposition", "attachment; filename =" + noteobj.NoteTitle + ".pdf");
+            Response.TransmitFile(sellerattachobj.FilePath);
+            Response.End();
+            return RedirectToAction("MyRejectedNotes","Profile");
+        }
         [NonAction]
         public void SendContactAdminEmail(string FullName , string Comments_Questions)
         {
-            var fromEmail = new MailAddress("thehamojha@gmail.com"); //Company Email
+            var fromEmail = new MailAddress(dbObj.ManageSystemConfigurations.FirstOrDefault().SupportEmail); //Company Email
             var toEmail = new MailAddress("maitrarajsinhchudasama05799@gmail.com"); //Admin Email
-            var fromEmailPassword = "244466666"; //Password of Company Email
+            var fromEmailPassword = dbObj.ManageSystemConfigurations.FirstOrDefault().SupportPassword; //Password of Company Email
             string subject = "" + FullName + "";
 
             string body = "Hello" + "," +
@@ -699,9 +750,9 @@ namespace Notes_MarketPlace.Controllers
         [NonAction]
         public void SendDownloadEmailToAdmin(string SellerEmailID, string SellerFirstName, string SellerLastName , string BuyerFirstName, string BuyerLastName)
         {
-            var fromEmail = new MailAddress("thehamojha@gmail.com"); //Company Email
+            var fromEmail = new MailAddress(dbObj.ManageSystemConfigurations.FirstOrDefault().SupportEmail); //Company Email
             var toEmail = new MailAddress(SellerEmailID); //Seller Email
-            var fromEmailPassword = "244466666"; //Password of Company Email
+            var fromEmailPassword = dbObj.ManageSystemConfigurations.FirstOrDefault().SupportEmail; //Password of Company Email
             string subject = BuyerFirstName + BuyerLastName + " wants to purchase your notes";
 
             string body = "Hello" + " " + SellerFirstName + " " + SellerLastName + "," +

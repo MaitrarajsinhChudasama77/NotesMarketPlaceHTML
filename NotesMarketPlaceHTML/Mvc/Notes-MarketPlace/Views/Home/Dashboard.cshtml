@@ -1,4 +1,4 @@
-﻿@model IPagedList<Notes_MarketPlace.Context.NoteDetail>
+﻿@model Notes_MarketPlace.Models.DashboardModel
 @using PagedList.Mvc;
 @using PagedList;
 <!DOCTYPE html>
@@ -55,24 +55,24 @@
                         <div class="container">
                             <div class="collapse navbar-collapse" id="myNavbar">
                                 <ul class="nav navbar-nav navbar-right">
-                                    <li><a href="@Url.Action("SearchNotes","Home")"> Search Notes </a></li>
-                                    <li><a href="@Url.Action("Dashboard","Home")"> Sell Your Notes </a></li>
-                                    <li><a href="@Url.Action("BuyerRequests","Home")"> Buyer Requests </a></li>
+                                    <li><a href="@Url.Action("SearchNotes","Home")">Search Notes</a></li>
+                                    <li><a href="@Url.Action("Dashboard","Home")">Sell Your Notes</a></li>
+                                    <li><a href="@Url.Action("BuyerRequests","Home")">Buyer Requests</a></li>
                                     <li><a href="@Url.Action("FAQ","Home")">FAQ</a></li>
-                                    <li><a href="@Url.Action("ContactUs","Home")"> Contact Us </a></li>
+                                    <li><a href="@Url.Action("ContactUs","Home")">Contact Us</a></li>
                                     <li class="nav-item-drop-down">
                                         <a style="padding-top: 0px; padding-bottom: 0px;" data-toggle="dropdown"><img class="navbar-user-photo" src="../@ViewBag.pic" /></a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")" style="padding-top:10px;padding-bottom:10px;padding-left:7px;Open Sans;font-size:14px;color:#6255a5;">My Profile</a></li>
-                                            <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Downloads</a></li>
-                                            <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Sold Notes</a></li>
-                                            <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">My Rejected Notes</a></li>
-                                            <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")" style="padding-top: 10px;padding-bottom:10px; padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Change Password</a></li>
-                                            <li><a class="dropdown-item row-color" href="@Url.Action("Logout","UserLogin")" style="padding-top: 10px; padding-bottom:10px;padding-left: 7px; font-family: Open Sans; font-size: 14px; color: #6255a5;">Logout</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("UserProfile","Profile")">My Profile</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("MyDownloads","Profile")">My Downloads</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("MySoldNotes","Profile")">My Sold Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("MyRejectedNotes","Profile")">My Rejected Notes</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ChangePassword","UserLogin")">Change Password</a></li>
+                                            <li><a class="dropdown-item row-color" onclick="return confirm('Are you sure, you want to logout?')" href="@Url.Action("Logout","UserLogin")">LOGOUT</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <button id = "dashboard-log-button" role="button" onclick="location.href = '@Url.Action("Logout","UserLogin")' " class="btn btn-class last-child smooth-scroll">Logout</button>
+                                        <button id="dashboard-log-button" onclick="if (confirm('Are you sure, you want to logout?')) location.href = '@Url.Action("Logout","UserLogin")'" class="btn btn-class last-child smooth-scroll">Logout</button>
                                     </li>
                                 </ul>
                             </div>
@@ -128,7 +128,7 @@
 
                             <div class="col-md-4 col-sm-4">
                                 <div class="dashboard-border">
-                                    <a role="button" href="@Url.Action("MyRejectedNotes","Profile")" style="text-decoration:none;"><h3 style="color:#6255a5">12</h3></a>
+                                    <a role="button" href="@Url.Action("MyRejectedNotes","Profile")" style="text-decoration:none;"><h3 style="color:#6255a5">@ViewBag.rejectednotescount</h3></a>
                                     <p>My Rejected Notes</p>
                                 </div>
                             </div>
@@ -155,19 +155,19 @@
                             </div>
                             <div id="dashboard-heading-right">
                                 <div class="form-group" id="dashboard-search-left">
-                                    <input name="search" id="search-button" type="search" class="form-control search-field" placeholder="Search">
+                                    <input name="Search" id="search-button" type="search" class="form-control search-field" placeholder="Search">
                                 </div>
                                 <div id="dashboard-search-right">
-                                    <a class="btn btn-class smooth-scroll" role="button" href="#" title="Search">SEARCH</a>
+                                    <button class="btn btn-class smooth-scroll" type="submit" value="Search" title="Search">SEARCH</button>
                                 </div>
                             </div>
-                         }
+                        }
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
 
-                        <div class="table-responsive-md" id="dashboard-table">
+                        <div class="table-responsive" id="dashboard-table">
                             <table class="table">
-                                @if (Model.Count() == 0)
+                                @if (Model.Note.Count() == 0)
                                 {
                                     <tr>
                                         <th scope="col"><h4 style="font-family:Open Sans;font-size:18px;color:#333333">No Records Found</h4></th>
@@ -182,9 +182,9 @@
                                         <th scope="col">STATUS</th>
                                         <th scope="col">ACTIONS</th>
                                     </tr>
-                                    foreach (var item in Model)
+                                    foreach (var item in Model.Note)
                                     {
-                                        <tr class="search-button">
+                                        <tr>
                                             <td>@item.CreatedDate.Value.ToShortDateString()</td>
                                             <td>@item.NoteTitle</td>
                                             <td>@item.AddEditCategory.CategoryName</td>
@@ -219,7 +219,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center pagination">
-                        @Html.PagedListPager(Model,i=>Url.Action("Dashboard","Home",new { i,search=Request.QueryString["search"]}))
+                        @Html.PagedListPager(Model.Note, i => Url.Action("Dashboard", "Home", new { i, search = Request.QueryString["search"] }))
                     </div>
                 </div>
             </div>
@@ -232,92 +232,68 @@
                         <div id="dashboard-heading-left">
                             <h4>Published Notes</h4>
                         </div>
-                        <div id="dashboard-heading-right">
-                            <div class="form-group" id="dashboard-search-left">
-
-                                <input id="search-button" type="search" class="form-control search-field" placeholder="Search">
+                        @using (Html.BeginForm("Dashboard", "Home", FormMethod.Get))
+                        {
+                            <div id="dashboard-heading-right">
+                                <div class="form-group" id="dashboard-search-left">
+                                    <input name="Search2" id="search-button" type="search" class="form-control search-field" placeholder="Search">
+                                </div>
+                                <div id="dashboard-search-right">
+                                    <button class="btn  btn-class smooth-scroll" type="submit" title="Search">SEARCH</button>
+                                </div>
                             </div>
-                            <div id="dashboard-search-right">
-                                <a class="btn  btn-class smooth-scroll" role="button" href="#" title="Search">SEARCH</a>
-                            </div>
+                        }
                         </div>
-                    </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
 
                         <div class="table-responsive-md" id="dashboard-table">
                             <table class="table">
-                                <thead>
+                                @if (Model.Note2.Count() == 0)
+                                {
                                     <tr>
-                                        <th scope="col">ADDED DATE</th>
-                                        <th scope="col">TITLE</th>
-                                        <th scope="col">CATEGORY</th>
-                                        <th scope="col">STATUS</th>
-                                        <th scope="col">ACTIONS</th>
+                                        <th scope="col"><h4 style="font-family:Open Sans;font-size:18px;color:#333333">No Records Found</h4></th>
                                     </tr>
-                                </thead>
-                                <tbody>
+                                }
+                                else
+                                {
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">@Html.ActionLink("ADDED DATE", "Dashboard", new { sortBy2 = ViewBag.SortDate2, search2 = Request.QueryString["search2"] })</th>
+                                            <th scope="col">@Html.ActionLink("TITLE", "Dashboard", new { sortBy2 = ViewBag.SortTitle2, search2 = Request.QueryString["search2"] })</th>
+                                            <th scope="col">@Html.ActionLink("CATEGORY", "Dashboard", new { sortBy2 = ViewBag.SortCategory2, search2 = Request.QueryString["search2"] })</th>
+                                            <th scope="col">SELL TYPE</th>
+                                            <th scope="col">PRICE</th>
+                                            <th scope="col">ACTIONS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Note2)
+                                        {
+                                            <tr>
+                                                <td scope="row">@item.ModifiedDate.Value.ToShortDateString()</td>
+                                                <td>@item.NoteTitle</td>
+                                                <td>@item.AddEditCategory.CategoryName</td>
+                                                @if (item.IsPaid)
+                                                {
+                                                    <td>Paid</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>Free</td>
+                                                }
+                                                <td>$@item.SellingPrice_USD</td>
+                                                <td>
+                                                    <div id="dashboard-buttons">
+                                                        <a href="@Url.Action("NoteDetails", "Home",new { id = item.ID })"><img src="~/Content/user/image/Dashboard/eye.png" alt="eye" /></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                }
 
-                                    <tr class="search-button">
-                                        <td scope="row">09-10-2020</td>
-                                        <td>Data Science</td>
-                                        <td>Science</td>
-                                        <td>Draft</td>
-                                        <td>
-                                            <div id="dashboard-buttons">
-                                                <img src="~/Content/user/image/Dashboard/edit.png" alt="pencil" />
-                                                <i class="fa fa-trash" id="ellipsis"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="search-button">
-                                        <td scope="row">10-10-2020</td>
-                                        <td>Accounts</td>
-                                        <td>Commerce</td>
-                                        <td>In Review</td>
-                                        <td>
-                                            <div id="dashboard-buttons">
-                                                <img src="~/Content/user/image/Dashboard/edit.png" alt="eye" />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="search-button">
-                                        <td scope="row">11-10-2020</td>
-                                        <td>Social Studies</td>
-                                        <td>Social</td>
-                                        <td>Submitted</td>
-                                        <td>
-                                            <div id="dashboard-buttons">
-                                                <img src="~/Content/user/image/Dashboard/eye.png" alt="eye" />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="search-button">
-                                        <td scope="row">12-10-2020</td>
-                                        <td>AI</td>
-                                        <td>IT</td>
-                                        <td>Submitted</td>
-                                        <td>
-                                            <div id="dashboard-buttons">
-                                                <img src="~/Content/user/image/Dashboard/edit.png" alt="eye" />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="search-button">
-                                        <td scope="row">13-10-2020</td>
-                                        <td>Lorem ipsum dolor sit ametesectur</td>
-                                        <td>Lorem</td>
-                                        <td>Draft</td>
-                                        <td>
-                                            <div id="dashboard-buttons">
-                                                <img src="~/Content/user/image/Dashboard/edit.png" alt="pencil" />
-                                                <i class="fa fa-trash" id="ellipsis"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -325,16 +301,8 @@
         <div class="content-box-md downloads-pagination">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 text-center">
-                        <div class="pagination">
-                            <a href="#"><i class="fa fa-angle-left"></i></a>
-                            <a href="#" class="active">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">5</a>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
+                    <div class="col-md-12 text-center pagination">
+                        @Html.PagedListPager(Model.Note2, j => Url.Action("Dashboard", "Home", new { j, search2 = Request.QueryString["search2"] }))
                     </div>
                 </div>
             </div>
@@ -380,7 +348,7 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script>
+    <!--<script>
         $(document).ready(function () {
             function Contains(text_one, text_two) {
                 if (text_one.indexOf(text_two) != -1)
@@ -398,6 +366,6 @@
                 });
             });
         });
-    </script>
+    </script>-->
 </body>
 </html>

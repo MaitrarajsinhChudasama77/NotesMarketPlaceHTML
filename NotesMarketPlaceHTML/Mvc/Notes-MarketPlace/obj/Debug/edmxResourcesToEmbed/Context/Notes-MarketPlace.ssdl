@@ -4,37 +4,56 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CategoryName" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Description" Type="varchar(max)" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="AddEditCountry">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CountryName" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="CountryCode" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="AddEditType">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Type" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Description" Type="varchar(max)" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AID" Type="int" Nullable="false" />
+    <Property Name="SecondaryEmail" Type="varchar" MaxLength="100" />
+    <Property Name="PhoneNumber_CountryCode" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ProfilePicture" Type="varchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ContactUs">
     <Key>
@@ -77,13 +96,14 @@
     </Key>
     <Property Name="ID" Type="int" Nullable="false" />
     <Property Name="SupportEmail" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SupportPassword" Type="varchar" MaxLength="50" />
     <Property Name="SupportContactNumber" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="EmailAddress_es" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="FacebookURL" Type="varchar" MaxLength="100" />
     <Property Name="TwitterURL" Type="varchar" MaxLength="100" />
     <Property Name="LinkedInURL" Type="varchar" MaxLength="100" />
-    <Property Name="DefaultNoteDisplayImage" Type="varbinary" MaxLength="1" Nullable="false" />
-    <Property Name="DefaultProfilePicture" Type="varbinary" MaxLength="1" Nullable="false" />
+    <Property Name="DefaultNoteDisplayImage" Type="varchar(max)" Nullable="false" />
+    <Property Name="DefaultProfilePicture" Type="varchar(max)" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
@@ -427,6 +447,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Admin_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="AID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_NoteDetails_StatusTable">
     <End Role="StatusTable" Type="Self.StatusTable" Multiplicity="1" />
     <End Role="NoteDetails" Type="Self.NoteDetails" Multiplicity="*" />
@@ -455,6 +487,7 @@
     <EntitySet Name="AddEditCategory" EntityType="Self.AddEditCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AddEditCountry" EntityType="Self.AddEditCountry" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AddEditType" EntityType="Self.AddEditType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContactUs" EntityType="Self.ContactUs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DownloadedNotes" EntityType="Self.DownloadedNotes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ManageSystemConfiguration" EntityType="Self.ManageSystemConfiguration" Schema="dbo" store:Type="Tables" />
@@ -529,6 +562,10 @@
     <AssociationSet Name="FK__Users__RoleID__286302EC" Association="Self.FK__Users__RoleID__286302EC">
       <End Role="UserRoles" EntitySet="UserRoles" />
       <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Users" Association="Self.FK_Admin_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Admin" EntitySet="Admin" />
     </AssociationSet>
     <AssociationSet Name="FK_NoteDetails_StatusTable" Association="Self.FK_NoteDetails_StatusTable">
       <End Role="StatusTable" EntitySet="StatusTable" />

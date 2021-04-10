@@ -301,12 +301,12 @@
     <Content Include="Content\user\image\Userprofile\upload.png" />
     <Content Include="Context\dbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Notes-Marketplace.edmx</DependentUpon>
+      <DependentUpon>Notes-MarketPlace.edmx</DependentUpon>
       <LastGenOutput>dbModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Context\dbModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Notes-Marketplace.edmx</DependentUpon>
+      <DependentUpon>Notes-MarketPlace.edmx</DependentUpon>
       <LastGenOutput>dbModel.cs</LastGenOutput>
     </Content>
     <Content Include="Default\1.jpg" />
@@ -393,6 +393,7 @@
     <Content Include="Scripts\admin\bootstrap\bootstrap.js" />
     <Content Include="Scripts\admin\jQuery-3.5.1.js" />
     <Content Include="Scripts\admin\script.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -413,6 +414,9 @@
     <Compile Include="Context\AddEditType.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Context\Admin.cs">
+      <DependentUpon>dbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Context\ContactU.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
@@ -426,10 +430,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Context\Notes-Marketplace.Designer.cs">
+    <Compile Include="Context\Notes-MarketPlace.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Notes-Marketplace.edmx</DependentUpon>
+      <DependentUpon>Notes-MarketPlace.edmx</DependentUpon>
     </Compile>
     <Compile Include="Context\DownloadedNote.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
@@ -461,21 +465,36 @@
     <Compile Include="Context\UserRole.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdminDashboardController.cs" />
+    <Compile Include="Controllers\AdminMembersController.cs" />
+    <Compile Include="Controllers\AdminNotesController.cs" />
+    <Compile Include="Controllers\AdminProfileController.cs" />
+    <Compile Include="Controllers\AdminReportsController.cs" />
+    <Compile Include="Controllers\AdminSettingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserLoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddAdministrator.cs" />
     <Compile Include="Models\AddNotesModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\ContactUsModel.cs" />
+    <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\ForgotPasswordModel.cs" />
+    <Compile Include="Models\ManageCategoryModel.cs" />
+    <Compile Include="Models\ManageCountryModel.cs" />
+    <Compile Include="Models\ManageSysConfigModel.cs" />
+    <Compile Include="Models\ManageTypeModel.cs" />
+    <Compile Include="Models\MemberDetailsModel.cs" />
+    <Compile Include="Models\MyProfileModel.cs" />
     <Compile Include="Models\SearchNotesModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserProfileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -543,14 +562,14 @@
     <Content Include="Members\39\1014\Attachment\Attachment_1_21-03-2021_16-36-31_TS_SRS_Notes_marketplace_v1.0.pdf" />
     <Content Include="Members\39\3\Attachment\Attachment_1_05-03-2021_19-30-29_TS_SRS_Notes_marketplace_v1.0.pdf" />
     <Content Include="Members\40\4\Attachment\Attachment_1_05-03-2021_19-42-50_TS_SRS_Notes_marketplace_v1.0.pdf" />
-    <EntityDeploy Include="Context\Notes-Marketplace.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Notes-Marketplace.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Context\Notes-Marketplace.edmx.diagram">
-      <DependentUpon>Notes-Marketplace.edmx</DependentUpon>
-    </Content>
     <Content Include="Default\170210107013_PRACTICAL-6.pdf" />
+    <EntityDeploy Include="Context\Notes-MarketPlace.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Notes-MarketPlace.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Context\Notes-MarketPlace.edmx.diagram">
+      <DependentUpon>Notes-MarketPlace.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
     <Content Include="packages\Microsoft.AspNet.Mvc.5.2.7\.signature.p7s" />
     <Content Include="packages\Microsoft.AspNet.Mvc.5.2.7\Content\Web.config.install.xdt" />
@@ -616,6 +635,26 @@
     <Content Include="Views\Profile\MySoldNotes.cshtml" />
     <Content Include="Views\Profile\MyRejectedNotes.cshtml" />
     <Content Include="Views\Profile\UserProfile.cshtml" />
+    <Content Include="Views\AdminProfile\MyProfile.cshtml" />
+    <Content Include="Views\AdminMembers\Members.cshtml" />
+    <Content Include="Views\AdminMembers\MemberDetails.cshtml" />
+    <Content Include="Views\AdminDashboard\Dashboard.cshtml" />
+    <Content Include="Views\AdminNotes\DownloadedNotes.cshtml" />
+    <Content Include="Views\AdminNotes\NotesUnderReview.cshtml" />
+    <Content Include="Views\AdminNotes\PublishedNotes.cshtml" />
+    <Content Include="Views\AdminNotes\RejectedNotes.cshtml" />
+    <Content Include="Views\AdminSettings\AddAdministrator.cshtml" />
+    <Content Include="Views\AdminSettings\ManageAdministrator.cshtml" />
+    <Content Include="Views\AdminSettings\AddCategory.cshtml" />
+    <Content Include="Views\AdminSettings\ManageCategory.cshtml" />
+    <Content Include="Views\AdminSettings\AddCountry.cshtml" />
+    <Content Include="Views\AdminSettings\ManageCountry.cshtml" />
+    <Content Include="Views\AdminSettings\AddType.cshtml" />
+    <Content Include="Views\AdminSettings\ManageType.cshtml" />
+    <Content Include="Views\AdminSettings\ManageSystemConfiguration.cshtml" />
+    <Content Include="Views\AdminReports\SpamReports.cshtml" />
+    <Content Include="Views\AdminNotes\ViewNotes.cshtml" />
+    <Content Include="Views\AdminSettings\EditAdministrator.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
